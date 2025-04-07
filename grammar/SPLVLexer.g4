@@ -10,7 +10,7 @@ Comment: '//' ~[\r\n]* -> channel(HIDDEN);
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
 // literals
-IntLiteral: ([1-9][0-9]*) | '0';
+IntLiteral: '-'? ([1-9][0-9]*) | '0';
 FloatLiteral: IntLiteral '.' [0-9]*;
 BoolLiteral: 'true' | 'false';
 StringLiteral: '"' (ESC | SAFECODEPOINT)* '"'; //taken from JSON grammar
@@ -18,16 +18,10 @@ fragment ESC: '\\' (["\\/bfnrt]); //
 fragment SAFECODEPOINT: ~ ["\\\u0000-\u001F]; //
 
 // operators
-PlusOperator: '+';
-MinusOperator: '-';
-StarOperator: '*';
-SlashOperator: '/';
-GTOperator: '>';
-GEOperator: '>=';
-LTOperator: '<';
-LEOperator: '<=';
-EQOperator: '==';
-NEQOperator: '!=';
+AdditiveOperator: '+' | '-';
+MultiplicativeOperator: '*' | '/' | '%';
+ComparisonOperator: '>' | '>=' | '<' | '<=' | '==' | '!=';
+BooleanOperator: 'and' | 'or' | 'xor';
 NOTOperator: '!';
 AssignmentOperator: '=';
 InOperator: 'in';
@@ -40,11 +34,7 @@ FunctionKeyword: 'fun';
 ReturnKeyword: 'ret';
 
 // type declarations
-IntType: 'int';
-FloatType: 'flo';
-StringType: 'str';
-BooleanType: 'bol';
-ListType: 'lst';
+Type: 'int' | 'flo' | 'str' | 'bol' | 'lst';
 GlobalTypeModifier: 'glob';
 
 // special characters
