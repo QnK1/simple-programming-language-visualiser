@@ -54,6 +54,7 @@ expression
     | expression ComparisonOperator expression
     | NOTOperator expression
     | expression InOperator expression
+    | expression BracketLeft expression BracketRight
     ;
 ////
 
