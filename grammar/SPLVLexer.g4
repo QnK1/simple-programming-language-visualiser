@@ -13,7 +13,7 @@ Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 IntLiteral: '-'? ([1-9][0-9]*) | '0';
 FloatLiteral: IntLiteral '.' [0-9]*;
 BoolLiteral: 'true' | 'false';
-StringLiteral: '"' (ESC | SAFECODEPOINT)* '"'; //taken from JSON grammar
+StringLiteral: '"' (ESC | SAFECODEPOINT)* '"'; //from JSON grammar
 fragment ESC: '\\' (["\\/bfnrt]); //
 fragment SAFECODEPOINT: ~ ["\\\u0000-\u001F]; //
 
