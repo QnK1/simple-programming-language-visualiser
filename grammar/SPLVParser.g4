@@ -31,13 +31,13 @@ literal
     : IntLiteral
     | FloatLiteral
     | StringLiteral
-    | BooleanOperator
+    | BoolLiteral
     | listLiteral
     ;
 
 listLiteral
-    : BracketLeft expression Colon expression BracketRight
-    | BracketLeft expression (Comma expression)* Comma? BracketRight
+    : BracketLeft expression DoubleDot expression BracketRight // list from range
+    | BracketLeft expression (Comma expression)* Comma? BracketRight // list with given elements
     | BracketLeft BracketRight
     ;
 ////
@@ -54,9 +54,10 @@ expression
     | expression ComparisonOperator expression
     | NOTOperator expression
     | expression InOperator expression
-    | expression BracketLeft expression BracketRight
+    | expression BracketLeft expression BracketRight // list indexing
+    | expression BracketLeft expression? Colon expression? BracketRight // list slicing
     ;
-////
+////`
 
 // function calls
 functionCall: Identifier ParenLeft (expression (Comma expression)* Comma?)? ParenRight; 
@@ -69,7 +70,8 @@ variableAssignment: Identifier AssignmentOperator expression;
 
 // block
 block: CurlyLeft (innerStatement Semicolon)* CurlRight;
-functionBlock: CurlyLeft (innerStatement Semicolon)* ReturnKeyword Semicolon CurlRight;
+functionBlock: CurlyLeft (innerStatement Semicolon)* returnStatement Semicolon CurlRight;
+returnStatement: ReturnKeyword expression;
 ////
 
 // function definitions

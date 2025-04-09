@@ -41,6 +41,7 @@ GlobalTypeModifier: 'glob';
 Semicolon: ';';
 Colon: ':';
 Comma: ',';
+DoubleDot: '..';
 BracketLeft: '[';
 BracketRight: ']';
 CurlyLeft: '{';

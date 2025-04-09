@@ -107,6 +107,15 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SPLVParser#returnStatement.
+    def enterReturnStatement(self, ctx:SPLVParser.ReturnStatementContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#returnStatement.
+    def exitReturnStatement(self, ctx:SPLVParser.ReturnStatementContext):
+        pass
+
+
     # Enter a parse tree produced by SPLVParser#functionDefinition.
     def enterFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         pass
