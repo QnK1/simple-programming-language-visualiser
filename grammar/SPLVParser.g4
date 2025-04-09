@@ -68,11 +68,12 @@ variableAssignment: Identifier AssignmentOperator expression;
 
 // block
 block: CurlyLeft (innerStatement Semicolon)* CurlRight;
+functionBlock: CurlyLeft (innerStatement Semicolon)* ReturnKeyword Semicolon CurlRight;
 ////
 
 // function definitions
 functionDefinition
-    : FunctionKeyword Type Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight block;
+    : FunctionKeyword Type Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight functionBlock;
 ////
 
 // control statements

@@ -98,6 +98,15 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SPLVParser#functionBlock.
+    def enterFunctionBlock(self, ctx:SPLVParser.FunctionBlockContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionBlock.
+    def exitFunctionBlock(self, ctx:SPLVParser.FunctionBlockContext):
+        pass
+
+
     # Enter a parse tree produced by SPLVParser#functionDefinition.
     def enterFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         pass

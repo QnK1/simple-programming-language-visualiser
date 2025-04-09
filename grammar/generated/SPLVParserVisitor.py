@@ -59,6 +59,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SPLVParser#functionBlock.
+    def visitFunctionBlock(self, ctx:SPLVParser.FunctionBlockContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SPLVParser#functionDefinition.
     def visitFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         return self.visitChildren(ctx)
