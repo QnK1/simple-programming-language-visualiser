@@ -19,9 +19,18 @@ statement
 ////
 
 // statements inside loop/if blocks
-innerStatement
+statementInblock
     : variableAssignment
     | functionCall
+    | controlStatement
+    ;
+////
+
+// statements inside functions
+statementInFunction
+    : variableAssignment
+    | functionCall
+    | variableDefinition
     | controlStatement
     ;
 ////
@@ -69,14 +78,18 @@ variableAssignment: Identifier AssignmentOperator expression;
 ////
 
 // block
-block: CurlyLeft (innerStatement Semicolon)* CurlRight;
-functionBlock: CurlyLeft (innerStatement Semicolon)* returnStatement Semicolon CurlRight;
+block: CurlyLeft (statementInblock Semicolon)* CurlyRight;
+functionBlock: CurlyLeft (statementInFunction Semicolon)* returnStatement Semicolon CurlyRight;
+voidFunctionBlock: CurlyLeft (statementInFunction Semicolon)* voidReturnStatement Semicolon CurlyRight;
+voidReturnStatement: ReturnKeyword;
 returnStatement: ReturnKeyword expression;
 ////
 
 // function definitions
 functionDefinition
-    : FunctionKeyword Type Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight functionBlock;
+    : FunctionKeyword Type Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight functionBlock #returningFunction
+    | FunctionKeyword VoidType Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight voidFunctionBlock #voidFunction
+    ;
 ////
 
 // control statements

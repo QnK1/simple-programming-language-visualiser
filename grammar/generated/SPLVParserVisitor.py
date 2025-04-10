@@ -19,8 +19,13 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#innerStatement.
-    def visitInnerStatement(self, ctx:SPLVParser.InnerStatementContext):
+    # Visit a parse tree produced by SPLVParser#statementInblock.
+    def visitStatementInblock(self, ctx:SPLVParser.StatementInblockContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#statementInFunction.
+    def visitStatementInFunction(self, ctx:SPLVParser.StatementInFunctionContext):
         return self.visitChildren(ctx)
 
 
@@ -64,13 +69,28 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SPLVParser#voidFunctionBlock.
+    def visitVoidFunctionBlock(self, ctx:SPLVParser.VoidFunctionBlockContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#voidReturnStatement.
+    def visitVoidReturnStatement(self, ctx:SPLVParser.VoidReturnStatementContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SPLVParser#returnStatement.
     def visitReturnStatement(self, ctx:SPLVParser.ReturnStatementContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#functionDefinition.
-    def visitFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
+    # Visit a parse tree produced by SPLVParser#returningFunction.
+    def visitReturningFunction(self, ctx:SPLVParser.ReturningFunctionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#voidFunction.
+    def visitVoidFunction(self, ctx:SPLVParser.VoidFunctionContext):
         return self.visitChildren(ctx)
 
 

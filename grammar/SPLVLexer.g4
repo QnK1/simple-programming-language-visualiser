@@ -29,13 +29,14 @@ InOperator: 'in';
 // keywords
 IfKeyword: 'if';
 LoopKeyword: 'lop';
-WhileKeyword: 'while';
+WhileKeyword: 'whl';
 FunctionKeyword: 'fun';
 ReturnKeyword: 'ret';
 
 // type declarations
 Type: 'int' | 'flo' | 'str' | 'bol' | 'lst';
-GlobalTypeModifier: 'glob';
+VoidType: 'nul';
+GlobalTypeModifier: 'glo';
 
 // special characters
 Semicolon: ';';
@@ -45,7 +46,7 @@ DoubleDot: '..';
 BracketLeft: '[';
 BracketRight: ']';
 CurlyLeft: '{';
-CurlRight: '}';
+CurlyRight: '}';
 ParenLeft: '(';
 ParenRight: ')';
 
