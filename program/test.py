@@ -1,8 +1,9 @@
 import time
 
-time.sleep(2)
+a = [0, 1]
+b = [0, 2]
 
-print('juz')
-time.sleep(2)
-
-print('juz')
+if a == b:
+    print('a == b')
+else:
+    print('a != b')

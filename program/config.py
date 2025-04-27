@@ -14,8 +14,19 @@ title_height = 40
 title_font_size = 50
 # block_border_color = (255, 255, 255)          # not used
 
+# Function config
+function_height = 450
+
+# Globals config
+globals_height = 650
+
 # Block transit config
 transit_tick_time = 3*ticks_per_second
 
+# Action config
+action_tick_time = 2*ticks_per_second
 # Loading queue config
 queue_file_name = 'queue.txt'
+
+# codeDisplay config
+

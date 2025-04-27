@@ -1,13 +1,8 @@
 from block import Block
 
 class Action:
-    def __init__(self, block : Block, lifeTime : int, endFunction : callable):
-        self.block = block
+    def __init__(self, lifeTime : int, endFunctions : list[callable]):
         self.lifeTime = lifeTime
-        self.endFunction = endFunction
-    def tick(self):
-        self.ticks -= 1
-        if self.ticks == 0:
-            self.endFunction()
-    def getLifeTime(self): return self.lifeTime
+        self.endFunctions = endFunctions
+
     

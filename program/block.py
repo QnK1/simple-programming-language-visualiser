@@ -10,8 +10,8 @@ class Block():
         self.type = type
         self.value = value
     
-    def highlight(self):
-        self.color = config.block_heghlight_color
+    def highlight(self, color = config.block_heghlight_color):
+        self.color = color
     def unhighlight(self):
         self.color = config.block_color
     def getName(self):
@@ -20,6 +20,8 @@ class Block():
         return self.type
     def getValue(self):
         return self.value
+    def getColor(self):
+        return self.color
     def getPosition(self):
         return self.position
     def x(self):
