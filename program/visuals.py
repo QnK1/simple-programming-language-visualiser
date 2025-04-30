@@ -16,8 +16,8 @@ class Visuals():
         self.actions = set()                                    # Set[Action] -> Action[block, lifeTime, endFunction]
 
     def if_func(self, var1, logic, var2):
-        boards = self.simulation.boards[-1] | self.simulation.globals
-        result = self.ops[logic](boards[var1].getValue(), boards[var2].getValue())
+        curBlocks = self.simulation.boards[-1].blocks + self.simulation.globals.blocks
+        result = self.ops[logic](curBlocks[var1].getValue(), curBlocks[var2].getValue())
         print('result ' + str(type(result)) + '    -> ', result)
         color = (0, 255, 0) if result == 1 else (255, 0, 0)
         blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
