@@ -1,0 +1,25 @@
+int a = 5;
+a = a * 3;
+fun flo:funkcja1(int c){
+    bol b = true;
+}
+
+if(a == a){
+    funckja1();
+
+    int suma = 0;
+    lop(int a in [1..5]){
+        suma = suma + a;
+    }
+
+    lop(int a in [1, 2, 3]){
+        suma = suma + a;
+    }
+
+    bol warunek = true;
+
+    lst lista = [];
+    whl(not warunek){
+        lista = lista + 3;
+    }
+}
