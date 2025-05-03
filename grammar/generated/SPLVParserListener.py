@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/SPLV/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -26,12 +26,12 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SPLVParser#statementInblock.
-    def enterStatementInblock(self, ctx:SPLVParser.StatementInblockContext):
+    # Enter a parse tree produced by SPLVParser#statementInControlBlock.
+    def enterStatementInControlBlock(self, ctx:SPLVParser.StatementInControlBlockContext):
         pass
 
-    # Exit a parse tree produced by SPLVParser#statementInblock.
-    def exitStatementInblock(self, ctx:SPLVParser.StatementInblockContext):
+    # Exit a parse tree produced by SPLVParser#statementInControlBlock.
+    def exitStatementInControlBlock(self, ctx:SPLVParser.StatementInControlBlockContext):
         pass
 
 
@@ -98,12 +98,12 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SPLVParser#block.
-    def enterBlock(self, ctx:SPLVParser.BlockContext):
+    # Enter a parse tree produced by SPLVParser#controlBlock.
+    def enterControlBlock(self, ctx:SPLVParser.ControlBlockContext):
         pass
 
-    # Exit a parse tree produced by SPLVParser#block.
-    def exitBlock(self, ctx:SPLVParser.BlockContext):
+    # Exit a parse tree produced by SPLVParser#controlBlock.
+    def exitControlBlock(self, ctx:SPLVParser.ControlBlockContext):
         pass
 
 
@@ -113,24 +113,6 @@ class SPLVParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by SPLVParser#functionBlock.
     def exitFunctionBlock(self, ctx:SPLVParser.FunctionBlockContext):
-        pass
-
-
-    # Enter a parse tree produced by SPLVParser#voidFunctionBlock.
-    def enterVoidFunctionBlock(self, ctx:SPLVParser.VoidFunctionBlockContext):
-        pass
-
-    # Exit a parse tree produced by SPLVParser#voidFunctionBlock.
-    def exitVoidFunctionBlock(self, ctx:SPLVParser.VoidFunctionBlockContext):
-        pass
-
-
-    # Enter a parse tree produced by SPLVParser#voidReturnStatement.
-    def enterVoidReturnStatement(self, ctx:SPLVParser.VoidReturnStatementContext):
-        pass
-
-    # Exit a parse tree produced by SPLVParser#voidReturnStatement.
-    def exitVoidReturnStatement(self, ctx:SPLVParser.VoidReturnStatementContext):
         pass
 
 
@@ -170,6 +152,15 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SPLVParser#controlStatementInsideFunction.
+    def enterControlStatementInsideFunction(self, ctx:SPLVParser.ControlStatementInsideFunctionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#controlStatementInsideFunction.
+    def exitControlStatementInsideFunction(self, ctx:SPLVParser.ControlStatementInsideFunctionContext):
+        pass
+
+
     # Enter a parse tree produced by SPLVParser#ifStatement.
     def enterIfStatement(self, ctx:SPLVParser.IfStatementContext):
         pass
@@ -194,6 +185,33 @@ class SPLVParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by SPLVParser#loopStatement.
     def exitLoopStatement(self, ctx:SPLVParser.LoopStatementContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#ifStatementInsideFunction.
+    def enterIfStatementInsideFunction(self, ctx:SPLVParser.IfStatementInsideFunctionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#ifStatementInsideFunction.
+    def exitIfStatementInsideFunction(self, ctx:SPLVParser.IfStatementInsideFunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#whileStatementInsideFunction.
+    def enterWhileStatementInsideFunction(self, ctx:SPLVParser.WhileStatementInsideFunctionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#whileStatementInsideFunction.
+    def exitWhileStatementInsideFunction(self, ctx:SPLVParser.WhileStatementInsideFunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#loopStatementInsideFunction.
+    def enterLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#loopStatementInsideFunction.
+    def exitLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
         pass
 
 

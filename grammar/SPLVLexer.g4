@@ -6,12 +6,9 @@ WS: [ \t\r\n]+ -> skip;
 // comments
 Comment: '//' ~[\r\n]* -> channel(HIDDEN);
 
-// identifiers
-Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
-
 // literals
 IntLiteral: '-'? ([1-9][0-9]*) | '0';
-FloatLiteral: IntLiteral '.' [0-9]*;
+FloatLiteral: IntLiteral '.' [0-9]+;
 BoolLiteral: 'true' | 'false';
 StringLiteral: '"' (ESC | SAFECODEPOINT)* '"'; //from JSON grammar
 fragment ESC: '\\' (["\\/bfnrt]); //
@@ -22,7 +19,7 @@ AdditiveOperator: '+' | '-';
 MultiplicativeOperator: '*' | '/' | '%';
 ComparisonOperator: '>' | '>=' | '<' | '<=' | '==' | '!=';
 BooleanOperator: 'and' | 'or' | 'xor';
-NOTOperator: '!';
+NOTOperator: 'not';
 AssignmentOperator: '=';
 InOperator: 'in';
 
@@ -37,6 +34,9 @@ ReturnKeyword: 'ret';
 Type: 'int' | 'flo' | 'str' | 'bol' | 'lst';
 VoidType: 'nul';
 GlobalTypeModifier: 'glo';
+
+// identifiers
+Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
 // special characters
 Semicolon: ';';
