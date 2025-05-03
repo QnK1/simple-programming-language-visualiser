@@ -1,0 +1,9 @@
+int a = 5;
+if(a == 5){
+    lst l = [1, 2, 3];
+
+    int sum = 0;
+    lop(int a in [1..5]){
+        sum = sum + a;
+    }
+}

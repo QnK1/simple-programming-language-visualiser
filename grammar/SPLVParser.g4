@@ -56,14 +56,14 @@ listLiteral
 // expressions
 expression
     : literal
-    | Identifier
     | functionCall
+    | Identifier
     | expression BracketLeft expression BracketRight // list indexing
     | expression BracketLeft expression? Colon expression? BracketRight // list slicing
     | ParenLeft expression ParenRight
     | NOTOperator expression 
-    | expression BooleanOperator expression
     | expression ComparisonOperator expression
+    | expression BooleanOperator expression
     | expression MultiplicativeOperator expression
     | expression AdditiveOperator expression
     | expression InOperator expression
@@ -108,11 +108,11 @@ controlStatementInsideFunction
     | loopStatementInsideFunction
     ;
 
-ifStatement: IfKeyword ParenLeft expression ParenRight controlBlock;
+ifStatement: IfKeyword ParenLeft expression ParenRight controlBlock (ElseKeyword controlBlock)?;
 whileStatement: WhileKeyword ParenLeft expression ParenRight controlBlock;
 loopStatement: LoopKeyword ParenLeft Type Identifier InOperator expression ParenRight controlBlock;
 
-ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight functionBlock;
+ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight (ElseKeyword functionBlock)?;
 whileStatementInsideFunction: WhileKeyword ParenLeft expression ParenRight functionBlock;
 loopStatementInsideFunction: LoopKeyword ParenLeft Type Identifier InOperator expression ParenRight functionBlock;
 ////

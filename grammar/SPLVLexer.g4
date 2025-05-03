@@ -25,6 +25,7 @@ InOperator: 'in';
 
 // keywords
 IfKeyword: 'if';
+ElseKeyword: 'els';
 LoopKeyword: 'lop';
 WhileKeyword: 'whl';
 FunctionKeyword: 'fun';
