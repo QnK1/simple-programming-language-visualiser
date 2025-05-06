@@ -1,11 +1,15 @@
 from antlr4 import *
-from parser.SPLVLexer import SPLVLexer
-from parser.SPLVParser import SPLVParser
+from base.SPLVLexer import SPLVLexer
+from base.SPLVParser import SPLVParser
+from listener import Listener
 
 def run(source: str):
     lexer = SPLVLexer(InputStream(input_text))
     stream = CommonTokenStream(lexer)
     parser = SPLVParser(stream)
+    listener = Listener()
+    
+    parser.addParseListener(listener)
 
     tree = parser.program()
 

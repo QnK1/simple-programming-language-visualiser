@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Users/Kacper/Desktop/SPLV/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -39,6 +39,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SPLVParser#type.
+    def visitType(self, ctx:SPLVParser.TypeContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SPLVParser#expression.
     def visitExpression(self, ctx:SPLVParser.ExpressionContext):
         return self.visitChildren(ctx)
@@ -74,13 +79,8 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#returningFunction.
-    def visitReturningFunction(self, ctx:SPLVParser.ReturningFunctionContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SPLVParser#voidFunction.
-    def visitVoidFunction(self, ctx:SPLVParser.VoidFunctionContext):
+    # Visit a parse tree produced by SPLVParser#functionDefinition.
+    def visitFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         return self.visitChildren(ctx)
 
 

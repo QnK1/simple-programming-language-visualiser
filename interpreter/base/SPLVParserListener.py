@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Users/Kacper/Desktop/SPLV/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -59,6 +59,15 @@ class SPLVParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by SPLVParser#listLiteral.
     def exitListLiteral(self, ctx:SPLVParser.ListLiteralContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#type.
+    def enterType(self, ctx:SPLVParser.TypeContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#type.
+    def exitType(self, ctx:SPLVParser.TypeContext):
         pass
 
 
@@ -125,21 +134,12 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SPLVParser#returningFunction.
-    def enterReturningFunction(self, ctx:SPLVParser.ReturningFunctionContext):
+    # Enter a parse tree produced by SPLVParser#functionDefinition.
+    def enterFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         pass
 
-    # Exit a parse tree produced by SPLVParser#returningFunction.
-    def exitReturningFunction(self, ctx:SPLVParser.ReturningFunctionContext):
-        pass
-
-
-    # Enter a parse tree produced by SPLVParser#voidFunction.
-    def enterVoidFunction(self, ctx:SPLVParser.VoidFunctionContext):
-        pass
-
-    # Exit a parse tree produced by SPLVParser#voidFunction.
-    def exitVoidFunction(self, ctx:SPLVParser.VoidFunctionContext):
+    # Exit a parse tree produced by SPLVParser#functionDefinition.
+    def exitFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         pass
 
 
