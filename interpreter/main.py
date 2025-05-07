@@ -17,7 +17,7 @@ def run(source: str):
 
 
 if __name__ == "__main__":
-    with open("test.txt", "r") as f:
+    with open("./test.txt", "r") as f:
         input_text = f.read()
 
     output = run(input_text)

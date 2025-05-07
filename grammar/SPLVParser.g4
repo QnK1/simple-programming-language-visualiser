@@ -53,6 +53,16 @@ listLiteral
     ;
 ////
 
+// types
+type
+    : IntType
+    | FloatType
+    | StringType
+    | BoolType
+    | ListType BracketLeft type BracketRight
+    ;
+////
+
 // expressions
 expression
     : literal
@@ -75,7 +85,10 @@ functionCall: Identifier ParenLeft (expression (Comma expression)* Comma?)? Pare
 ////
 
 // variable definition and assignment
-variableDefinition: GlobalTypeModifier? Type Identifier AssignmentOperator expression;
+variableDefinition
+    : GlobalTypeModifier? type Identifier AssignmentOperator expression
+    | GlobalTypeModifier? type Identifier
+    ;
 variableAssignment: Identifier AssignmentOperator expression;
 ////
 
@@ -90,9 +103,16 @@ returnStatement
 
 // function definitions
 functionDefinition
-    : FunctionKeyword Type Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight functionBlock #returningFunction
-    | FunctionKeyword VoidType Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight functionBlock #voidFunction
+    : FunctionKeyword functionIdentifier ParenLeft functionArgumentList ParenRight functionBlock
+    | FunctionKeyword functionIdentifier ParenLeft functionArgumentList ParenRight functionBlock
     ;
+
+functionArgumentList: (functionArgument (Comma functionArgument)* Comma?)?;
+functionIdentifier
+    : type Colon Identifier
+    | VoidType Colon Identifier
+    ;
+functionArgument: type Identifier;
 ////
 
 // control statements
@@ -110,10 +130,10 @@ controlStatementInsideFunction
 
 ifStatement: IfKeyword ParenLeft expression ParenRight controlBlock (ElseKeyword controlBlock)?;
 whileStatement: WhileKeyword ParenLeft expression ParenRight controlBlock;
-loopStatement: LoopKeyword ParenLeft Type Identifier InOperator expression ParenRight controlBlock;
+loopStatement: LoopKeyword ParenLeft type Identifier InOperator expression ParenRight controlBlock;
 
 ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight (ElseKeyword functionBlock)?;
 whileStatementInsideFunction: WhileKeyword ParenLeft expression ParenRight functionBlock;
-loopStatementInsideFunction: LoopKeyword ParenLeft Type Identifier InOperator expression ParenRight functionBlock;
+loopStatementInsideFunction: LoopKeyword ParenLeft type Identifier InOperator expression ParenRight functionBlock;
 ////
 

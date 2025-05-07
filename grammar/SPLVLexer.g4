@@ -32,7 +32,11 @@ FunctionKeyword: 'fun';
 ReturnKeyword: 'ret';
 
 // type declarations
-Type: 'int' | 'flo' | 'str' | 'bol' | 'lst';
+IntType: 'int';
+FloatType: 'flo';
+StringType: 'str';
+BoolType: 'bol';
+ListType: 'lst';
 VoidType: 'nul';
 GlobalTypeModifier: 'glo';
 

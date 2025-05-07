@@ -143,6 +143,33 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SPLVParser#functionArgumentList.
+    def enterFunctionArgumentList(self, ctx:SPLVParser.FunctionArgumentListContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionArgumentList.
+    def exitFunctionArgumentList(self, ctx:SPLVParser.FunctionArgumentListContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#functionIdentifier.
+    def enterFunctionIdentifier(self, ctx:SPLVParser.FunctionIdentifierContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionIdentifier.
+    def exitFunctionIdentifier(self, ctx:SPLVParser.FunctionIdentifierContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#functionArgument.
+    def enterFunctionArgument(self, ctx:SPLVParser.FunctionArgumentContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionArgument.
+    def exitFunctionArgument(self, ctx:SPLVParser.FunctionArgumentContext):
+        pass
+
+
     # Enter a parse tree produced by SPLVParser#controlStatement.
     def enterControlStatement(self, ctx:SPLVParser.ControlStatementContext):
         pass

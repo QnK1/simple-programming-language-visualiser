@@ -1,4 +1,4 @@
-fun str:fun1(int a1){
+fun str:fun1(int a1, lst[flo] c){
     flo bca;
     
     ret "abcd";
