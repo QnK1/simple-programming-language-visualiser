@@ -5,33 +5,35 @@ options {
 }
 
 // starting symbol
-program: (statement Semicolon)* EOF;
+program: statement+ EOF;
 ////
 
 // statements
 statement
-    : variableDefinition
-    | variableAssignment
+    : variableDefinition Semicolon
+    | variableAssignment Semicolon
     | functionDefinition
-    | functionCall
+    | functionCall Semicolon
     | controlStatement
     ;
 ////
 
 // statements inside loop/if blocks
-statementInblock
-    : variableAssignment
-    | functionCall
+statementInControlBlock
+    : variableAssignment Semicolon
+    | variableDefinition Semicolon
+    | functionCall Semicolon
     | controlStatement
     ;
 ////
 
 // statements inside functions
 statementInFunction
-    : variableAssignment
-    | functionCall
-    | variableDefinition
+    : variableAssignment Semicolon
+    | functionCall Semicolon
+    | variableDefinition Semicolon
     | controlStatement
+    | returnStatement Semicolon
     ;
 ////
 
@@ -51,20 +53,30 @@ listLiteral
     ;
 ////
 
+// types
+type
+    : IntType
+    | FloatType
+    | StringType
+    | BoolType
+    | ListType BracketLeft type BracketRight
+    ;
+////
+
 // expressions
 expression
     : literal
-    | Identifier
     | functionCall
-    | ParenLeft expression ParenRight
-    | expression AdditiveOperator expression
-    | expression MultiplicativeOperator expression
-    | expression BooleanOperator expression
-    | expression ComparisonOperator expression
-    | NOTOperator expression
-    | expression InOperator expression
+    | Identifier
     | expression BracketLeft expression BracketRight // list indexing
     | expression BracketLeft expression? Colon expression? BracketRight // list slicing
+    | ParenLeft expression ParenRight
+    | NOTOperator expression 
+    | expression ComparisonOperator expression
+    | expression BooleanOperator expression
+    | expression MultiplicativeOperator expression
+    | expression AdditiveOperator expression
+    | expression InOperator expression
     ;
 ////`
 
@@ -73,23 +85,34 @@ functionCall: Identifier ParenLeft (expression (Comma expression)* Comma?)? Pare
 ////
 
 // variable definition and assignment
-variableDefinition: GlobalTypeModifier? Type Identifier AssignmentOperator expression;
+variableDefinition
+    : GlobalTypeModifier? type Identifier AssignmentOperator expression
+    | GlobalTypeModifier? type Identifier
+    ;
 variableAssignment: Identifier AssignmentOperator expression;
 ////
 
 // block
-block: CurlyLeft (statementInblock Semicolon)* CurlyRight;
-functionBlock: CurlyLeft (statementInFunction Semicolon)* returnStatement Semicolon CurlyRight;
-voidFunctionBlock: CurlyLeft (statementInFunction Semicolon)* voidReturnStatement Semicolon CurlyRight;
-voidReturnStatement: ReturnKeyword;
-returnStatement: ReturnKeyword expression;
+controlBlock: CurlyLeft statementInControlBlock+ CurlyRight;
+functionBlock: CurlyLeft statementInFunction+ CurlyRight;
+returnStatement
+    : ReturnKeyword expression
+    | ReturnKeyword
+    ;
 ////
 
 // function definitions
 functionDefinition
-    : FunctionKeyword Type Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight functionBlock #returningFunction
-    | FunctionKeyword VoidType Colon Identifier ParenLeft (Type Identifier (Comma Type Identifier)* Comma?)? ParenRight voidFunctionBlock #voidFunction
+    : FunctionKeyword functionIdentifier ParenLeft functionArgumentList ParenRight functionBlock
+    | FunctionKeyword functionIdentifier ParenLeft functionArgumentList ParenRight functionBlock
     ;
+
+functionArgumentList: (functionArgument (Comma functionArgument)* Comma?)?;
+functionIdentifier
+    : type Colon Identifier
+    | VoidType Colon Identifier
+    ;
+functionArgument: type Identifier;
 ////
 
 // control statements
@@ -99,8 +122,18 @@ controlStatement
     | loopStatement
     ;
 
-ifStatement: IfKeyword ParenLeft expression ParenRight block;
-whileStatement: WhileKeyword ParenLeft expression ParenRight block;
-loopStatement: LoopKeyword ParenLeft Type Identifier InOperator expression ParenRight block;
+controlStatementInsideFunction
+    : ifStatementInsideFunction
+    | whileStatementInsideFunction
+    | loopStatementInsideFunction
+    ;
+
+ifStatement: IfKeyword ParenLeft expression ParenRight controlBlock (ElseKeyword controlBlock)?;
+whileStatement: WhileKeyword ParenLeft expression ParenRight controlBlock;
+loopStatement: LoopKeyword ParenLeft type Identifier InOperator expression ParenRight controlBlock;
+
+ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight (ElseKeyword functionBlock)?;
+whileStatementInsideFunction: WhileKeyword ParenLeft expression ParenRight functionBlock;
+loopStatementInsideFunction: LoopKeyword ParenLeft type Identifier InOperator expression ParenRight functionBlock;
 ////
 
