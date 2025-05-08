@@ -65,18 +65,18 @@ type
 
 // expressions
 expression
-    : literal
-    | functionCall
-    | Identifier
-    | expression BracketLeft expression BracketRight // list indexing
-    | expression BracketLeft expression? Colon expression? BracketRight // list slicing
-    | ParenLeft expression ParenRight
-    | NOTOperator expression 
-    | expression ComparisonOperator expression
-    | expression BooleanOperator expression
-    | expression MultiplicativeOperator expression
-    | expression AdditiveOperator expression
-    | expression InOperator expression
+    : literal #literalExpression
+    | functionCall #functionCallExpression
+    | Identifier #identifierExpression
+    | expression BracketLeft expression BracketRight #listIndexingExpression
+    | expression BracketLeft expression? Colon expression? BracketRight #listSlicingExpression
+    | ParenLeft expression ParenRight #parenthesesExpression
+    | NOTOperator expression #notOperatorExpression
+    | expression ComparisonOperator expression #comparisonOperatorExpression
+    | expression BooleanOperator expression #booleanOperatorExpression
+    | expression MultiplicativeOperator expression #multiplicativeOperatorExpression
+    | expression AdditiveOperator expression #additiveOperatorExpression
+    | expression InOperator expression #inOperatorExpression
     ;
 ////`
 
@@ -130,10 +130,12 @@ controlStatementInsideFunction
 
 ifStatement: IfKeyword ParenLeft expression ParenRight controlBlock (ElseKeyword controlBlock)?;
 whileStatement: WhileKeyword ParenLeft expression ParenRight controlBlock;
-loopStatement: LoopKeyword ParenLeft type Identifier InOperator expression ParenRight controlBlock;
+loopStatement: LoopKeyword ParenLeft loopStatementIterator ParenRight controlBlock;
 
 ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight (ElseKeyword functionBlock)?;
 whileStatementInsideFunction: WhileKeyword ParenLeft expression ParenRight functionBlock;
-loopStatementInsideFunction: LoopKeyword ParenLeft type Identifier InOperator expression ParenRight functionBlock;
+loopStatementInsideFunction: LoopKeyword ParenLeft loopStatementIterator ParenRight functionBlock;
+
+loopStatementIterator: type Identifier InOperator expression;
 ////
 

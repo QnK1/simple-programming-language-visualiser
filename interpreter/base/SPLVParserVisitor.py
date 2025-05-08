@@ -1,4 +1,4 @@
-# Generated from d:/Users/Kacper/Desktop/SPLV/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -44,8 +44,63 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#expression.
-    def visitExpression(self, ctx:SPLVParser.ExpressionContext):
+    # Visit a parse tree produced by SPLVParser#parenthesesExpression.
+    def visitParenthesesExpression(self, ctx:SPLVParser.ParenthesesExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#inOperatorExpression.
+    def visitInOperatorExpression(self, ctx:SPLVParser.InOperatorExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#comparisonOperatorExpression.
+    def visitComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#additiveOperatorExpression.
+    def visitAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#multiplicativeOperatorExpression.
+    def visitMultiplicativeOperatorExpression(self, ctx:SPLVParser.MultiplicativeOperatorExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#booleanOperatorExpression.
+    def visitBooleanOperatorExpression(self, ctx:SPLVParser.BooleanOperatorExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#identifierExpression.
+    def visitIdentifierExpression(self, ctx:SPLVParser.IdentifierExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#listSlicingExpression.
+    def visitListSlicingExpression(self, ctx:SPLVParser.ListSlicingExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#functionCallExpression.
+    def visitFunctionCallExpression(self, ctx:SPLVParser.FunctionCallExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#notOperatorExpression.
+    def visitNotOperatorExpression(self, ctx:SPLVParser.NotOperatorExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#listIndexingExpression.
+    def visitListIndexingExpression(self, ctx:SPLVParser.ListIndexingExpressionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#literalExpression.
+    def visitLiteralExpression(self, ctx:SPLVParser.LiteralExpressionContext):
         return self.visitChildren(ctx)
 
 
@@ -136,6 +191,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by SPLVParser#loopStatementInsideFunction.
     def visitLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#loopStatementIterator.
+    def visitLoopStatementIterator(self, ctx:SPLVParser.LoopStatementIteratorContext):
         return self.visitChildren(ctx)
 
 

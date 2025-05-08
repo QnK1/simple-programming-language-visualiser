@@ -1,4 +1,4 @@
-# Generated from d:/Users/Kacper/Desktop/SPLV/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -71,12 +71,111 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SPLVParser#expression.
-    def enterExpression(self, ctx:SPLVParser.ExpressionContext):
+    # Enter a parse tree produced by SPLVParser#parenthesesExpression.
+    def enterParenthesesExpression(self, ctx:SPLVParser.ParenthesesExpressionContext):
         pass
 
-    # Exit a parse tree produced by SPLVParser#expression.
-    def exitExpression(self, ctx:SPLVParser.ExpressionContext):
+    # Exit a parse tree produced by SPLVParser#parenthesesExpression.
+    def exitParenthesesExpression(self, ctx:SPLVParser.ParenthesesExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#inOperatorExpression.
+    def enterInOperatorExpression(self, ctx:SPLVParser.InOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#inOperatorExpression.
+    def exitInOperatorExpression(self, ctx:SPLVParser.InOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#comparisonOperatorExpression.
+    def enterComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#comparisonOperatorExpression.
+    def exitComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#additiveOperatorExpression.
+    def enterAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#additiveOperatorExpression.
+    def exitAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#multiplicativeOperatorExpression.
+    def enterMultiplicativeOperatorExpression(self, ctx:SPLVParser.MultiplicativeOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#multiplicativeOperatorExpression.
+    def exitMultiplicativeOperatorExpression(self, ctx:SPLVParser.MultiplicativeOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#booleanOperatorExpression.
+    def enterBooleanOperatorExpression(self, ctx:SPLVParser.BooleanOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#booleanOperatorExpression.
+    def exitBooleanOperatorExpression(self, ctx:SPLVParser.BooleanOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#identifierExpression.
+    def enterIdentifierExpression(self, ctx:SPLVParser.IdentifierExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#identifierExpression.
+    def exitIdentifierExpression(self, ctx:SPLVParser.IdentifierExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#listSlicingExpression.
+    def enterListSlicingExpression(self, ctx:SPLVParser.ListSlicingExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#listSlicingExpression.
+    def exitListSlicingExpression(self, ctx:SPLVParser.ListSlicingExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#functionCallExpression.
+    def enterFunctionCallExpression(self, ctx:SPLVParser.FunctionCallExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionCallExpression.
+    def exitFunctionCallExpression(self, ctx:SPLVParser.FunctionCallExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#notOperatorExpression.
+    def enterNotOperatorExpression(self, ctx:SPLVParser.NotOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#notOperatorExpression.
+    def exitNotOperatorExpression(self, ctx:SPLVParser.NotOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#listIndexingExpression.
+    def enterListIndexingExpression(self, ctx:SPLVParser.ListIndexingExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#listIndexingExpression.
+    def exitListIndexingExpression(self, ctx:SPLVParser.ListIndexingExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#literalExpression.
+    def enterLiteralExpression(self, ctx:SPLVParser.LiteralExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#literalExpression.
+    def exitLiteralExpression(self, ctx:SPLVParser.LiteralExpressionContext):
         pass
 
 
@@ -239,6 +338,15 @@ class SPLVParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by SPLVParser#loopStatementInsideFunction.
     def exitLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#loopStatementIterator.
+    def enterLoopStatementIterator(self, ctx:SPLVParser.LoopStatementIteratorContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#loopStatementIterator.
+    def exitLoopStatementIterator(self, ctx:SPLVParser.LoopStatementIteratorContext):
         pass
 
 
