@@ -6,11 +6,11 @@ from block import Block
 
 
 class Board():
-    def __init__(self, simulation, name, top_spacing):
+    def __init__(self, simulation, name: str, top_spacing: int):
         self.simulation = simulation
         self.name = name
         self.top_spacing = top_spacing
-        self.width = config.blocks_width                # rewrite for faster (~50% faster) computations
+        self.width = config.blocks_width                 # rewrite for faster (~50% faster) computations
         self.block_size = config.block_size
         self.block_border_size = config.block_border_size
         self.font_size = config.font_size
@@ -18,9 +18,9 @@ class Board():
         self.title_height = config.title_height
         self.blocks = {}                                 # Dict[variable_name : Block]
         self.mover = Mover(self)
-    def setBlock(self, name: str, type: str, value: any):
+    def setBlock(self, name: str, value: any):
         """Add or change variable name/type/value"""
-        self.blocks[name] = Block(name, type, value, (len(self.blocks)//self.width, len(self.blocks)%self.width))
+        self.blocks[name] = Block(name, value, (len(self.blocks)//self.width, len(self.blocks)%self.width))
     def tick(self):
         # self.mover.tick()
 

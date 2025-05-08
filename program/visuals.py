@@ -16,14 +16,41 @@ class Visuals():
         self.actions = set()                                    # Set[Action] -> Action[block, lifeTime, endFunction]
 
     def if_func(self, var1, logic, var2):
-        boards = self.simulation.boards[-1] | self.simulation.globals
-        result = self.ops[logic](boards[var1].getValue(), boards[var2].getValue())
-        print('result ' + str(type(result)) + '    -> ', result)
-        color = (0, 255, 0) if result == 1 else (255, 0, 0)
         blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
+        result = self.ops[logic](blocks[var1].getValue(), blocks[var2].getValue())
+        color = (0, 255, 0) if result == True else (255, 0, 0)
         blocks[var1].highlight(color)
         blocks[var2].highlight(color)
         self.actions.add(Action(config.action_tick_time, [lambda: blocks[var1].unhighlight(), lambda: blocks[var2].unhighlight()]))
+
+    def set_variable(self, var_name: str, value: float, if_global: bool = False):
+        board = self.simulation.globals if if_global == True else self.simulation.boards[-1]
+        board.setBlock(var_name, value)
+        board.blocks[var_name].highlight(config.change_color)
+        self.actions.add(Action(config.action_tick_time, [lambda: board.blocks[var_name].unhighlight()]))
+    
+    def add(self, var_name: str, value):
+        blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
+        add = value if type(value) != str else blocks[value].getValue()
+        blocks[var_name].value += add
+        blocks[var_name].highlight(config.add_color)
+        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
+
+    def multiply(self, var_name: str, value):
+        blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
+        mul = value if type(value) != str else blocks[value].getValue()
+        blocks[var_name].value *= mul
+        blocks[var_name].highlight(config.mul_color)
+        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
+
+    def divide(self, var_name: str, value):
+        blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
+        div = value if type(value) != str else blocks[value].getValue()
+        blocks[var_name].value /= div
+        blocks[var_name].highlight(config.div_color)
+        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
+
+    
 
     def tick(self):
         delActions = set()

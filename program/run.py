@@ -17,18 +17,29 @@ class Simulation:
         self.tps = config.ticks_per_second
         self.boards = []
         self.boards.append(Board(self, 'Main variables', 0))
-        self.boards[0].setBlock('a', 'int', 2)                  # temp
-        self.boards[0].setBlock('b', 'int', 2)                  # temp
-        self.boards[0].blocks['a'].highlight((255, 0, 0))
         self.functions = Board(self, 'Functions', config.function_height)  
-        self.functions.setBlock('add', 'function', '')          # temp
+        self.functions.setBlock('add', '')          # temp
         self.globals = Board(self, 'Global variables', config.globals_height)
-        self.globals.setBlock('c', 'int', 3)                    # temp
         self.visuals = Visuals(self)
-        self.queue = queue.Queue()
+        self.queue = []
         self.queueWaitTicks = 0
         self.codeDisplay = CodeDisplay(self)
-        self.visuals.if_func('a', '==', 'b')
+
+        self.queue.append(lambda: self.visuals.set_variable('a', 2))
+        self.queue.append(lambda: self.visuals.set_variable('b', 3))
+        self.queue.append(lambda: self.visuals.add('a', 15))
+        self.queue.append(lambda: self.visuals.add('a', 'b'))
+        self.queue.append(lambda: self.visuals.multiply('a', 2))
+        self.queue.append(lambda: self.visuals.multiply('a', 'b'))
+        self.queue.append(lambda: self.visuals.divide('a', 'b'))
+        self.queue.append(lambda: self.visuals.divide('a', 2))
+        self.queue.append(lambda: self.visuals.if_func('a', '==', 'b'))
+        self.queue.append(lambda: self.visuals.set_variable('c', 3, True))
+
+
+
+
+
         while True:
 
             # Events
@@ -37,7 +48,11 @@ class Simulation:
             # Ticking
             self.tps_delta += self.tps_clock.tick() / 1000.0            # tps_delta is in seconds
             while self.tps_delta > 1 / self.tps:                  # 1 tick per 1/60 second (if tps_max is 60)
+                if self.queueWaitTicks <= 0 and len(self.queue):
+                    self.queue.pop(0)()
+                    self.queueWaitTicks = config.action_tick_time + config.action_delay
                 self.tick()
+                self.queueWaitTicks -= 1
                 self.tps_delta -= 1/ self.tps
 
             # Drawing                                               

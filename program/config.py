@@ -24,7 +24,13 @@ globals_height = 650
 transit_tick_time = 3*ticks_per_second
 
 # Action config
-action_tick_time = 2*ticks_per_second
+action_tick_time = 1*ticks_per_second
+action_delay = .5*ticks_per_second
+change_color = (50,50,255)
+add_color = (50, 255, 0)
+mul_color = (100, 255, 0)
+div_color = (150, 255, 0)
+
 # Loading queue config
 queue_file_name = 'queue.txt'
 
