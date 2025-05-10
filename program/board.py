@@ -16,6 +16,7 @@ class Board():
         self.font_size = config.font_size
         self.title_font_size = config.title_font_size
         self.title_height = config.title_height
+        self.border_spacing = config.border_spacing
         self.blocks = {}                                 # Dict[variable_name : Block]
         self.mover = Mover(self)
     def setBlock(self, name: str, value: any):
@@ -29,7 +30,7 @@ class Board():
     def draw(self):
         font = pygame.font.Font(None, self.title_font_size)
         title = font.render(self.name, True, (100,100,100))
-        self.simulation.screen.blit(title, (0, self.top_spacing))
+        self.simulation.screen.blit(title, (self.border_spacing, self.top_spacing + self.border_spacing))
         for var in self.blocks.values():
             cur_height = var.x() * (self.block_size + self.block_border_size) + self.title_height + self.top_spacing
             cur_width = var.y() * (self.block_size + self.block_border_size)

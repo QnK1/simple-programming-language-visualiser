@@ -12,16 +12,19 @@ block_border_size = 20
 font_size = 40
 title_height = 40
 title_font_size = 50
-# block_border_color = (255, 255, 255)          # not used
 
-# Function config
-function_height = 450
+# Boards config
+border_spacing = 20
 
 # Globals config
-globals_height = 650
+globals_height = 500
 
-# Block transit config
-transit_tick_time = 3*ticks_per_second
+# ShowCode config
+showCode_width = 450
+showCode_font_size = 50
+showCode_plain = (210,210,250)
+showCode_colored = (150,50,200)
+
 
 # Action config
 action_tick_time = 1*ticks_per_second

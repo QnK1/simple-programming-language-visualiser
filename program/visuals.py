@@ -1,5 +1,6 @@
 import operator
 from action import Action
+from board import Board
 import config
 
 class Visuals():
@@ -15,7 +16,7 @@ class Visuals():
         self.simulation = simulation
         self.actions = set()                                    # Set[Action] -> Action[block, lifeTime, endFunction]
 
-    def if_func(self, var1, logic, var2):
+    def ifFunc(self, var1, logic, var2):
         blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
         result = self.ops[logic](blocks[var1].getValue(), blocks[var2].getValue())
         color = (0, 255, 0) if result == True else (255, 0, 0)
@@ -23,7 +24,7 @@ class Visuals():
         blocks[var2].highlight(color)
         self.actions.add(Action(config.action_tick_time, [lambda: blocks[var1].unhighlight(), lambda: blocks[var2].unhighlight()]))
 
-    def set_variable(self, var_name: str, value: float, if_global: bool = False):
+    def setVariable(self, var_name: str, value: float, if_global: bool = False):
         board = self.simulation.globals if if_global == True else self.simulation.boards[-1]
         board.setBlock(var_name, value)
         board.blocks[var_name].highlight(config.change_color)
@@ -50,7 +51,17 @@ class Visuals():
         blocks[var_name].highlight(config.div_color)
         self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
 
-    
+    def openFunction(self, name):
+        self.simulation.boards.append(Board(self.simulation, name, 0))
+
+    def closeFunction(self):
+        if len(self.simulation.boards) > 1:
+            self.simulation.boards.pop()
+
+    def setCurrentCode(self, text, begin, end):
+        self.simulation.showCode.text = text
+        self.simulation.showCode.begin = begin
+        self.simulation.showCode.end = end
 
     def tick(self):
         delActions = set()

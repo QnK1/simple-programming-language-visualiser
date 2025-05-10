@@ -1,9 +1,11 @@
 import pygame, sys, os
+import pygame_gui
 import config, queue, time
 from board import Board
 from block import Block
 from visuals import Visuals
 from codeDisplay import CodeDisplay
+from showCode import ShowCode
 class Simulation:
 
     def __init__(self):
@@ -11,34 +13,44 @@ class Simulation:
         pygame.init()
         os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
         self.screen = pygame.display.set_mode(config.fullscreen_screen_size)
-        # fullscreen = False
         self.tps_clock = pygame.time.Clock()
         self.tps_delta = 0.0
         self.tps = config.ticks_per_second
         self.boards = []
         self.boards.append(Board(self, 'Main variables', 0))
-        self.functions = Board(self, 'Functions', config.function_height)  
-        self.functions.setBlock('add', '')          # temp
         self.globals = Board(self, 'Global variables', config.globals_height)
         self.visuals = Visuals(self)
         self.queue = []
         self.queueWaitTicks = 0
         self.codeDisplay = CodeDisplay(self)
+        self.showCode = ShowCode(self)
 
-        self.queue.append(lambda: self.visuals.set_variable('a', 2))
-        self.queue.append(lambda: self.visuals.set_variable('b', 3))
+        self.queue.append(lambda: self.visuals.setCurrentCode('a += 2', 5, 6))
+        self.queue.append(lambda: self.visuals.setCurrentCode('a += 4', 5, 6))
+        self.queue.append(lambda: self.visuals.setCurrentCode('a += 6', 5, 6))
+        self.queue.append(lambda: self.visuals.setVariable('a', 2))
+        self.queue.append(lambda: self.visuals.setVariable('b', 3))
         self.queue.append(lambda: self.visuals.add('a', 15))
         self.queue.append(lambda: self.visuals.add('a', 'b'))
         self.queue.append(lambda: self.visuals.multiply('a', 2))
         self.queue.append(lambda: self.visuals.multiply('a', 'b'))
         self.queue.append(lambda: self.visuals.divide('a', 'b'))
         self.queue.append(lambda: self.visuals.divide('a', 2))
-        self.queue.append(lambda: self.visuals.if_func('a', '==', 'b'))
-        self.queue.append(lambda: self.visuals.set_variable('c', 3, True))
-
-
-
-
+        self.queue.append(lambda: self.visuals.ifFunc('a', '==', 'b'))
+        self.queue.append(lambda: self.visuals.setVariable('c', 3, True))
+        self.queue.append(lambda: self.visuals.openFunction('funkcja'))
+        self.queue.append(lambda: self.visuals.setVariable('a', 2))
+        self.queue.append(lambda: self.visuals.setVariable('b', 3))
+        self.queue.append(lambda: self.visuals.add('a', 15))
+        self.queue.append(lambda: self.visuals.add('a', 'b'))
+        self.queue.append(lambda: self.visuals.multiply('a', 2))
+        self.queue.append(lambda: self.visuals.multiply('a', 'b'))
+        self.queue.append(lambda: self.visuals.closeFunction())
+        self.queue.append(lambda: self.visuals.add('a', 15))
+        self.queue.append(lambda: self.visuals.add('a', 'b'))
+        self.queue.append(lambda: self.visuals.multiply('a', 2))
+        self.queue.append(lambda: self.visuals.multiply('a', 'b'))
+        
 
         while True:
 
@@ -58,7 +70,6 @@ class Simulation:
             # Drawing                                               
             self.draw()
 
-
     def tick(self):
         self.boards[-1].tick()
         self.visuals.tick()
@@ -66,9 +77,9 @@ class Simulation:
     def draw(self):
         self.screen.fill((0,0,0))                               # background color
         self.boards[-1].draw()
-        self.functions.draw()
         self.globals.draw()
         self.codeDisplay.draw()
+        self.showCode.draw()
         pygame.display.flip()                                   # update screen
     def checkEvents(self):
         self.events = pygame.event.get()
