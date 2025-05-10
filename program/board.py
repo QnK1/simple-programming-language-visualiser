@@ -4,7 +4,6 @@ from mover import Mover
 from block import Block
 
 
-
 class Board():
     def __init__(self, simulation, name: str, top_spacing: int):
         self.simulation = simulation

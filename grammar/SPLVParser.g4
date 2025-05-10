@@ -68,15 +68,15 @@ expression
     : literal #literalExpression
     | functionCall #functionCallExpression
     | Identifier #identifierExpression
-    | expression BracketLeft expression BracketRight #listIndexingExpression
-    | expression BracketLeft expression? Colon expression? BracketRight #listSlicingExpression
-    | ParenLeft expression ParenRight #parenthesesExpression
-    | NOTOperator expression #notOperatorExpression
-    | expression ComparisonOperator expression #comparisonOperatorExpression
-    | expression BooleanOperator expression #booleanOperatorExpression
     | expression MultiplicativeOperator expression #multiplicativeOperatorExpression
     | expression AdditiveOperator expression #additiveOperatorExpression
     | expression InOperator expression #inOperatorExpression
+    | NOTOperator expression #notOperatorExpression
+    | expression ComparisonOperator expression #comparisonOperatorExpression
+    | expression BooleanOperator expression #booleanOperatorExpression
+    | ParenLeft expression ParenRight #parenthesesExpression
+    | expression BracketLeft expression BracketRight #listIndexingExpression
+    | expression BracketLeft expression? Colon expression? BracketRight #listSlicingExpression
     ;
 ////`
 

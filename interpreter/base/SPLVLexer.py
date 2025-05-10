@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/simple-programming-language-visualiser/grammar/SPLVLexer.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/simple_programming_language_visualiser/grammar/SPLVLexer.g4 by ANTLR 4.13.1
 from antlr4 import *
 from io import StringIO
 import sys

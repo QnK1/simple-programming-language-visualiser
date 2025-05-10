@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/simple_programming_language_visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -54,13 +54,13 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#comparisonOperatorExpression.
-    def visitComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
+    # Visit a parse tree produced by SPLVParser#additiveOperatorExpression.
+    def visitAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#additiveOperatorExpression.
-    def visitAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
+    # Visit a parse tree produced by SPLVParser#comparisonOperatorExpression.
+    def visitComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
         return self.visitChildren(ctx)
 
 
