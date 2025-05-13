@@ -1,4 +1,5 @@
-import pygame, config
+import pygame
+from . import config
 
 class ShowCode():
     def __init__(self, simulation):

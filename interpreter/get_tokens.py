@@ -1,5 +1,5 @@
 from antlr4 import *
-from base.SPLVLexer import SPLVLexer
+from .base.SPLVLexer import SPLVLexer
 from dataclasses import dataclass
 
 # a dataclass representing a token used for syntax highlighting

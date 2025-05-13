@@ -1,8 +1,8 @@
 from antlr4 import *
-from base.SPLVParser import SPLVParser
-from base.SPLVParserListener import SPLVParserListener
+from .base.SPLVParser import SPLVParser
+from .base.SPLVParserListener import SPLVParserListener
 from enum import Enum
-
+from program.block import Block
 
 # a listener class that ensures type correctness, usage of previously defined identifiers
 # and inclusion of return statements in functions

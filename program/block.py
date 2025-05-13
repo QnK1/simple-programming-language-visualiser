@@ -1,4 +1,4 @@
-import config
+from . import config
 from typing import Tuple
 
 class Block():

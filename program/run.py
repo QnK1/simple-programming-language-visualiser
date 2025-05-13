@@ -1,11 +1,11 @@
 import pygame, sys, os
 import pygame_gui
-import config, queue, time
-from board import Board
-from block import Block
-from visuals import Visuals
-from codeDisplay import CodeDisplay
-from showCode import ShowCode
+from . import config
+from .board import Board
+from .block import Block
+from .visuals import Visuals
+from .codeDisplay import CodeDisplay
+from .showCode import ShowCode
 class Simulation:
 
     def __init__(self):
