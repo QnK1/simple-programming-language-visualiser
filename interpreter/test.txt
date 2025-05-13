@@ -12,6 +12,14 @@ fun int:fun2(int c, flo b){
     ret a;
 }
 
+fun nul:fun3(){
+    lst[int] list = [1];
+    int a = 1 + 2 * 3 == not 5 + 3 and list == list[(5 + 3) + 8];
+
+
+    ret;
+}
+
 str result = fun1(3);
 
 // flo b = 4;

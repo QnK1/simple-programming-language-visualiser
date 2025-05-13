@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple-programming-language-visualiser/simple-programming-language-visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/simple_programming_language_visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser
@@ -89,21 +89,21 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SPLVParser#comparisonOperatorExpression.
-    def enterComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
-        pass
-
-    # Exit a parse tree produced by SPLVParser#comparisonOperatorExpression.
-    def exitComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
-        pass
-
-
     # Enter a parse tree produced by SPLVParser#additiveOperatorExpression.
     def enterAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
         pass
 
     # Exit a parse tree produced by SPLVParser#additiveOperatorExpression.
     def exitAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#comparisonOperatorExpression.
+    def enterComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#comparisonOperatorExpression.
+    def exitComparisonOperatorExpression(self, ctx:SPLVParser.ComparisonOperatorExpressionContext):
         pass
 
 

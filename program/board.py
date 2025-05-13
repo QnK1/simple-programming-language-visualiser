@@ -1,8 +1,7 @@
 import pygame, math, random 
-import config
-from block import Block
-
-
+from . import config
+from .mover import Mover
+from .block import Block
 
 class Board():
     def __init__(self, simulation, name: str, top_spacing: int):

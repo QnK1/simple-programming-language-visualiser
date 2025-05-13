@@ -1,7 +1,8 @@
 from antlr4 import *
-from base.SPLVLexer import SPLVLexer
-from base.SPLVParser import SPLVParser
-from listener import Listener
+from .base.SPLVLexer import SPLVLexer
+from .base.SPLVParser import SPLVParser
+from .listener import Listener
+from pathlib import Path
 
 def run(source: str):
     lexer = SPLVLexer(InputStream(input_text))
@@ -17,7 +18,7 @@ def run(source: str):
 
 
 if __name__ == "__main__":
-    with open("./test.txt", "r") as f:
+    with open(Path(__file__).resolve().parent / Path("test.txt"), "r") as f:
         input_text = f.read()
 
     output = run(input_text)

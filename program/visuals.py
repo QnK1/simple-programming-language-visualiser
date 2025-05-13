@@ -1,7 +1,7 @@
 import operator
-from action import Action
-from board import Board
-import config
+from .action import Action
+from .board import Board
+from . import config
 
 class Visuals():
     ops = {
