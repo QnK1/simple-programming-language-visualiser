@@ -16,7 +16,7 @@ class Visuals():
         self.simulation = simulation
         self.actions = set()                                    # Set[Action] -> Action[block, lifeTime, endFunction]
 
-    def ifFunc(self, var1, logic, var2):
+    def ifFunc(self, var1, logic, var2, result = None):
         blocks = self.simulation.boards[-1].blocks | self.simulation.globals.blocks
         result = self.ops[logic](blocks[var1].getValue(), blocks[var2].getValue())
         color = (0, 255, 0) if result == True else (255, 0, 0)
@@ -24,8 +24,11 @@ class Visuals():
         blocks[var2].highlight(color)
         self.actions.add(Action(config.action_tick_time, [lambda: blocks[var1].unhighlight(), lambda: blocks[var2].unhighlight()]))
 
-    def setVariable(self, var_name: str, value: float, if_global: bool = False):
+    def setVariable(self, var_name: str, value: float, if_global: bool = False):        # DODAĆ KOD JEŚLI JUZ ZMIENNA ISTNIEJE
         board = self.simulation.globals if if_global == True else self.simulation.boards[-1]
+        if board.blocks.contains(var_name):
+            board.blocks[var_name].value = value
+            return
         board.setBlock(var_name, value)
         board.blocks[var_name].highlight(config.change_color)
         self.actions.add(Action(config.action_tick_time, [lambda: board.blocks[var_name].unhighlight()]))

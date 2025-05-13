@@ -1,6 +1,5 @@
 import pygame, math, random 
 import config
-from mover import Mover
 from block import Block
 
 
@@ -18,7 +17,6 @@ class Board():
         self.title_height = config.title_height
         self.border_spacing = config.border_spacing
         self.blocks = {}                                 # Dict[variable_name : Block]
-        self.mover = Mover(self)
     def setBlock(self, name: str, value: any):
         """Add or change variable name/type/value"""
         self.blocks[name] = Block(name, value, (len(self.blocks)//self.width, len(self.blocks)%self.width))
