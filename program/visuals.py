@@ -26,7 +26,7 @@ class Visuals():
 
     def setVariable_q(self, var_name: str, value: float, if_global: bool = False):        # DODAĆ KOD JEŚLI JUZ ZMIENNA ISTNIEJE
         board = self.simulation.globals if if_global == True else self.simulation.boards[-1]
-        if board.blocks.contains:
+        if var_name in board.blocks.keys():
             board.blocks[var_name].value = value
             return
         board.setBlock(var_name, value)

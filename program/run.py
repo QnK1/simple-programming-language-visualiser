@@ -1,5 +1,5 @@
 import pygame, sys, os
-import pygame_gui
+from collections import deque
 from . import config
 from .board import Board
 from .block import Block
@@ -20,7 +20,7 @@ class Simulation:
         self.boards.append(Board(self, 'Main variables', 0))
         self.globals = Board(self, 'Global variables', config.globals_height)
         self.visuals = Visuals(self)
-        self.queue = []
+        self.queue = deque()
         self.queueWaitTicks = 0
         self.codeDisplay = CodeDisplay(self)
         self.showCode = ShowCode(self)
@@ -47,7 +47,7 @@ class Simulation:
             self.tps_delta += self.tps_clock.tick() / 1000.0            # tps_delta is in seconds
             while self.tps_delta > 1 / self.tps:                  # 1 tick per 1/60 second (if tps_max is 60)
                 if self.queueWaitTicks <= 0 and len(self.queue):
-                    self.queue.pop(0)()
+                    self.queue.popleft()()
                     self.queueWaitTicks = config.action_tick_time + config.action_delay
                 self.tick()
                 self.queueWaitTicks -= 1
