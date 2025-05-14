@@ -1,6 +1,5 @@
 import pygame, math, random 
 from . import config
-from .mover import Mover
 from .block import Block
 
 class Board():
