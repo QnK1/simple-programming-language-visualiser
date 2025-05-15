@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/simple_programming_language_visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -71,29 +71,29 @@ def serializedATN():
         5,23,0,0,136,137,5,24,0,0,137,138,5,32,0,0,138,139,3,12,6,0,139,
         140,5,33,0,0,140,142,1,0,0,0,141,132,1,0,0,0,141,133,1,0,0,0,141,
         134,1,0,0,0,141,135,1,0,0,0,141,136,1,0,0,0,142,13,1,0,0,0,143,144,
-        6,7,-1,0,144,154,3,8,4,0,145,154,3,16,8,0,146,154,5,27,0,0,147,148,
-        5,11,0,0,148,154,3,14,7,6,149,150,5,36,0,0,150,151,3,14,7,0,151,
+        6,7,-1,0,144,154,5,27,0,0,145,154,3,8,4,0,146,154,3,16,8,0,147,148,
+        5,11,0,0,148,154,3,14,7,4,149,150,5,36,0,0,150,151,3,14,7,0,151,
         152,5,37,0,0,152,154,1,0,0,0,153,143,1,0,0,0,153,145,1,0,0,0,153,
         146,1,0,0,0,153,147,1,0,0,0,153,149,1,0,0,0,154,187,1,0,0,0,155,
-        156,10,9,0,0,156,157,5,8,0,0,157,186,3,14,7,10,158,159,10,8,0,0,
-        159,160,5,7,0,0,160,186,3,14,7,9,161,162,10,7,0,0,162,163,5,13,0,
-        0,163,186,3,14,7,8,164,165,10,5,0,0,165,166,5,9,0,0,166,186,3,14,
-        7,6,167,168,10,4,0,0,168,169,5,10,0,0,169,186,3,14,7,5,170,171,10,
-        2,0,0,171,172,5,32,0,0,172,173,3,14,7,0,173,174,5,33,0,0,174,186,
-        1,0,0,0,175,176,10,1,0,0,176,178,5,32,0,0,177,179,3,14,7,0,178,177,
-        1,0,0,0,178,179,1,0,0,0,179,180,1,0,0,0,180,182,5,29,0,0,181,183,
-        3,14,7,0,182,181,1,0,0,0,182,183,1,0,0,0,183,184,1,0,0,0,184,186,
-        5,33,0,0,185,155,1,0,0,0,185,158,1,0,0,0,185,161,1,0,0,0,185,164,
-        1,0,0,0,185,167,1,0,0,0,185,170,1,0,0,0,185,175,1,0,0,0,186,189,
-        1,0,0,0,187,185,1,0,0,0,187,188,1,0,0,0,188,15,1,0,0,0,189,187,1,
-        0,0,0,190,191,5,27,0,0,191,203,5,36,0,0,192,197,3,14,7,0,193,194,
-        5,30,0,0,194,196,3,14,7,0,195,193,1,0,0,0,196,199,1,0,0,0,197,195,
-        1,0,0,0,197,198,1,0,0,0,198,201,1,0,0,0,199,197,1,0,0,0,200,202,
-        5,30,0,0,201,200,1,0,0,0,201,202,1,0,0,0,202,204,1,0,0,0,203,192,
-        1,0,0,0,203,204,1,0,0,0,204,205,1,0,0,0,205,206,5,37,0,0,206,17,
-        1,0,0,0,207,209,5,26,0,0,208,207,1,0,0,0,208,209,1,0,0,0,209,210,
-        1,0,0,0,210,211,3,12,6,0,211,212,5,27,0,0,212,213,5,12,0,0,213,214,
-        3,14,7,0,214,222,1,0,0,0,215,217,5,26,0,0,216,215,1,0,0,0,216,217,
+        156,10,7,0,0,156,157,5,8,0,0,157,186,3,14,7,8,158,159,10,6,0,0,159,
+        160,5,7,0,0,160,186,3,14,7,7,161,162,10,5,0,0,162,163,5,13,0,0,163,
+        186,3,14,7,6,164,165,10,3,0,0,165,166,5,9,0,0,166,186,3,14,7,4,167,
+        168,10,2,0,0,168,169,5,10,0,0,169,186,3,14,7,3,170,171,10,10,0,0,
+        171,172,5,32,0,0,172,173,3,14,7,0,173,174,5,33,0,0,174,186,1,0,0,
+        0,175,176,10,9,0,0,176,178,5,32,0,0,177,179,3,14,7,0,178,177,1,0,
+        0,0,178,179,1,0,0,0,179,180,1,0,0,0,180,182,5,29,0,0,181,183,3,14,
+        7,0,182,181,1,0,0,0,182,183,1,0,0,0,183,184,1,0,0,0,184,186,5,33,
+        0,0,185,155,1,0,0,0,185,158,1,0,0,0,185,161,1,0,0,0,185,164,1,0,
+        0,0,185,167,1,0,0,0,185,170,1,0,0,0,185,175,1,0,0,0,186,189,1,0,
+        0,0,187,185,1,0,0,0,187,188,1,0,0,0,188,15,1,0,0,0,189,187,1,0,0,
+        0,190,191,5,27,0,0,191,203,5,36,0,0,192,197,3,14,7,0,193,194,5,30,
+        0,0,194,196,3,14,7,0,195,193,1,0,0,0,196,199,1,0,0,0,197,195,1,0,
+        0,0,197,198,1,0,0,0,198,201,1,0,0,0,199,197,1,0,0,0,200,202,5,30,
+        0,0,201,200,1,0,0,0,201,202,1,0,0,0,202,204,1,0,0,0,203,192,1,0,
+        0,0,203,204,1,0,0,0,204,205,1,0,0,0,205,206,5,37,0,0,206,17,1,0,
+        0,0,207,209,5,26,0,0,208,207,1,0,0,0,208,209,1,0,0,0,209,210,1,0,
+        0,0,210,211,3,12,6,0,211,212,5,27,0,0,212,213,5,12,0,0,213,214,3,
+        14,7,0,214,222,1,0,0,0,215,217,5,26,0,0,216,215,1,0,0,0,216,217,
         1,0,0,0,217,218,1,0,0,0,218,219,3,12,6,0,219,220,5,27,0,0,220,222,
         1,0,0,0,221,208,1,0,0,0,221,216,1,0,0,0,222,19,1,0,0,0,223,224,5,
         27,0,0,224,225,5,12,0,0,225,226,3,14,7,0,226,21,1,0,0,0,227,229,
@@ -1310,28 +1310,28 @@ class SPLVParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
-                localctx = SPLVParser.LiteralExpressionContext(self, localctx)
+                localctx = SPLVParser.IdentifierExpressionContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
 
                 self.state = 144
-                self.literal()
+                self.match(SPLVParser.Identifier)
                 pass
 
             elif la_ == 2:
-                localctx = SPLVParser.FunctionCallExpressionContext(self, localctx)
+                localctx = SPLVParser.LiteralExpressionContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 145
-                self.functionCall()
+                self.literal()
                 pass
 
             elif la_ == 3:
-                localctx = SPLVParser.IdentifierExpressionContext(self, localctx)
+                localctx = SPLVParser.FunctionCallExpressionContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 146
-                self.match(SPLVParser.Identifier)
+                self.functionCall()
                 pass
 
             elif la_ == 4:
@@ -1341,7 +1341,7 @@ class SPLVParser ( Parser ):
                 self.state = 147
                 self.match(SPLVParser.NOTOperator)
                 self.state = 148
-                self.expression(6)
+                self.expression(4)
                 pass
 
             elif la_ == 5:
@@ -1373,74 +1373,74 @@ class SPLVParser ( Parser ):
                         localctx = SPLVParser.MultiplicativeOperatorExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 155
-                        if not self.precpred(self._ctx, 9):
+                        if not self.precpred(self._ctx, 7):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
                         self.state = 156
                         self.match(SPLVParser.MultiplicativeOperator)
                         self.state = 157
-                        self.expression(10)
+                        self.expression(8)
                         pass
 
                     elif la_ == 2:
                         localctx = SPLVParser.AdditiveOperatorExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 158
-                        if not self.precpred(self._ctx, 8):
+                        if not self.precpred(self._ctx, 6):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 8)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
                         self.state = 159
                         self.match(SPLVParser.AdditiveOperator)
                         self.state = 160
-                        self.expression(9)
+                        self.expression(7)
                         pass
 
                     elif la_ == 3:
                         localctx = SPLVParser.InOperatorExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 161
-                        if not self.precpred(self._ctx, 7):
+                        if not self.precpred(self._ctx, 5):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
                         self.state = 162
                         self.match(SPLVParser.InOperator)
                         self.state = 163
-                        self.expression(8)
+                        self.expression(6)
                         pass
 
                     elif la_ == 4:
                         localctx = SPLVParser.ComparisonOperatorExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 164
-                        if not self.precpred(self._ctx, 5):
+                        if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 5)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
                         self.state = 165
                         self.match(SPLVParser.ComparisonOperator)
                         self.state = 166
-                        self.expression(6)
+                        self.expression(4)
                         pass
 
                     elif la_ == 5:
                         localctx = SPLVParser.BooleanOperatorExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 167
-                        if not self.precpred(self._ctx, 4):
+                        if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                         self.state = 168
                         self.match(SPLVParser.BooleanOperator)
                         self.state = 169
-                        self.expression(5)
+                        self.expression(3)
                         pass
 
                     elif la_ == 6:
                         localctx = SPLVParser.ListIndexingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 170
-                        if not self.precpred(self._ctx, 2):
+                        if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
                         self.state = 171
                         self.match(SPLVParser.BracketLeft)
                         self.state = 172
@@ -1453,9 +1453,9 @@ class SPLVParser ( Parser ):
                         localctx = SPLVParser.ListSlicingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 175
-                        if not self.precpred(self._ctx, 1):
+                        if not self.precpred(self._ctx, 9):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 1)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
                         self.state = 176
                         self.match(SPLVParser.BracketLeft)
                         self.state = 178
@@ -2943,31 +2943,31 @@ class SPLVParser ( Parser ):
 
     def expression_sempred(self, localctx:ExpressionContext, predIndex:int):
             if predIndex == 0:
-                return self.precpred(self._ctx, 9)
-         
-
-            if predIndex == 1:
-                return self.precpred(self._ctx, 8)
-         
-
-            if predIndex == 2:
                 return self.precpred(self._ctx, 7)
          
 
-            if predIndex == 3:
+            if predIndex == 1:
+                return self.precpred(self._ctx, 6)
+         
+
+            if predIndex == 2:
                 return self.precpred(self._ctx, 5)
          
 
-            if predIndex == 4:
-                return self.precpred(self._ctx, 4)
+            if predIndex == 3:
+                return self.precpred(self._ctx, 3)
          
 
-            if predIndex == 5:
+            if predIndex == 4:
                 return self.precpred(self._ctx, 2)
          
 
+            if predIndex == 5:
+                return self.precpred(self._ctx, 10)
+         
+
             if predIndex == 6:
-                return self.precpred(self._ctx, 1)
+                return self.precpred(self._ctx, 9)
          
 
 

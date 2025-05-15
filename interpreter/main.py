@@ -5,7 +5,7 @@ from .listener import Listener
 from pathlib import Path
 
 def run(source: str):
-    lexer = SPLVLexer(InputStream(input_text))
+    lexer = SPLVLexer(InputStream(source))
     stream = CommonTokenStream(lexer)
     parser = SPLVParser(stream)
     listener = Listener()

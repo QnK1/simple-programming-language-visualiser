@@ -1,4 +1,4 @@
-# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/simple_programming_language_visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
+# Generated from d:/Desktop/tkik_new/simple_programming_language_visualiser/grammar/SPLVParser.g4 by ANTLR 4.13.1
 from antlr4 import *
 if "." in __name__:
     from .SPLVParser import SPLVParser

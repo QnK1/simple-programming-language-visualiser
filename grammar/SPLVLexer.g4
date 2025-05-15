@@ -1,7 +1,8 @@
 lexer grammar SPLVLexer;
 
 // whitespace
-WS: [ \t\r\n]+ -> skip;
+// WS: [ \t\r\n]+ -> skip;
+WS : [ \t\r\n]+ -> channel(HIDDEN);
 
 // comments
 Comment: '//' ~[\r\n]* -> channel(HIDDEN);
@@ -55,3 +56,5 @@ CurlyRight: '}';
 ParenLeft: '(';
 ParenRight: ')';
 
+// unmatched tokens
+ERROR_CHAR: . ;

@@ -65,9 +65,11 @@ type
 
 // expressions
 expression
-    : literal #literalExpression
+    : Identifier #identifierExpression
+    | literal #literalExpression
+    | expression BracketLeft expression BracketRight #listIndexingExpression
+    | expression BracketLeft expression? Colon expression? BracketRight #listSlicingExpression
     | functionCall #functionCallExpression
-    | Identifier #identifierExpression
     | expression MultiplicativeOperator expression #multiplicativeOperatorExpression
     | expression AdditiveOperator expression #additiveOperatorExpression
     | expression InOperator expression #inOperatorExpression
@@ -75,8 +77,6 @@ expression
     | expression ComparisonOperator expression #comparisonOperatorExpression
     | expression BooleanOperator expression #booleanOperatorExpression
     | ParenLeft expression ParenRight #parenthesesExpression
-    | expression BracketLeft expression BracketRight #listIndexingExpression
-    | expression BracketLeft expression? Colon expression? BracketRight #listSlicingExpression
     ;
 ////`
 
