@@ -119,6 +119,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SPLVParser#lValue.
+    def visitLValue(self, ctx:SPLVParser.LValueContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SPLVParser#controlBlock.
     def visitControlBlock(self, ctx:SPLVParser.ControlBlockContext):
         return self.visitChildren(ctx)
@@ -126,6 +131,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by SPLVParser#functionBlock.
     def visitFunctionBlock(self, ctx:SPLVParser.FunctionBlockContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#functionControlBlock.
+    def visitFunctionControlBlock(self, ctx:SPLVParser.FunctionControlBlockContext):
         return self.visitChildren(ctx)
 
 

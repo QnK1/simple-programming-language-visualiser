@@ -35,6 +35,7 @@ CurlyLeft=34
 CurlyRight=35
 ParenLeft=36
 ParenRight=37
+ERROR_CHAR=38
 'not'=11
 '='=12
 'in'=13

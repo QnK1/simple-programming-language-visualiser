@@ -17,7 +17,7 @@ textColor_comments: (119, 115, 115)
 # textColor_quotes - strings
 textColor_quotes: (231, 219, 116)
 
-# textColor_operators = operators
+# textColor_operators - operators
 textColor_operators: (249, 36, 114)
 
 # textColor_keywords - keywords

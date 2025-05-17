@@ -1,15 +1,37 @@
+int test;
+
 fun str:fun1(int c, lst[flo] b){
     flo a = 1.5;
     glo lst[str] lista = ["aa", "bb"];
     
-    ret "abcd";
+    if(a == 5){
+        a = 4;
+
+        ret a;
+    }els{
+        ret 4;
+    }
+
+    ret "aa";
 }
 
 fun int:fun2(int c, flo b){
     flo a = 3.1;
     int f = 3;
 
-    ret a;
+    test = test;
+
+    if(true){
+        ret 1;
+    }els{
+        f = 5;
+        ret 2;
+    }
+
+    whl(true){
+        ret 5;
+    }
+
 }
 
 fun nul:fun3(){
@@ -31,6 +53,8 @@ if(af == 5){
     lop(int a in [1..5]){
         sum = sum + a;
     }
+
+    l[0] = 5;
     
 }
 

@@ -32,7 +32,7 @@ statementInFunction
     : variableAssignment Semicolon
     | functionCall Semicolon
     | variableDefinition Semicolon
-    | controlStatement
+    | controlStatementInsideFunction
     | returnStatement Semicolon
     ;
 ////
@@ -89,12 +89,17 @@ variableDefinition
     : GlobalTypeModifier? type Identifier AssignmentOperator expression
     | GlobalTypeModifier? type Identifier
     ;
-variableAssignment: Identifier AssignmentOperator expression;
+variableAssignment: lValue AssignmentOperator expression;
+lValue
+    : Identifier
+    | Identifier BracketLeft expression BracketRight
+    ;
 ////
 
 // block
 controlBlock: CurlyLeft statementInControlBlock+ CurlyRight;
 functionBlock: CurlyLeft statementInFunction+ CurlyRight;
+functionControlBlock: CurlyLeft statementInFunction+ CurlyRight;
 returnStatement
     : ReturnKeyword expression
     | ReturnKeyword
@@ -132,9 +137,9 @@ ifStatement: IfKeyword ParenLeft expression ParenRight controlBlock (ElseKeyword
 whileStatement: WhileKeyword ParenLeft expression ParenRight controlBlock;
 loopStatement: LoopKeyword ParenLeft loopStatementIterator ParenRight controlBlock;
 
-ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight (ElseKeyword functionBlock)?;
-whileStatementInsideFunction: WhileKeyword ParenLeft expression ParenRight functionBlock;
-loopStatementInsideFunction: LoopKeyword ParenLeft loopStatementIterator ParenRight functionBlock;
+ifStatementInsideFunction: IfKeyword ParenLeft expression ParenRight functionControlBlock (ElseKeyword functionControlBlock)?;
+whileStatementInsideFunction: WhileKeyword ParenLeft expression ParenRight functionControlBlock;
+loopStatementInsideFunction: LoopKeyword ParenLeft loopStatementIterator ParenRight functionControlBlock;
 
 loopStatementIterator: type Identifier InOperator expression;
 ////

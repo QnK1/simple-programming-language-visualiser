@@ -206,6 +206,15 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SPLVParser#lValue.
+    def enterLValue(self, ctx:SPLVParser.LValueContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#lValue.
+    def exitLValue(self, ctx:SPLVParser.LValueContext):
+        pass
+
+
     # Enter a parse tree produced by SPLVParser#controlBlock.
     def enterControlBlock(self, ctx:SPLVParser.ControlBlockContext):
         pass
@@ -221,6 +230,15 @@ class SPLVParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by SPLVParser#functionBlock.
     def exitFunctionBlock(self, ctx:SPLVParser.FunctionBlockContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#functionControlBlock.
+    def enterFunctionControlBlock(self, ctx:SPLVParser.FunctionControlBlockContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionControlBlock.
+    def exitFunctionControlBlock(self, ctx:SPLVParser.FunctionControlBlockContext):
         pass
 
 
