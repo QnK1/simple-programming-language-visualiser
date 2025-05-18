@@ -53,12 +53,30 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by SPLVParser#listLiteral.
-    def enterListLiteral(self, ctx:SPLVParser.ListLiteralContext):
+    # Enter a parse tree produced by SPLVParser#listFromRangeLiteral.
+    def enterListFromRangeLiteral(self, ctx:SPLVParser.ListFromRangeLiteralContext):
         pass
 
-    # Exit a parse tree produced by SPLVParser#listLiteral.
-    def exitListLiteral(self, ctx:SPLVParser.ListLiteralContext):
+    # Exit a parse tree produced by SPLVParser#listFromRangeLiteral.
+    def exitListFromRangeLiteral(self, ctx:SPLVParser.ListFromRangeLiteralContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#listFromElementsLiteral.
+    def enterListFromElementsLiteral(self, ctx:SPLVParser.ListFromElementsLiteralContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#listFromElementsLiteral.
+    def exitListFromElementsLiteral(self, ctx:SPLVParser.ListFromElementsLiteralContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#emptyListLiteral.
+    def enterEmptyListLiteral(self, ctx:SPLVParser.EmptyListLiteralContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#emptyListLiteral.
+    def exitEmptyListLiteral(self, ctx:SPLVParser.EmptyListLiteralContext):
         pass
 
 
@@ -188,6 +206,15 @@ class SPLVParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by SPLVParser#passedParametersList.
+    def enterPassedParametersList(self, ctx:SPLVParser.PassedParametersListContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#passedParametersList.
+    def exitPassedParametersList(self, ctx:SPLVParser.PassedParametersListContext):
+        pass
+
+
     # Enter a parse tree produced by SPLVParser#variableDefinition.
     def enterVariableDefinition(self, ctx:SPLVParser.VariableDefinitionContext):
         pass
@@ -275,6 +302,15 @@ class SPLVParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by SPLVParser#functionIdentifier.
     def exitFunctionIdentifier(self, ctx:SPLVParser.FunctionIdentifierContext):
+        pass
+
+
+    # Enter a parse tree produced by SPLVParser#functionReturnType.
+    def enterFunctionReturnType(self, ctx:SPLVParser.FunctionReturnTypeContext):
+        pass
+
+    # Exit a parse tree produced by SPLVParser#functionReturnType.
+    def exitFunctionReturnType(self, ctx:SPLVParser.FunctionReturnTypeContext):
         pass
 
 

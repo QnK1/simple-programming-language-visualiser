@@ -24,20 +24,21 @@ class DeclarationChecker(SPLVParserListener):
     def enterLoopStatement(self, ctx:SPLVParser.LoopStatementContext):
         self.scopes.append(self.Scope())
 
+    def enterLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
+        self.scopes.append(self.Scope())
 
-    # temporarily add loop iterator to current scope
     def exitLoopStatementIterator(self, ctx:SPLVParser.LoopStatementIteratorContext):
         name = ctx.Identifier().getText()
 
         self._addDefinition(name)
 
-
-    # remove loop iterator from current scope
     def exitLoopStatement(self, ctx:SPLVParser.LoopStatementContext):
         self.scopes.pop()
     
+    def exitLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
+        self.scopes.pop()
     
-    # register variables from a function's argument list
+    
     def exitFunctionArgumentList(self, ctx:SPLVParser.FunctionArgumentListContext):
         
         for c in ctx.getChildren():
@@ -46,8 +47,7 @@ class DeclarationChecker(SPLVParserListener):
                 name = c.getChild(1).getText()
                 self._addDefinition(name, False)
     
-
-    # register a variable definition
+    
     def exitVariableDefinition(self, ctx:SPLVParser.VariableDefinitionContext):
         t = None
         name = ctx.Identifier().getText()

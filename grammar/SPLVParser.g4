@@ -47,9 +47,9 @@ literal
     ;
 
 listLiteral
-    : BracketLeft expression DoubleDot expression BracketRight // list from range
-    | BracketLeft expression (Comma expression)* Comma? BracketRight // list with given elements
-    | BracketLeft BracketRight
+    : BracketLeft expression DoubleDot expression BracketRight #listFromRangeLiteral
+    | BracketLeft expression (Comma expression)* Comma? BracketRight #listFromElementsLiteral
+    | BracketLeft BracketRight #emptyListLiteral
     ;
 ////
 
@@ -81,14 +81,12 @@ expression
 ////`
 
 // function calls
-functionCall: Identifier ParenLeft (expression (Comma expression)* Comma?)? ParenRight; 
+functionCall: Identifier ParenLeft passedParametersList ParenRight;
+passedParametersList: (expression (Comma expression)* Comma?)?;
 ////
 
 // variable definition and assignment
-variableDefinition
-    : GlobalTypeModifier? type Identifier AssignmentOperator expression
-    | GlobalTypeModifier? type Identifier
-    ;
+variableDefinition: GlobalTypeModifier? type Identifier AssignmentOperator expression;
 variableAssignment: lValue AssignmentOperator expression;
 lValue
     : Identifier
@@ -113,9 +111,10 @@ functionDefinition
     ;
 
 functionArgumentList: (functionArgument (Comma functionArgument)* Comma?)?;
-functionIdentifier
-    : type Colon Identifier
-    | VoidType Colon Identifier
+functionIdentifier: functionReturnType Colon Identifier;
+functionReturnType
+    : type
+    | VoidType
     ;
 functionArgument: type Identifier;
 ////

@@ -34,8 +34,18 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SPLVParser#listLiteral.
-    def visitListLiteral(self, ctx:SPLVParser.ListLiteralContext):
+    # Visit a parse tree produced by SPLVParser#listFromRangeLiteral.
+    def visitListFromRangeLiteral(self, ctx:SPLVParser.ListFromRangeLiteralContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#listFromElementsLiteral.
+    def visitListFromElementsLiteral(self, ctx:SPLVParser.ListFromElementsLiteralContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#emptyListLiteral.
+    def visitEmptyListLiteral(self, ctx:SPLVParser.EmptyListLiteralContext):
         return self.visitChildren(ctx)
 
 
@@ -109,6 +119,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SPLVParser#passedParametersList.
+    def visitPassedParametersList(self, ctx:SPLVParser.PassedParametersListContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SPLVParser#variableDefinition.
     def visitVariableDefinition(self, ctx:SPLVParser.VariableDefinitionContext):
         return self.visitChildren(ctx)
@@ -156,6 +171,11 @@ class SPLVParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by SPLVParser#functionIdentifier.
     def visitFunctionIdentifier(self, ctx:SPLVParser.FunctionIdentifierContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SPLVParser#functionReturnType.
+    def visitFunctionReturnType(self, ctx:SPLVParser.FunctionReturnTypeContext):
         return self.visitChildren(ctx)
 
 

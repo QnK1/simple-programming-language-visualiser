@@ -1,8 +1,15 @@
-int test;
+int test = 3;
 
 fun str:fun1(int c, lst[flo] b){
     flo a = 1.5;
     glo lst[str] lista = ["aa", "bb"];
+
+    lst[lst[int]] test_list = [[], [1, 2, 3]];
+    lst[lst[int]] test_list2 = [[2], [1, 2, 3]];
+
+    lst[int] test_list3 = [1..2];
+
+    int abc = test_list[1][2];
     
     if(a == 5){
         a = 4;
@@ -11,6 +18,16 @@ fun str:fun1(int c, lst[flo] b){
     }els{
         ret 4;
     }
+
+    int sum = 0;
+    lop(int i in [0, 1, 2]){
+        sum  = sum + i;
+    }
+
+    if(sum in [1, 2, 3]){
+        ret "aa";
+    }
+
 
     ret "aa";
 }
@@ -36,9 +53,12 @@ fun int:fun2(int c, flo b){
 
 fun nul:fun3(){
     lst[int] list = [1];
-    int a = 1 + 2 * 3 == not 5 + 3 and list == list[(5 + 3) + 8];
 
+    if(not false){
+        int bbbb = list[1:];
+    }
 
+    int a = fun3();
     ret;
 }
 
