@@ -10,13 +10,16 @@ fun str:fun1(int c, lst[flo] b){
     lst[int] test_list3 = [1..2];
 
     int abc = test_list[1][2];
-    
-    if(a == 5){
-        a = 4;
 
-        ret a;
+    lst[int] test123 = [1, 2, 3] + [];
+    str test1234 = "aa" + lista[0];
+    
+    if(a == 5.1){
+        a = 4.1;
+
+        ret "bb";
     }els{
-        ret 4;
+        ret "cc";
     }
 
     int sum = 0;
@@ -49,6 +52,8 @@ fun int:fun2(int c, flo b){
         ret 5;
     }
 
+    fun2(2, 0.1);
+
 }
 
 fun nul:fun3(){
@@ -58,15 +63,14 @@ fun nul:fun3(){
         int bbbb = list[1:];
     }
 
-    int a = fun3();
     ret;
 }
 
-str result = fun1(3);
+str result = fun1(3, [1.1]);
 
 // flo b = 4;
 int af = 5;
-if(af == 5){
+if(af == 5 and af == 5){
     lst[int] l = [1, 2, 3];
 
     int sum = 0;
@@ -81,3 +85,7 @@ if(af == 5){
 int if1 = 7;
 
 lst[int] abcd = [1, 2, 3];
+
+int abcbca = 5 + 4;
+str sss = "aa" + "a";
+lst[int] lll = [1..2] + [1];

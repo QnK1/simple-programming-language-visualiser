@@ -1,9 +1,6 @@
 from interpreter.get_tokens import get_tokens
 from interpreter.base.SPLVLexer import SPLVLexer
 from pygments.token import Token
-from pathlib import Path
-import pygame
-from pygame_texteditor import TextEditor
 
 class SyntaxHighlighter:
     

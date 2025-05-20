@@ -1,20 +1,26 @@
 from antlr4 import *
 from .base.SPLVParser import SPLVParser
 from .base.SPLVParserVisitor import SPLVParserVisitor
+from .errors import ReturnException
 
 
 # a visitor class that ensures return statements are present in functions
 class ReturnChecker(SPLVParserVisitor):
+    VOID_KEYWORD = 'nul'
+    
     def __init__(self):
         self.current_function = None
+        self.current_function_is_void = False
     
 
     def visitFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
         self.visitChildren(ctx)
         self.current_function = None
+        self.current_function_is_void = False
 
     def visitFunctionIdentifier(self, ctx:SPLVParser.FunctionIdentifierContext):
         self.current_function = ctx.Identifier().getText()
+        self.current_function_is_void = ctx.functionReturnType().getText() == self.VOID_KEYWORD
         self.visitChildren(ctx)
         
     
@@ -26,13 +32,14 @@ class ReturnChecker(SPLVParserVisitor):
                 returns = True
                 break
 
-        if not returns:
-            raise Exception(f"Function {self.current_function} doesn't return a value in all control paths. Note that loop/while statements require outside return statements.")
-    
+        if not self.current_function_is_void and not returns:
+            raise ReturnException(f"Function {self.current_function} doesn't return a value in all control paths.", ctx.start.line, ctx.start.column)
+        elif self.current_function_is_void and returns:
+            raise ReturnException(f"Void function cannot return a value", ctx.start.line, ctx.start.column)
 
 
     def visitStatementInFunction(self, ctx:SPLVParser.StatementInFunctionContext):
-        if ctx.returnStatement() is not None:
+        if ctx.returnStatement() is not None and ctx.returnStatement().expression() is not None:
             return True
         elif ctx.controlStatementInsideFunction() is not None:
             return self.visit(ctx.controlStatementInsideFunction())
