@@ -1,10 +1,10 @@
 # Simulation config
 ticks_per_second = 60
 windowed_screen_size = (1280, 720)
-fullscreen_screen_size = (1920, 1080)
+fullscreen_screen_size = (1500, 900) #(1920, 1080)
 
 # Block config
-blocks_width = 5
+blocks_width = 8
 block_size = 100
 block_color = (25, 25, 25)
 block_heghlight_color = (150,150,255)
@@ -17,7 +17,7 @@ title_font_size = 50
 border_spacing = 20
 
 # Globals config
-globals_height = 500
+globals_height = 600
 
 # ShowCode config
 showCode_width = 450
@@ -37,5 +37,10 @@ div_color = (150, 255, 0)
 # Loading queue config
 queue_file_name = 'queue.txt'
 
-# codeDisplay config
+# Code Editor config
+editor_width = 880
+editor_height = 1000
+editor_offset_x = 1000
+editor_offset_y = 40
+editor_font_size = 30
 
