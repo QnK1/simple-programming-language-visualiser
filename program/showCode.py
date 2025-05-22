@@ -11,7 +11,7 @@ class ShowCode():
         self.color = config.showCode_colored
         self.font_size = config.showCode_font_size
         self.width = config.showCode_width
-        self.height = config.border_spacing
+        self.height = config.board_offset
 
     def setTest(self, text, begin, end):
         self.text = text

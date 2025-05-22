@@ -87,7 +87,7 @@ class Visuals():
     def closeFunction(self):
         self.simulation.queue.append(lambda: self.closeFunction_q())
 
-    def setCurrentCode(self, text, begin, end):
+    def setCurrentCode(self, text, begin = 0, end = 0):
         self.simulation.queue.append(lambda: self.setCurrentCode_q(text, begin, end))
 
     def tick(self):

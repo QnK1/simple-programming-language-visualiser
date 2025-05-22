@@ -52,7 +52,7 @@ def run(source: str) -> tuple[list[CompilationError], list]:
 
 
 if __name__ == "__main__":
-    with open(Path(__file__).resolve().parent / Path("test.txt"), "r") as f:
+    with open(Path(__file__).resolve().parent / Path("test2.txt"), "r") as f:
         input_text = f.read()
 
     output = run(input_text)

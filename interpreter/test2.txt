@@ -6,38 +6,7 @@ fun int:fib(int n){
     }
 }
 
+flo a = fib(1);
+int a = 5;
 
 lst[int] fib3 = [fib(0), fib(1), fib(2)];
-
-str s = "";
-if(fib3[2] > 1){
-    s = "aa";
-}
-
-int test = 5;
-
-fun nul:abc(){
-    flo test = 3.14;
-
-    flo b = test;
-
-    ret;
-}
-
-
-str suma = "";
-lop(str i in "aa"){
-    suma = suma + i;
-}
-
-int ccc = 3;
-flo res = 0.1;
-if(1 == 1){
-    res = ccc / 3;
-}
-
-bol cdd = ccc > res;
-
-if(cdd){
-    res = 0.0;
-}
