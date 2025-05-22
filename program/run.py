@@ -33,33 +33,33 @@ class Simulation:
         self.textEditor = MyTextEditor(self)
 
         self.visuals.setCurrentCode('l = [1,2,3]', 4, 55)
-        self.visuals.setVariable('l', [1,2,3])
+        self.visuals.setVariable('l', [1,2,3], "lst[int]")
 
         self.visuals.setCurrentCode('s1 = "text"', 5, 56)
-        self.visuals.setVariable('s1', "text")
+        self.visuals.setVariable('s1', "text", "str")
 
         self.visuals.setCurrentCode('s2 = "longer_text"', 5, 99)
-        self.visuals.setVariable('s2', "longer_text")
+        self.visuals.setVariable('s2', "longer_text", "str")
 
         self.visuals.setCurrentCode('a = 2', 4, 5)
-        self.visuals.setVariable('a', 2)
+        self.visuals.setVariable('a', 2, "int")
 
         self.visuals.setCurrentCode('b = 6', 4, 5)
-        self.visuals.setVariable('b', 6)
+        self.visuals.setVariable('b', 6, "int")
 
         self.visuals.setCurrentCode('c = a + b', 4, 55)
         self.visuals.setCurrentCode('c = 2 + b', 4, 5)
         self.visuals.setCurrentCode('c = 2 + 6', 8, 9)
         self.visuals.setCurrentCode('c = 8', 4, 5)
-        self.visuals.setVariable('c', 8)
+        self.visuals.setVariable('c', 8, "int")
 
         self.visuals.setCurrentCode('d = multiply_func(a, b)')
         self.visuals.setCurrentCode('d = multiply_func(2, b)', 18, 19)
         self.visuals.setCurrentCode('d = multiply_func(2, 6)', 21, 22)
         self.visuals.setCurrentCode('d = multiply_func(2, 6)')
         self.visuals.openFunction('multiply_func')
-        self.visuals.setVariable('a', 2)
-        self.visuals.setVariable('b', 6)
+        self.visuals.setVariable('a', 2, "int")
+        self.visuals.setVariable('b', 6, "int")
         self.visuals.setCurrentCode('return = a * b', 9, 14)
         self.visuals.setCurrentCode('return = 2 * b', 9, 10)
         self.visuals.setCurrentCode('return = 2 * 6', 13, 14)
@@ -67,7 +67,7 @@ class Simulation:
         self.visuals.closeFunction()
         self.visuals.setCurrentCode('d = multiply_func(a, b)', 4, 99)
         self.visuals.setCurrentCode('d = 12', 4, 99)
-        self.visuals.setVariable('d', 12)
+        self.visuals.setVariable('d', 12, "int")
 
         # self.visuals.setCurrentCode('a += 4', 5, 6)
         # self.visuals.add('a', 4)

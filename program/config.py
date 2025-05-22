@@ -4,8 +4,6 @@ windowed_screen_size = (1280, 720)
 fullscreen_screen_size = (1500, 900) #(1920, 1080)
 
 # Block config
-
-
 block_size = 100
 block_text_color = (200,200,200)
 block_color = (25, 25, 25)
@@ -21,8 +19,11 @@ board_offset = 20
 block_spacing = 20
 blocks_width = 8
 
-
-
+# Hover on block config
+hover_color = (150,150,255)
+hover_text_color = (0,0,0)
+hover_font_size = 40
+hover_height = 150
 
 # Globals config
 globals_height = 600
@@ -32,7 +33,6 @@ showCode_width = 450
 showCode_font_size = 50
 showCode_plain = (210,210,250)
 showCode_colored = (150,50,200)
-
 
 # Action config
 action_tick_time = 1*ticks_per_second

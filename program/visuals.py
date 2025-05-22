@@ -24,12 +24,12 @@ class Visuals():
         blocks[var2].highlight(color)
         self.actions.add(Action(config.action_tick_time, [lambda: blocks[var1].unhighlight(), lambda: blocks[var2].unhighlight()]))
 
-    def setVariable_q(self, var_name: str, value: float, if_global: bool = False):        # DODAĆ KOD JEŚLI JUZ ZMIENNA ISTNIEJE
+    def setVariable_q(self, var_name: str, value: float, type: str, if_global: bool = False):        # DODAĆ KOD JEŚLI JUZ ZMIENNA ISTNIEJE
         board = self.simulation.globals if if_global == True else self.simulation.boards[-1]
         if var_name in board.blocks.keys():
             board.blocks[var_name].value = value
             return
-        board.setBlock(var_name, value)
+        board.setBlock(var_name, value, type)
         board.blocks[var_name].highlight(config.change_color)
         self.actions.add(Action(config.action_tick_time, [lambda: board.blocks[var_name].unhighlight()]))
     
