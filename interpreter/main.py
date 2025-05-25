@@ -8,6 +8,7 @@ from .type_checker import TypeChecker
 from .return_checker import ReturnChecker
 from .ParsingErrorListener import ParsingErrorListener
 from .errors import DeclarationException, CompilationError, ReturnException, TypeException
+from .runner import Runner
 
 
 def run(source: str) -> tuple[list[CompilationError], list]:
@@ -17,6 +18,8 @@ def run(source: str) -> tuple[list[CompilationError], list]:
     declaration_checker = DeclarationChecker()
     return_checker = ReturnChecker()
     type_checker = TypeChecker()
+    runner = Runner()
+
     parser.addParseListener(declaration_checker)
 
     compile_time_errors = []
@@ -35,16 +38,20 @@ def run(source: str) -> tuple[list[CompilationError], list]:
     compile_time_errors.extend(error_listener.errors)
     compile_time_errors.extend(declaration_errors)
 
+    program = None
     if tree is not None:
         try:
             return_checker.visit(tree)
             type_checker.visit(tree)
+
+            program = runner.visit(tree)
         except (ReturnException, TypeException) as e:
             compile_time_errors.append(CompilationError(e.line, e.column, e.msg))
         
     
 
     print(compile_time_errors)
+    print(program)
 
     result = None
 
@@ -52,7 +59,7 @@ def run(source: str) -> tuple[list[CompilationError], list]:
 
 
 if __name__ == "__main__":
-    with open(Path(__file__).resolve().parent / Path("test.txt"), "r") as f:
+    with open(Path(__file__).resolve().parent / Path("test2.txt"), "r") as f:
         input_text = f.read()
 
     output = run(input_text)

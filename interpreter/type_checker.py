@@ -317,7 +317,7 @@ class TypeChecker(SPLVParserVisitor):
         elif not all(t == self.Variable(TypeNames.INT) for t in bound_types):
             raise TypeException("List slicing bounds must be integers", ctx.start.line, ctx.start.column)
         
-        return list_type.getListElementType()
+        return list_type
 
 
     # Visit a parse tree produced by SPLVParser#functionCallExpression.
