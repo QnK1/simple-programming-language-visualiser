@@ -1,0 +1,8 @@
+
+
+
+a = 2 + func(5) + 3
+openfunc
+...
+closefunc
+a = 2 + 3 + 3

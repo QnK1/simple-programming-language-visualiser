@@ -4,17 +4,26 @@ windowed_screen_size = (1280, 720)
 fullscreen_screen_size = (1500, 900) #(1920, 1080)
 
 # Block config
-blocks_width = 8
 block_size = 100
+block_text_color = (200,200,200)
 block_color = (25, 25, 25)
 block_heghlight_color = (150,150,255)
-block_border_size = 20
+block_char_limit = 5
 font_size = 40
-title_height = 40
+title_color = (200,200,200)
 title_font_size = 50
 
 # Boards config
-border_spacing = 20
+title_height = 40
+board_offset = 20
+block_spacing = 20
+blocks_width = 8
+
+# Hover on block config
+hover_color = (150,150,255)
+hover_text_color = (0,0,0)
+hover_font_size = 40
+hover_height = 150
 
 # Globals config
 globals_height = 600
@@ -24,7 +33,6 @@ showCode_width = 450
 showCode_font_size = 50
 showCode_plain = (210,210,250)
 showCode_colored = (150,50,200)
-
 
 # Action config
 action_tick_time = 1*ticks_per_second
@@ -39,8 +47,19 @@ queue_file_name = 'queue.txt'
 
 # Code Editor config
 editor_width = 880
-editor_height = 1000
+editor_height = 860
 editor_offset_x = 1000
 editor_offset_y = 40
 editor_font_size = 30
 
+# Button config
+button_font_size = 40
+button_offset_y = 950
+button_offset_x = 1000
+button_width = 200
+button_height = 80
+button_spacing = 20
+button_color = (150,0,150)
+button_text_color = (0, 0, 0)
+button_text_offset_x = 10
+button_text_offset_y = 10

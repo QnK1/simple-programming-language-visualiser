@@ -1,13 +1,15 @@
-from . import config
 from typing import Tuple
+from . import config
 
 class Block():
-    def __init__(self, name: str, value: any, position: Tuple[int, int]):
-        
-        self.color = config.block_color
+    def __init__(self, name: str, value: any, type: str, position: Tuple[int, int], color = config.block_color):
+        self.color = color
         self.position = position
         self.name = name
         self.value = value
+        self.type = type
+        self.x_pos = None
+        self.y_pos = None
     
     def highlight(self, color = config.block_heghlight_color):
         self.color = color
