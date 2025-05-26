@@ -1,12 +1,1 @@
-fun int:fib(int n){
-    if(n == 0 or n == 1){
-        ret 1;
-    }els{
-        ret fib(n - 1) + fib(n - 2);
-    }
-}
-
-flo a = fib(1);
-int a = 5;
-
-lst[int] fib3 = [fib(0), fib(1), fib(2)];
+flo a = 5 * 5.1 + (5 + 3);

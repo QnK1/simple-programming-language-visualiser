@@ -44,12 +44,50 @@ class Runner(SPLVParserVisitor):
 
     
     def _defineVariable(self, ctx):
+        rhs_exp = ctx.variableDefinition().expression()
+
+        calculator = ExpressionCalculator()
+        calculator.calculate(rhs_exp)
+
+
+        
         return None, None, None, None
 
 class ExpressionCalculator(SPLVParserVisitor):
+    def __init__(self):
+        self.original_expression = None
+        self.depth = None
+        self.starting_depth = None
+    
+    def calculate(self, exp):
+        self.original_expression = exp.getText()
+
+        counter = ExpressionCounter()
+        self.starting_depth = counter.visit(exp)
+        stages = []
+
+        while self.starting_depth >= 0:
+            # print(f"depth: {self.starting_depth}")
+            self.depth = self.starting_depth
+            stages.append(Expression.Stage(self.visit(exp)))
+            self.starting_depth = self.starting_depth - 1
+        
+        print("Stages:")
+        for stage in stages:
+            print(stage.content)
+    
     # Visit a parse tree produced by SPLVParser#parenthesesExpression.
     def visitParenthesesExpression(self, ctx:SPLVParser.ParenthesesExpressionContext):
-        return self.visitChildren(ctx)
+        start_depth = self.depth
+        self.depth = self.depth - 1
+
+        content = self.visit(ctx.expression())
+        
+        if start_depth > 0:
+            return f"({content})"
+        else:
+            return content
+
 
 
     # Visit a parse tree produced by SPLVParser#inOperatorExpression.
@@ -59,7 +97,19 @@ class ExpressionCalculator(SPLVParserVisitor):
 
     # Visit a parse tree produced by SPLVParser#additiveOperatorExpression.
     def visitAdditiveOperatorExpression(self, ctx:SPLVParser.AdditiveOperatorExpressionContext):
-        return self.visitChildren(ctx)
+        start_depth = self.depth
+        self.depth = self.depth - 1
+
+        left_exp = ctx.expression()[0]
+        right_exp = ctx.expression()[1]
+
+        left_content = self.visit(left_exp)
+        right_content = self.visit(right_exp)
+        
+        if start_depth > 0:
+            return f"{left_content}+{right_content}"
+        else:
+            return left_content + right_content
 
 
     # Visit a parse tree produced by SPLVParser#comparisonOperatorExpression.
@@ -69,7 +119,19 @@ class ExpressionCalculator(SPLVParserVisitor):
 
     # Visit a parse tree produced by SPLVParser#multiplicativeOperatorExpression.
     def visitMultiplicativeOperatorExpression(self, ctx:SPLVParser.MultiplicativeOperatorExpressionContext):
-        return self.visitChildren(ctx)
+        start_depth = self.depth
+        self.depth = self.depth - 1
+
+        left_exp = ctx.expression()[0]
+        right_exp = ctx.expression()[1]
+
+        left_content = self.visit(left_exp)
+        right_content = self.visit(right_exp)
+        
+        if start_depth > 0:
+            return f"{left_content}*{right_content}"
+        else:
+            return left_content * right_content
 
 
     # Visit a parse tree produced by SPLVParser#booleanOperatorExpression.
@@ -104,7 +166,54 @@ class ExpressionCalculator(SPLVParserVisitor):
 
     # Visit a parse tree produced by SPLVParser#literalExpression.
     def visitLiteralExpression(self, ctx:SPLVParser.LiteralExpressionContext):
-        return self.visitChildren(ctx)
+        if ctx.literal().listLiteral() is None:
+            # print(f"start depth: {self.depth}, return val: {self._getLiteralValue(ctx.literal())}")
+            return self._getLiteralValue(ctx.literal())
+        
+        if isinstance(ctx.literal().listLiteral(), SPLVParser.EmptyListLiteralContext):
+            return ListValue([])
+        elif isinstance(ctx.literal().listLiteral(), SPLVParser.ListFromElementsLiteralContext):
+            start_depth = self.depth
+
+            exps = ctx.literal().listLiteral().expression()
+            content = [self.visit(e) for e in exps]
+
+            if start_depth > 0:
+                return f"{ListValue(content)}"
+            else:
+                return ListValue(content)
+        elif isinstance(ctx.literal().listLiteral(), SPLVParser.ListFromRangeLiteralContext):
+            start_depth = self.depth
+
+            exp1 = ctx.literal().listLiteral().expression()[0]
+            exp2 = ctx.literal().listLiteral().expression()[1]
+            
+            content1 = self.visit(exp1)
+            content2 = self.visit(exp2)
+
+            if start_depth > 0:
+                return f"[{content1}..{content2}]"
+            else:
+                return ListValue([i for i in range(content1.value, content2.value)])
+
+
+    
+
+    def _getLiteralValue(self, ctx):
+        if ctx.IntLiteral() is not None:
+            literal = ctx.IntLiteral()
+            val = IntValue(int(literal.getText()))
+        elif ctx.FloatLiteral() is not None:
+            literal = ctx.FloatLiteral()
+            val = FloatValue(float(literal.getText()))
+        elif ctx.StringLiteral() is not None:
+            literal = ctx.StringLiteral()
+            val = StringValue(literal.getText()[1:-1])
+        elif ctx.BoolLiteral() is not None:
+            literal = ctx.BoolLiteral()
+            val = BoolValue(True if literal.getText().lower() == "true" else False)
+        
+        return val
 
 
 
@@ -187,5 +296,6 @@ class ExpressionCounter(SPLVParserVisitor):
         res = 0
         if ctx.literal().listLiteral() is not None and type(ctx.literal().listLiteral()) != SPLVParser.EmptyListLiteralContext:
             res += sum([self.visit(e) for e in ctx.literal().listLiteral().expression()])
+
         
         return res
