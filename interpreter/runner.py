@@ -5,7 +5,6 @@ from .base.SPLVParserVisitor import SPLVParserVisitor
 from .run_utils import *
 
 
-
 class Runner(SPLVParserVisitor):
     def __init__(self):
         self.result: list[Statement] = []
@@ -17,23 +16,54 @@ class Runner(SPLVParserVisitor):
         return self.result
     
 
-    def visitStatement(self, ctx:SPLVParser.StatementContext):
-        if ctx.variableDefinition() is not None:
-            n, t, f, e = self.visitVariableDefinition(ctx.variableDefinition())
+    def executeStatement(self, ctx):
+        if not isinstance(ctx, SPLVParser.StatementInControlBlockContext) and ctx.variableDefinition() is not None:
+            n, t, f, e, s = self.visitVariableDefinition(ctx.variableDefinition())
             
-            self.result.append(VariableDefinitionStatement(ctx.start.line, ctx.start.column, n, t, f, e))
+            self.result.append(VariableDefinitionStatement(ctx.start.line, ctx.start.column, n, t, f, e, s))
         elif ctx.variableAssignment() is not None:
-            self.result.append(VariableAssignmentStatement(ctx.start.line, ctx.start.column))
+            n, t, f, e, s, ii, ie, fi = self.visitVariableAssignment(ctx.variableAssignment())
+
+            self.result.append(VariableAssignmentStatement(ctx.start.line, ctx.start.column, n, t, f, e, s, ii, ie, fi))
         elif ctx.functionDefinition() is not None:
             self.result.append(FunctionDefinitionStatement(ctx.start.line, ctx.start.column))
         elif ctx.functionCall() is not None:
             self.result.append(FunctionCallStatement(ctx.start.line, ctx.start.column))
         elif ctx.controlStatement().ifStatement() is not None:
-            self.result.append(IfStatement(ctx.start.line, ctx.start.column))
+            c, f, h, statements_to_execute = self.visitIfStatement(ctx.controlStatement().ifStatement())
+            
+            self.result.append(IfStatement(ctx.start.line, ctx.start.column, c, f, h))
+
+            for s in statements_to_execute:
+                self.visitStatementInControlBlock(s)
         elif ctx.controlStatement().whileStatement() is not None:
             self.result.append(WhileStatement(ctx.start.line, ctx.start.column))
         elif ctx.controlStatement().loopStatement() is not None:
             self.result.append(LoopStatement(ctx.start.line, ctx.start.column))
+
+
+    def visitStatement(self, ctx:SPLVParser.StatementContext):
+        self.executeStatement(ctx)
+    
+
+    def visitStatementInControlBlock(self, ctx:SPLVParser.StatementInControlBlockContext):
+        self.executeStatement(ctx)
+    
+
+    def visitIfStatement(self, ctx:SPLVParser.IfStatementContext):
+        condition_ctx = ctx.expression()
+        calculator = ExpressionCalculator(self)
+        exp = calculator.calculate(condition_ctx)
+        final_val = exp.stages[-1].content
+        has_else = ctx.ElseKeyword() is not None
+
+
+        if final_val.value:
+            statements = ctx.controlBlock()[0].statementInControlBlock()
+        elif has_else:
+            statements = ctx.controlBlock()[1].statementInControlBlock()
+
+        return exp, final_val, has_else, statements
 
 
     def visitVariableDefinition(self, ctx:SPLVParser.VariableDefinitionContext):
@@ -46,16 +76,76 @@ class Runner(SPLVParserVisitor):
         t = ctx.type_().getText()
         final_val = exp.stages[-1].content
 
-        self.scopes[-1].variables[name] = Variable(t, final_val)
+        if ctx.GlobalTypeModifier() is None and len(self.scopes) > 1:
+            self.scopes[-1].variables[name] = Variable(t, final_val)
+            scope = ScopeType.FUNCTION
+        else:
+            self.scopes[0].variables[name] = Variable(t, final_val)
+            scope = ScopeType.GLOBAL
 
-        return name, t, final_val, exp
+        return name, t, final_val, exp, scope
     
+
+    # Visit a parse tree produced by SPLVParser#variableAssignment.
+    def visitVariableAssignment(self, ctx:SPLVParser.VariableAssignmentContext):
+        rhs_exp = ctx.expression()
+        calculator = ExpressionCalculator(self)
+        exp = calculator.calculate(rhs_exp)
+        final_val = exp.stages[-1].content
+
+        lvalue = ctx.lValue()
+        name = lvalue.Identifier().getText()
+        t = self.getVariableType(name)
+
+        is_list_indexing = False
+        final_index = None
+        index_exp = None
+
+        if lvalue.expression() is None:
+            self.setVariableValue(name, final_val)
+        else:
+            is_list_indexing = True
+            index_exp_ctx = lvalue.expression()
+            calculator = ExpressionCalculator(self)
+            index_exp = calculator.calculate(index_exp_ctx)
+            final_index = index_exp.stages[-1].content
+            self.setListElement(name, final_val, final_index)
+        
+        return name, t, final_val, exp, self.getVariableScope(name), is_list_indexing, index_exp, final_index
+
 
     def getVariableValue(self, name):
         for scope in self.scopes[::-1]:
             if name in scope.variables:
                 return scope.variables[name].value
     
+
+    def setVariableValue(self, name, value):
+        for scope in self.scopes[::-1]:
+            if name in scope.variables:
+                scope.variables[name].value = value
+
+    def setListElement(self, name, value, index):
+        for scope in self.scopes[::-1]:
+            if name in scope.variables:
+                scope.variables[name].value[index] = value
+    
+
+    def getVariableType(self, name):
+        for scope in self.scopes[::-1]:
+            if name in scope.variables:
+                return scope.variables[name].type
+    
+
+    def getVariableScope(self, name):
+        for i, scope in enumerate(self.scopes[::-1]):
+            if name in scope.variables:
+                if i != 0 or i == 0 and len(self.scopes) == 1:
+                    return ScopeType.GLOBAL
+                else:
+                    return ScopeType.FUNCTION
+    
+
 
 class ExpressionCalculator(SPLVParserVisitor):
     def __init__(self, runner):
@@ -158,32 +248,32 @@ class ExpressionCalculator(SPLVParserVisitor):
             if start_depth > 0:
                 return f"{left_content}=={right_content}"
             else:
-                return left_content == right_content
+                return BoolValue(left_content == right_content)
         elif operator == "!=":
             if start_depth > 0:
                 return f"{left_content}!={right_content}"
             else:
-                return left_content != right_content
+                return BoolValue(left_content != right_content)
         elif operator == "<=":
             if start_depth > 0:
                 return f"{left_content}<={right_content}"
             else:
-                return left_content <= right_content
+                return BoolValue(left_content <= right_content)
         elif operator == "<":
             if start_depth > 0:
                 return f"{left_content}<{right_content}"
             else:
-                return left_content < right_content
+                return BoolValue(left_content < right_content)
         elif operator == ">=":
             if start_depth > 0:
                 return f"{left_content}>={right_content}"
             else:
-                return left_content >= right_content
+                return BoolValue(left_content >= right_content)
         elif operator == ">":
             if start_depth > 0:
                 return f"{left_content}>{right_content}"
             else:
-                return left_content > right_content
+                return BoolValue(left_content > right_content)
 
 
     # Visit a parse tree produced by SPLVParser#multiplicativeOperatorExpression.

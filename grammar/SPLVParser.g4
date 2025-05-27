@@ -21,7 +21,6 @@ statement
 // statements inside loop/if blocks
 statementInControlBlock
     : variableAssignment Semicolon
-    | variableDefinition Semicolon
     | functionCall Semicolon
     | controlStatement
     ;

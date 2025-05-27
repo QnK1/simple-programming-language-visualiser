@@ -53,6 +53,12 @@ def run(source: str) -> tuple[list[CompilationError], list]:
     print(compile_time_errors)
     print(program)
 
+    print()
+    for s in program:
+        print(s)
+        for key, val in s.__dict__.items():
+            print(key, val)
+
     result = None
 
     return compile_time_errors, result

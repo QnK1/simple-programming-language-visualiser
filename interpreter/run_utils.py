@@ -1,23 +1,36 @@
 from dataclasses import dataclass
+from enum import Enum
 
 class Statement:
     def __init__(self, line_start: int, column_start: int):
         self.line_start: int = line_start
         self.column_start: int = column_start
 
+class ScopeType(Enum):
+    GLOBAL = 1
+    FUNCTION = 2
 
 class VariableDefinitionStatement(Statement):
-    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val: str, rhs_exp: "Expression"):
+    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val: str, rhs_exp: "Expression", scope: ScopeType):
         super().__init__(line_start, column_start)
         self.name: str = name
         self.type: str = type
         self.final_val: str = final_val
         self.rhs_exp: "Expression" = rhs_exp
+        self.scope = scope
 
 
 class VariableAssignmentStatement(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val: str, rhs_exp: "Expression", scope: ScopeType, is_list_indexing: bool, index_exp: "Expression", final_index: str):
         super().__init__(line_start, column_start)
+        self.name: str = name
+        self.type: str = type
+        self.final_val: str = final_val
+        self.rhs_exp: "Expression" = rhs_exp
+        self.scope = scope
+        self.is_list_indexing = is_list_indexing
+        self.index_exp = index_exp
+        self.final_index = final_index
 
 
 class FunctionDefinitionStatement(Statement):
@@ -31,8 +44,11 @@ class FunctionCallStatement(Statement):
 
 
 class IfStatement(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, condition_exp: "Expression", final_cond_val: str, has_else: bool):
         super().__init__(line_start, column_start)
+        self.condition_exp = condition_exp
+        self.final_cond_val = final_cond_val
+        self.has_else = has_else
 
 
 class WhileStatement(Statement):

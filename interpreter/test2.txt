@@ -1,1 +1,6 @@
-bol a = "A" in ["A", "a"];
+int a = 5;
+int b = 3;
+
+if(a != b){
+    a = 3;
+}
