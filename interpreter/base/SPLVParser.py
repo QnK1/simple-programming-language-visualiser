@@ -22,8 +22,8 @@ def serializedATN():
         127,8,5,10,5,12,5,130,9,5,1,5,3,5,133,8,5,1,5,1,5,1,5,1,5,3,5,139,
         8,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,3,6,150,8,6,1,7,1,7,1,7,
         1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,162,8,7,1,7,1,7,1,7,1,7,1,7,1,7,
-        1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,
-        1,7,3,7,187,8,7,1,7,1,7,3,7,191,8,7,1,7,5,7,194,8,7,10,7,12,7,197,
+        1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,3,7,182,8,7,1,7,
+        1,7,3,7,186,8,7,1,7,1,7,1,7,1,7,1,7,1,7,5,7,194,8,7,10,7,12,7,197,
         9,7,1,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,5,9,207,8,9,10,9,12,9,210,9,
         9,1,9,3,9,213,8,9,3,9,215,8,9,1,10,3,10,218,8,10,1,10,1,10,1,10,
         1,10,1,10,1,11,1,11,1,11,1,11,1,12,1,12,1,12,1,12,1,12,1,12,3,12,
@@ -81,22 +81,22 @@ def serializedATN():
         164,10,7,0,0,164,165,5,8,0,0,165,194,3,14,7,8,166,167,10,6,0,0,167,
         168,5,7,0,0,168,194,3,14,7,7,169,170,10,5,0,0,170,171,5,13,0,0,171,
         194,3,14,7,6,172,173,10,3,0,0,173,174,5,9,0,0,174,194,3,14,7,4,175,
-        176,10,2,0,0,176,177,5,10,0,0,177,194,3,14,7,3,178,179,10,10,0,0,
-        179,180,5,32,0,0,180,181,3,14,7,0,181,182,5,33,0,0,182,194,1,0,0,
-        0,183,184,10,9,0,0,184,186,5,32,0,0,185,187,3,14,7,0,186,185,1,0,
-        0,0,186,187,1,0,0,0,187,188,1,0,0,0,188,190,5,29,0,0,189,191,3,14,
-        7,0,190,189,1,0,0,0,190,191,1,0,0,0,191,192,1,0,0,0,192,194,5,33,
-        0,0,193,163,1,0,0,0,193,166,1,0,0,0,193,169,1,0,0,0,193,172,1,0,
-        0,0,193,175,1,0,0,0,193,178,1,0,0,0,193,183,1,0,0,0,194,197,1,0,
-        0,0,195,193,1,0,0,0,195,196,1,0,0,0,196,15,1,0,0,0,197,195,1,0,0,
-        0,198,199,5,27,0,0,199,200,5,36,0,0,200,201,3,18,9,0,201,202,5,37,
-        0,0,202,17,1,0,0,0,203,208,3,14,7,0,204,205,5,30,0,0,205,207,3,14,
-        7,0,206,204,1,0,0,0,207,210,1,0,0,0,208,206,1,0,0,0,208,209,1,0,
-        0,0,209,212,1,0,0,0,210,208,1,0,0,0,211,213,5,30,0,0,212,211,1,0,
-        0,0,212,213,1,0,0,0,213,215,1,0,0,0,214,203,1,0,0,0,214,215,1,0,
-        0,0,215,19,1,0,0,0,216,218,5,26,0,0,217,216,1,0,0,0,217,218,1,0,
-        0,0,218,219,1,0,0,0,219,220,3,12,6,0,220,221,5,27,0,0,221,222,5,
-        12,0,0,222,223,3,14,7,0,223,21,1,0,0,0,224,225,3,24,12,0,225,226,
+        176,10,2,0,0,176,177,5,10,0,0,177,194,3,14,7,3,178,179,10,11,0,0,
+        179,181,5,32,0,0,180,182,3,14,7,0,181,180,1,0,0,0,181,182,1,0,0,
+        0,182,183,1,0,0,0,183,185,5,29,0,0,184,186,3,14,7,0,185,184,1,0,
+        0,0,185,186,1,0,0,0,186,187,1,0,0,0,187,194,5,33,0,0,188,189,10,
+        10,0,0,189,190,5,32,0,0,190,191,3,14,7,0,191,192,5,33,0,0,192,194,
+        1,0,0,0,193,163,1,0,0,0,193,166,1,0,0,0,193,169,1,0,0,0,193,172,
+        1,0,0,0,193,175,1,0,0,0,193,178,1,0,0,0,193,188,1,0,0,0,194,197,
+        1,0,0,0,195,193,1,0,0,0,195,196,1,0,0,0,196,15,1,0,0,0,197,195,1,
+        0,0,0,198,199,5,27,0,0,199,200,5,36,0,0,200,201,3,18,9,0,201,202,
+        5,37,0,0,202,17,1,0,0,0,203,208,3,14,7,0,204,205,5,30,0,0,205,207,
+        3,14,7,0,206,204,1,0,0,0,207,210,1,0,0,0,208,206,1,0,0,0,208,209,
+        1,0,0,0,209,212,1,0,0,0,210,208,1,0,0,0,211,213,5,30,0,0,212,211,
+        1,0,0,0,212,213,1,0,0,0,213,215,1,0,0,0,214,203,1,0,0,0,214,215,
+        1,0,0,0,215,19,1,0,0,0,216,218,5,26,0,0,217,216,1,0,0,0,217,218,
+        1,0,0,0,218,219,1,0,0,0,219,220,3,12,6,0,220,221,5,27,0,0,221,222,
+        5,12,0,0,222,223,3,14,7,0,223,21,1,0,0,0,224,225,3,24,12,0,225,226,
         5,12,0,0,226,227,3,14,7,0,227,23,1,0,0,0,228,235,5,27,0,0,229,230,
         5,27,0,0,230,231,5,32,0,0,231,232,3,14,7,0,232,233,5,33,0,0,233,
         235,1,0,0,0,234,228,1,0,0,0,234,229,1,0,0,0,235,25,1,0,0,0,236,238,
@@ -136,7 +136,7 @@ def serializedATN():
         0,351,352,5,16,0,0,352,353,5,36,0,0,353,354,3,60,30,0,354,355,5,
         37,0,0,355,356,3,30,15,0,356,59,1,0,0,0,357,358,3,12,6,0,358,359,
         5,27,0,0,359,360,5,13,0,0,360,361,3,14,7,0,361,61,1,0,0,0,32,65,
-        80,92,107,114,128,132,138,149,161,186,190,193,195,208,212,214,217,
+        80,92,107,114,128,132,138,149,161,181,185,193,195,208,212,214,217,
         234,240,248,256,263,279,286,290,292,300,308,313,322,343
     ]
 
@@ -1237,6 +1237,8 @@ class SPLVParser ( Parser ):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SPLVParser.ExpressionContext
             super().__init__(parser)
+            self.left_exp = None # ExpressionContext
+            self.right_exp = None # ExpressionContext
             self.copyFrom(ctx)
 
         def expression(self, i:int=None):
@@ -1516,48 +1518,48 @@ class SPLVParser ( Parser ):
                         pass
 
                     elif la_ == 6:
-                        localctx = SPLVParser.ListIndexingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = SPLVParser.ListSlicingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 178
-                        if not self.precpred(self._ctx, 10):
+                        if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
                         self.state = 179
                         self.match(SPLVParser.BracketLeft)
-                        self.state = 180
-                        self.expression(0)
                         self.state = 181
+                        self._errHandler.sync(self)
+                        _la = self._input.LA(1)
+                        if (((_la) & ~0x3f) == 0 and ((1 << _la) & 73148663928) != 0):
+                            self.state = 180
+                            localctx.left_exp = self.expression(0)
+
+
+                        self.state = 183
+                        self.match(SPLVParser.Colon)
+                        self.state = 185
+                        self._errHandler.sync(self)
+                        _la = self._input.LA(1)
+                        if (((_la) & ~0x3f) == 0 and ((1 << _la) & 73148663928) != 0):
+                            self.state = 184
+                            localctx.right_exp = self.expression(0)
+
+
+                        self.state = 187
                         self.match(SPLVParser.BracketRight)
                         pass
 
                     elif la_ == 7:
-                        localctx = SPLVParser.ListSlicingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
+                        localctx = SPLVParser.ListIndexingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
-                        self.state = 183
-                        if not self.precpred(self._ctx, 9):
-                            from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
-                        self.state = 184
-                        self.match(SPLVParser.BracketLeft)
-                        self.state = 186
-                        self._errHandler.sync(self)
-                        _la = self._input.LA(1)
-                        if (((_la) & ~0x3f) == 0 and ((1 << _la) & 73148663928) != 0):
-                            self.state = 185
-                            self.expression(0)
-
-
                         self.state = 188
-                        self.match(SPLVParser.Colon)
+                        if not self.precpred(self._ctx, 10):
+                            from antlr4.error.Errors import FailedPredicateException
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
+                        self.state = 189
+                        self.match(SPLVParser.BracketLeft)
                         self.state = 190
-                        self._errHandler.sync(self)
-                        _la = self._input.LA(1)
-                        if (((_la) & ~0x3f) == 0 and ((1 << _la) & 73148663928) != 0):
-                            self.state = 189
-                            self.expression(0)
-
-
-                        self.state = 192
+                        self.expression(0)
+                        self.state = 191
                         self.match(SPLVParser.BracketRight)
                         pass
 
@@ -3267,11 +3269,11 @@ class SPLVParser ( Parser ):
          
 
             if predIndex == 5:
-                return self.precpred(self._ctx, 10)
+                return self.precpred(self._ctx, 11)
          
 
             if predIndex == 6:
-                return self.precpred(self._ctx, 9)
+                return self.precpred(self._ctx, 10)
          
 
 

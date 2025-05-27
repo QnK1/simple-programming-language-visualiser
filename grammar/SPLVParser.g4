@@ -66,9 +66,9 @@ type
 // expressions
 expression
     : Identifier #identifierExpression
-    | literal #literalExpression
+    | expression BracketLeft left_exp=expression? Colon right_exp=expression? BracketRight #listSlicingExpression
     | expression BracketLeft expression BracketRight #listIndexingExpression
-    | expression BracketLeft expression? Colon expression? BracketRight #listSlicingExpression
+    | literal #literalExpression
     | functionCall #functionCallExpression
     | expression MultiplicativeOperator expression #multiplicativeOperatorExpression
     | expression AdditiveOperator expression #additiveOperatorExpression

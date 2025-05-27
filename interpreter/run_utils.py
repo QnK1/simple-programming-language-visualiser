@@ -59,6 +59,7 @@ class Expression:
         self.stages: list[Expression.Stage] = []
 
 
+
 @dataclass(order=True)
 class IntValue:
     value: int
@@ -76,12 +77,33 @@ class IntValue:
         
         raise NotImplementedError()
 
+    def __sub__(self, other):
+        if isinstance(other, IntValue):
+            return IntValue(self.value - other.value)
+        elif isinstance(other, FloatValue):
+            return FloatValue(self.value - other.value)
+        
+        raise NotImplementedError()
 
     def __mul__(self, other):
         if isinstance(other, IntValue):
             return IntValue(self.value * other.value)
         elif isinstance(other, FloatValue):
             return FloatValue(self.value * other.value)
+
+        raise NotImplementedError()
+    
+    def __truediv__(self, other):
+        if isinstance(other, IntValue):
+            return IntValue(self.value / other.value)
+        elif isinstance(other, FloatValue):
+            return FloatValue(self.value / other.value)
+
+        raise NotImplementedError()
+    
+    def __mod__(self, other):
+        if isinstance(other, IntValue):
+            return IntValue(self.value % other.value)
 
         raise NotImplementedError()
 
@@ -103,12 +125,28 @@ class FloatValue:
         
         raise NotImplementedError()
     
+    def __sub__(self, other):
+        if isinstance(other, IntValue):
+            return IntValue(self.value - other.value)
+        elif isinstance(other, FloatValue):
+            return FloatValue(self.value - other.value)
+        
+        raise NotImplementedError()
+    
     
     def __mul__(self, other):
         if isinstance(other, IntValue):
             return IntValue(self.value * other.value)
         elif isinstance(other, FloatValue):
             return FloatValue(self.value * other.value)
+
+        raise NotImplementedError()
+    
+    def __truediv__(self, other):
+        if isinstance(other, IntValue):
+            return IntValue(self.value / other.value)
+        elif isinstance(other, FloatValue):
+            return FloatValue(self.value / other.value)
 
         raise NotImplementedError()
         
@@ -133,7 +171,28 @@ class BoolValue:
     value: bool
 
     def __str__(self):
-        return f"\"{self.value}\"".lower()
+        return f"{self.value}".lower()
+    
+    def __and__(self, other):
+        if isinstance(other, IntValue):
+            return BoolValue(self.value and other.value)
+
+        raise NotImplementedError()
+    
+    def __or__(self, other):
+        if isinstance(other, IntValue):
+            return BoolValue(self.value or other.value)
+
+        raise NotImplementedError()
+    
+    def __xor__(self, other):
+        if isinstance(other, IntValue):
+            return BoolValue(self.value ^ other.value)
+
+        raise NotImplementedError()
+    
+    def __bool__(self):
+        return self.value
     
 
 @dataclass
@@ -151,3 +210,26 @@ class ListValue:
             res.value.append(other)
             print(other)
             return res
+    
+    def __getitem__(self, i):
+        if isinstance(i, slice):
+            return ListValue(self.value[i.start.value:i.stop.value])
+        else:
+            return ListValue(self.value[i.value])
+    
+    def __setitem__(self, key, val):
+        self.value[key.value] = val.value
+
+    def __contains__(self, item):
+        return BoolValue(item in self.value)
+
+
+@dataclass
+class Variable:
+    type: str
+    value: IntValue | FloatValue | StringValue | BoolValue | ListValue
+
+
+class Scope:
+    def __init__(self):
+        self.variables: dict[str, Variable] = {}
