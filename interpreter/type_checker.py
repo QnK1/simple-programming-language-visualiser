@@ -428,7 +428,7 @@ class TypeChecker(SPLVParserVisitor):
         if exp_type not in (self.Variable(TypeNames.STRING), self.Variable(TypeNames.LIST)):
             raise TypeException(f"{exp_type} is not iterable", ctx.start.line, ctx.start.column)
         
-        if not (t == self.Variable(TypeNames.STRING) == exp_type or t == exp_type.getListElementType()):
+        if not (t == self.Variable(TypeNames.STRING) == exp_type or t == exp_type.getListElementType() or len(exp_type.getListElementType().type) == 0):
             raise TypeException(f"Iterator of type {t} invalid for {exp_type}", ctx.start.line, ctx.start.column)
     
 

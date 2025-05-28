@@ -55,7 +55,7 @@ def run(source: str) -> tuple[list[CompilationError], list]:
 
     print()
     for s in program:
-        print(s)
+        print(f"\n{s}")
         for key, val in s.__dict__.items():
             print(key, val)
 

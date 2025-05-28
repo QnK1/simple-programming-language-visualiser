@@ -11,7 +11,7 @@ class ScopeType(Enum):
     FUNCTION = 2
 
 class VariableDefinitionStatement(Statement):
-    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val: str, rhs_exp: "Expression", scope: ScopeType):
+    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val, rhs_exp: "Expression", scope: ScopeType):
         super().__init__(line_start, column_start)
         self.name: str = name
         self.type: str = type
@@ -21,7 +21,7 @@ class VariableDefinitionStatement(Statement):
 
 
 class VariableAssignmentStatement(Statement):
-    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val: str, rhs_exp: "Expression", scope: ScopeType, is_list_indexing: bool, index_exp: "Expression", final_index: str):
+    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val, rhs_exp: "Expression", scope: ScopeType, is_list_indexing: bool, index_exp: "Expression", final_index: str):
         super().__init__(line_start, column_start)
         self.name: str = name
         self.type: str = type
@@ -44,21 +44,30 @@ class FunctionCallStatement(Statement):
 
 
 class IfStatement(Statement):
-    def __init__(self, line_start: int, column_start: int, condition_exp: "Expression", final_cond_val: str, has_else: bool):
+    def __init__(self, line_start: int, column_start: int, condition_exp: "Expression", final_cond_val, has_else: bool):
         super().__init__(line_start, column_start)
         self.condition_exp = condition_exp
         self.final_cond_val = final_cond_val
         self.has_else = has_else
 
 
+# represents one time a while statement is reached and evaluated
 class WhileStatement(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, condition_exp: "Expression", final_cond_val):
         super().__init__(line_start, column_start)
+        self.condition_exp = condition_exp
+        self.final_cond_val = final_cond_val
 
 
 class LoopStatement(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, iterator_name: str, iterator_type: str, current_iterator_val: str, iterated_exp: "Expression", iterated_exp_final_val, current_iterator_index: int):
         super().__init__(line_start, column_start)
+        self.iterator_name = iterator_name
+        self.iterator_type = iterator_type
+        self.current_iterator_val = current_iterator_val
+        self.iterated_exp = iterated_exp
+        self.iterated_exp_final_val = iterated_exp_final_val
+        self.current_iterator_index = current_iterator_index
 
 
 class Error(Statement):
@@ -84,6 +93,8 @@ class IntValue:
         return f"{self.value}"
 
     def __add__(self, other):
+        print(type(other))
+        
         if isinstance(other, IntValue):
             return IntValue(self.value + other.value)
         elif isinstance(other, ListValue):
@@ -182,6 +193,7 @@ class StringValue:
         
         raise NotImplementedError()
 
+
 @dataclass
 class BoolValue:
     value: bool
@@ -238,6 +250,19 @@ class ListValue:
 
     def __contains__(self, item):
         return BoolValue(item in self.value)
+
+    
+    def fromElementType(self, val):
+        if isinstance(self.value[0], IntValue):
+            return IntValue(val)
+        elif isinstance(self.value[0], FloatValue):
+            return FloatValue(val)
+        elif isinstance(self.value[0], BoolValue):
+            return BoolValue(val)
+        elif isinstance(self.value[0], ListValue):
+            return ListValue(val)
+        elif isinstance(self.value[0], StringValue):
+            return StringValue(val)
 
 
 @dataclass

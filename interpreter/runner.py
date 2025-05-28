@@ -25,7 +25,7 @@ class Runner(SPLVParserVisitor):
             n, t, f, e, s, ii, ie, fi = self.visitVariableAssignment(ctx.variableAssignment())
 
             self.result.append(VariableAssignmentStatement(ctx.start.line, ctx.start.column, n, t, f, e, s, ii, ie, fi))
-        elif ctx.functionDefinition() is not None:
+        elif isinstance(ctx, SPLVParser.StatementContext) and ctx.functionDefinition() is not None:
             self.result.append(FunctionDefinitionStatement(ctx.start.line, ctx.start.column))
         elif ctx.functionCall() is not None:
             self.result.append(FunctionCallStatement(ctx.start.line, ctx.start.column))
@@ -37,9 +37,10 @@ class Runner(SPLVParserVisitor):
             for s in statements_to_execute:
                 self.visitStatementInControlBlock(s)
         elif ctx.controlStatement().whileStatement() is not None:
-            self.result.append(WhileStatement(ctx.start.line, ctx.start.column))
+            self.visit(ctx.controlStatement().whileStatement())
+            
         elif ctx.controlStatement().loopStatement() is not None:
-            self.result.append(LoopStatement(ctx.start.line, ctx.start.column))
+            self.visit(ctx.controlStatement().loopStatement())
 
 
     def visitStatement(self, ctx:SPLVParser.StatementContext):
@@ -64,6 +65,60 @@ class Runner(SPLVParserVisitor):
             statements = ctx.controlBlock()[1].statementInControlBlock()
 
         return exp, final_val, has_else, statements
+
+
+    def visitWhileStatement(self, ctx:SPLVParser.WhileStatementContext):
+        condition_ctx = ctx.expression()
+        calculator = ExpressionCalculator(self)
+
+        exp = calculator.calculate(condition_ctx)
+        val = exp.stages[-1].content
+
+
+        while val.value:
+            self.result.append(WhileStatement(ctx.start.line, ctx.start.column, exp, val))
+
+            statements = ctx.controlBlock().statementInControlBlock()
+
+            for s in statements:
+                self.visitStatementInControlBlock(s)
+            
+            calculator = ExpressionCalculator(self)
+            exp = calculator.calculate(condition_ctx)
+            val = exp.stages[-1].content
+
+        self.result.append(WhileStatement(ctx.start.line, ctx.start.column, exp, val))
+    
+
+    def visitLoopStatement(self, ctx:SPLVParser.LoopStatementContext):
+        self.scopes.append(Scope())
+
+        iterator_name = ctx.loopStatementIterator().Identifier().getText()
+        iterator_type = ctx.loopStatementIterator().type_().getText()
+        self.scopes[-1].variables[iterator_name] = Variable(iterator_type, None)
+
+        iterated_exp_ctx = ctx.loopStatementIterator().expression()
+        calculator = ExpressionCalculator(self)
+        iterated_exp = calculator.calculate(iterated_exp_ctx)
+        iterated_exp_final_val = iterated_exp.stages[-1].content
+
+        iteration_started = False
+        for index, i in enumerate(iterated_exp_final_val.value):
+            iteration_started = True
+
+            self.setVariableValue(iterator_name, i)
+
+            self.result.append(LoopStatement(ctx.start.line, ctx.start.column, iterator_name, iterator_type, i, iterated_exp, iterated_exp_final_val, index))
+
+            statements = ctx.controlBlock().statementInControlBlock()
+
+            for s in statements:
+                self.visitStatementInControlBlock(s)
+        
+        if not iteration_started:
+            self.result.append(LoopStatement(ctx.start.line, ctx.start.column, iterator_name, iterator_type, None, iterated_exp, iterated_exp_final_val, None))
+        
+        self.scopes.pop()
 
 
     def visitVariableDefinition(self, ctx:SPLVParser.VariableDefinitionContext):

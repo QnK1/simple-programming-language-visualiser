@@ -1,6 +1,5 @@
-int a = 5;
-int b = 3;
+int sum = 0;
 
-if(a != b){
-    a = 3;
+lop(int i in [1, 2, 3, 4]){
+    sum = sum + i;
 }
