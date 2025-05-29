@@ -13,7 +13,7 @@ class Runner(SPLVParserVisitor):
 
     def visitProgram(self, ctx:SPLVParser.ProgramContext):
         self.visitChildren(ctx)
-        
+
         return self.result
     
 
@@ -93,11 +93,14 @@ class Runner(SPLVParserVisitor):
 
     def visitReturnStatement(self, ctx:SPLVParser.ReturnStatementContext):
         fun_name = self.scopes[-1].fun_name
-        exp = ctx.expression()
-
-        calculator = ExpressionCalculator(self)
-        return_exp = calculator.calculate(exp)
-        final_val = return_exp.stages[-1].content
+        if self.functions[fun_name].return_type != "nul":
+            exp = ctx.expression()
+            calculator = ExpressionCalculator(self)
+            return_exp = calculator.calculate(exp)
+            final_val = return_exp.stages[-1].content
+        else:
+            return_exp = None
+            final_val = None
 
         self.result.append(ReturnStatement(ctx.start.line, ctx.start.column, fun_name, return_exp, final_val))
 

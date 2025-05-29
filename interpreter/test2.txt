@@ -13,3 +13,17 @@ fun int:fib(int n){
 int a = fib(4);
 
 lst[int] list = [1, 2];
+
+list[0] = 5;
+
+int mm = 0;
+fun nul:test(){
+    flo c = 8.1;
+    mm = 3;
+
+    ret;
+}
+
+test();
+
+int testest = fib(mm);
