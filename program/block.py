@@ -21,6 +21,8 @@ class Block():
         return self.value
     def getColor(self):
         return self.color
+    def getType(self):
+        return self.type
     def getPosition(self):
         return self.position
     def add(self, value: float):

@@ -20,10 +20,11 @@ block_spacing = 20
 blocks_width = 8
 
 # Hover on block config
-hover_color = (150,150,255)
+hover_color = (50,50,50)
 hover_text_color = (0,0,0)
 hover_font_size = 40
-hover_height = 150
+hover_height = block_size * 1.5
+hover_border_size = 15
 
 # Globals config
 globals_height = 600
