@@ -34,13 +34,26 @@ class VariableAssignmentStatement(Statement):
 
 
 class FunctionDefinitionStatement(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, args: list["Argument"], return_type: str, name: str):
         super().__init__(line_start, column_start)
+        self.args = args
+        self.return_type = return_type
+        self.name = name
+
+
+class ReturnStatement(Statement):
+    def __init__(self, line_start: int, column_start: int, function_name: str, return_exp: "Expression", return_val):
+        super().__init__(line_start, column_start)
+        self.function_name = function_name
+        self.return_val = return_val
 
 
 class FunctionCallStatement(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, function_name: str, arg_expressions: list["Expression"], arg_values: list):
         super().__init__(line_start, column_start)
+        self.function_name = function_name
+        self.arg_expressions = arg_expressions
+        self.arg_values = arg_values
 
 
 class IfStatement(Statement):
@@ -272,5 +285,19 @@ class Variable:
 
 
 class Scope:
-    def __init__(self):
+    def __init__(self, fun_name: str = "$$global"):
         self.variables: dict[str, Variable] = {}
+        self.fun_name: str = fun_name
+
+
+@dataclass
+class Argument:
+    type: str
+    name: str
+
+@dataclass
+class Function:
+    args: list[Argument]
+    return_type: str
+    name: str
+    content: list

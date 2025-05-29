@@ -59,9 +59,8 @@ def run(source: str) -> tuple[list[CompilationError], list]:
         for key, val in s.__dict__.items():
             print(key, val)
 
-    result = None
 
-    return compile_time_errors, result
+    return compile_time_errors, program
 
 
 if __name__ == "__main__":

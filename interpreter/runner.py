@@ -9,6 +9,7 @@ class Runner(SPLVParserVisitor):
     def __init__(self):
         self.result: list[Statement] = []
         self.scopes: list[Scope] = [Scope()]
+        self.functions: dict[str, Function] = {}
 
     def visitProgram(self, ctx:SPLVParser.ProgramContext):
         self.visitChildren(ctx)
@@ -17,30 +18,42 @@ class Runner(SPLVParserVisitor):
     
 
     def executeStatement(self, ctx):
-        if not isinstance(ctx, SPLVParser.StatementInControlBlockContext) and ctx.variableDefinition() is not None:
+        if (isinstance(ctx, SPLVParser.StatementContext) or isinstance(ctx, SPLVParser.StatementInFunctionContext)) and ctx.variableDefinition() is not None:
             n, t, f, e, s = self.visitVariableDefinition(ctx.variableDefinition())
             
             self.result.append(VariableDefinitionStatement(ctx.start.line, ctx.start.column, n, t, f, e, s))
         elif ctx.variableAssignment() is not None:
             n, t, f, e, s, ii, ie, fi = self.visitVariableAssignment(ctx.variableAssignment())
-
             self.result.append(VariableAssignmentStatement(ctx.start.line, ctx.start.column, n, t, f, e, s, ii, ie, fi))
         elif isinstance(ctx, SPLVParser.StatementContext) and ctx.functionDefinition() is not None:
-            self.result.append(FunctionDefinitionStatement(ctx.start.line, ctx.start.column))
+            self.visit(ctx.functionDefinition())
         elif ctx.functionCall() is not None:
-            self.result.append(FunctionCallStatement(ctx.start.line, ctx.start.column))
-        elif ctx.controlStatement().ifStatement() is not None:
+            self.callFunction(ctx.functionCall())
+        elif (isinstance(ctx, SPLVParser.StatementContext) or isinstance(ctx, SPLVParser.StatementInControlBlockContext)) and ctx.controlStatement().ifStatement() is not None:
             c, f, h, statements_to_execute = self.visitIfStatement(ctx.controlStatement().ifStatement())
             
             self.result.append(IfStatement(ctx.start.line, ctx.start.column, c, f, h))
 
             for s in statements_to_execute:
                 self.visitStatementInControlBlock(s)
-        elif ctx.controlStatement().whileStatement() is not None:
+        elif (isinstance(ctx, SPLVParser.StatementContext) or isinstance(ctx, SPLVParser.StatementInControlBlockContext)) and ctx.controlStatement().whileStatement() is not None:
             self.visit(ctx.controlStatement().whileStatement())
             
-        elif ctx.controlStatement().loopStatement() is not None:
+        elif (isinstance(ctx, SPLVParser.StatementContext) or isinstance(ctx, SPLVParser.StatementInControlBlockContext)) and ctx.controlStatement().loopStatement() is not None:
             self.visit(ctx.controlStatement().loopStatement())
+        elif isinstance(ctx, SPLVParser.StatementInFunctionContext) and ctx.controlStatementInsideFunction() is not None and ctx.controlStatementInsideFunction().ifStatementInsideFunction() is not None:
+            c, f, h, statements_to_execute = self.visitIfStatementInsideFunction(ctx.controlStatementInsideFunction().ifStatementInsideFunction())
+            
+            self.result.append(IfStatement(ctx.start.line, ctx.start.column, c, f, h))
+
+            for s in statements_to_execute:
+                self.visit(s)
+        elif isinstance(ctx, SPLVParser.StatementInFunctionContext) and ctx.controlStatementInsideFunction() is not None and ctx.controlStatementInsideFunction().whileStatementInsideFunction() is not None:
+            self.visit(ctx.controlStatementInsideFunction().whileStatementInsideFunction())
+        elif isinstance(ctx, SPLVParser.StatementInFunctionContext) and ctx.controlStatementInsideFunction() is not None and ctx.controlStatementInsideFunction().loopStatementInsideFunction() is not None:
+            self.visit(ctx.controlStatementInsideFunction().loopStatementInsideFunction())
+        elif isinstance(ctx, SPLVParser.StatementInFunctionContext) and ctx.returnStatement() is not None:
+            self.visitReturnStatement(ctx.returnStatement())
 
 
     def visitStatement(self, ctx:SPLVParser.StatementContext):
@@ -51,7 +64,56 @@ class Runner(SPLVParserVisitor):
         self.executeStatement(ctx)
     
 
-    def visitIfStatement(self, ctx:SPLVParser.IfStatementContext):
+    def callFunction(self, ctx: SPLVParser.FunctionCallContext):
+        function = self.functions[ctx.Identifier().getText()]
+        
+        self.scopes.append(Scope(function.name))
+
+        arg_exps = []
+        arg_values = []
+
+        for a, param in zip(ctx.passedParametersList().expression(), function.args):
+            calculator = ExpressionCalculator(self)
+            arg_exp = calculator.calculate(a)
+            final_val = arg_exp.stages[-1].content
+
+            arg_exps.append(arg_exp)
+            arg_values.append(final_val)
+
+            self.scopes[-1].variables[param.name] = Variable(param.type, final_val)
+        
+        self.result.append(FunctionCallStatement(ctx.start.line, ctx.start.column, function.name, arg_exps, arg_values))
+
+        for statement in function.content:
+            self.executeStatement(statement)
+        
+
+        self.scopes.pop()
+    
+
+    def visitReturnStatement(self, ctx:SPLVParser.ReturnStatementContext):
+        fun_name = self.scopes[-1].fun_name
+        exp = ctx.expression()
+
+        calculator = ExpressionCalculator(self)
+        return_exp = calculator.calculate(exp)
+        final_val = return_exp.stages[-1].content
+
+        self.result.append(ReturnStatement(ctx.start.line, ctx.start.column, fun_name, return_exp, final_val))
+
+
+    def visitFunctionDefinition(self, ctx:SPLVParser.FunctionDefinitionContext):
+        args = [Argument(a.type_().getText(), a.Identifier().getText()) for a in ctx.functionArgumentList().functionArgument()]
+        return_type = ctx.functionIdentifier().functionReturnType().getText()
+        name = ctx.functionIdentifier().Identifier().getText()
+        content = ctx.functionBlock().statementInFunction()
+
+        self.functions[name] = Function(args, return_type, name, content)
+
+        self.result.append(FunctionDefinitionStatement(ctx.start.line, ctx.start.column, args, return_type, name))
+    
+
+    def executeIfStatement(self, ctx):
         condition_ctx = ctx.expression()
         calculator = ExpressionCalculator(self)
         exp = calculator.calculate(condition_ctx)
@@ -60,14 +122,23 @@ class Runner(SPLVParserVisitor):
 
 
         if final_val.value:
-            statements = ctx.controlBlock()[0].statementInControlBlock()
+            if isinstance(ctx, SPLVParser.IfStatementContext):
+                statements = ctx.controlBlock()[0].statementInControlBlock()
+            elif isinstance(ctx, SPLVParser.IfStatementInsideFunctionContext):
+                statements = ctx.functionControlBlock()[0].statementInFunction()
         elif has_else:
-            statements = ctx.controlBlock()[1].statementInControlBlock()
+            if isinstance(ctx, SPLVParser.IfStatementContext):
+                statements = ctx.controlBlock()[1].statementInControlBlock()
+            elif isinstance(ctx, SPLVParser.IfStatementInsideFunctionContext):
+                statements = ctx.functionControlBlock()[1].statementInFunction()
 
         return exp, final_val, has_else, statements
 
+    def visitIfStatement(self, ctx:SPLVParser.IfStatementContext):
+        return self.executeIfStatement(ctx)
 
-    def visitWhileStatement(self, ctx:SPLVParser.WhileStatementContext):
+
+    def executeWhileStatement(self, ctx):
         condition_ctx = ctx.expression()
         calculator = ExpressionCalculator(self)
 
@@ -77,20 +148,26 @@ class Runner(SPLVParserVisitor):
 
         while val.value:
             self.result.append(WhileStatement(ctx.start.line, ctx.start.column, exp, val))
-
-            statements = ctx.controlBlock().statementInControlBlock()
+            
+            if isinstance(ctx, SPLVParser.WhileStatementContext):
+                statements = ctx.controlBlock().statementInControlBlock()
+            elif isinstance(ctx, SPLVParser.WhileStatementInsideFunctionContext):   
+                statements = ctx.functionControlBlock().statementInFunction()
 
             for s in statements:
-                self.visitStatementInControlBlock(s)
+                self.executeStatement(s)
             
             calculator = ExpressionCalculator(self)
             exp = calculator.calculate(condition_ctx)
             val = exp.stages[-1].content
 
         self.result.append(WhileStatement(ctx.start.line, ctx.start.column, exp, val))
+
+    def visitWhileStatement(self, ctx:SPLVParser.WhileStatementContext):
+        self.executeWhileStatement(ctx)
     
 
-    def visitLoopStatement(self, ctx:SPLVParser.LoopStatementContext):
+    def executeLoopStatement(self, ctx):
         self.scopes.append(Scope())
 
         iterator_name = ctx.loopStatementIterator().Identifier().getText()
@@ -110,16 +187,32 @@ class Runner(SPLVParserVisitor):
 
             self.result.append(LoopStatement(ctx.start.line, ctx.start.column, iterator_name, iterator_type, i, iterated_exp, iterated_exp_final_val, index))
 
-            statements = ctx.controlBlock().statementInControlBlock()
+            if isinstance(ctx, SPLVParser.LoopStatementContext):
+                statements = ctx.controlBlock().statementInControlBlock()
+            elif isinstance(ctx, SPLVParser.LoopStatementInsideFunctionContext):
+                statements = ctx.functionControlBlock().statementInFunction()
 
             for s in statements:
-                self.visitStatementInControlBlock(s)
+                self.executeStatement(s)
         
         if not iteration_started:
             self.result.append(LoopStatement(ctx.start.line, ctx.start.column, iterator_name, iterator_type, None, iterated_exp, iterated_exp_final_val, None))
         
         self.scopes.pop()
 
+    def visitLoopStatement(self, ctx:SPLVParser.LoopStatementContext):
+        self.executeLoopStatement(ctx)
+
+
+    def visitIfStatementInsideFunction(self, ctx:SPLVParser.IfStatementInsideFunctionContext):
+        return self.executeIfStatement(ctx)
+
+
+    def visitWhileStatementInsideFunction(self, ctx:SPLVParser.WhileStatementInsideFunctionContext):
+        self.executeWhileStatement(ctx)
+
+    def visitLoopStatementInsideFunction(self, ctx:SPLVParser.LoopStatementInsideFunctionContext):
+        self.executeLoopStatement(ctx)
 
     def visitVariableDefinition(self, ctx:SPLVParser.VariableDefinitionContext):
         rhs_exp = ctx.expression()

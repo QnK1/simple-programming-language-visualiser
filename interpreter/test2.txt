@@ -1,5 +1,9 @@
-int sum = 0;
+fun int:test(int a, int b){
+    lop(int i in [1, 2, 3]){
+        a = a + i;
+    }
 
-lop(int i in [1, 2, 3, 4]){
-    sum = sum + i;
+    ret a;
 }
+
+test(2, 0);
