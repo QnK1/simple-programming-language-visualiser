@@ -47,17 +47,6 @@ def run(source: str) -> tuple[list[CompilationError], list]:
             program = runner.visit(tree)
         except (ReturnException, TypeException) as e:
             compile_time_errors.append(CompilationError(e.line, e.column, e.msg))
-        
-    
-
-    print(compile_time_errors)
-    print(program)
-
-    print()
-    for s in program:
-        print(f"\n{s}")
-        for key, val in s.__dict__.items():
-            print(key, val)
 
 
     return compile_time_errors, program
@@ -67,4 +56,12 @@ if __name__ == "__main__":
     with open(Path(__file__).resolve().parent / Path("test2.txt"), "r") as f:
         input_text = f.read()
 
-    output = run(input_text)
+    compilation_errors, program = run(input_text)
+
+    if program is not None:
+        for s in program:
+            print(f"\n{s}")
+            for key, val in s.__dict__.items():
+                print(key, val)
+    else:
+        print(compilation_errors)
