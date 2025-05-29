@@ -1,9 +1,15 @@
-fun int:test(int a, int b){
-    lop(int i in [1, 2, 3]){
-        a = a + i;
+fun int:fib(int n){
+    int a = 0;
+    
+    if(n == 0 or n == 1){
+        a = 1;
+    }els{
+        a = fib(n - 1) + fib(n - 2);
     }
 
     ret a;
 }
 
-test(2, 0);
+int a = fib(4);
+
+lst[int] list = [1, 2];

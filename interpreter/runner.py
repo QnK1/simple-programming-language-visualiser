@@ -13,7 +13,7 @@ class Runner(SPLVParserVisitor):
 
     def visitProgram(self, ctx:SPLVParser.ProgramContext):
         self.visitChildren(ctx)
-
+        
         return self.result
     
 
@@ -22,7 +22,7 @@ class Runner(SPLVParserVisitor):
             n, t, f, e, s = self.visitVariableDefinition(ctx.variableDefinition())
             
             self.result.append(VariableDefinitionStatement(ctx.start.line, ctx.start.column, n, t, f, e, s))
-        elif ctx.variableAssignment() is not None:
+        elif (isinstance(ctx, SPLVParser.StatementContext) or isinstance(ctx, SPLVParser.StatementInControlBlockContext) or isinstance(ctx, SPLVParser.StatementInFunctionContext)) and ctx.variableAssignment() is not None:
             n, t, f, e, s, ii, ie, fi = self.visitVariableAssignment(ctx.variableAssignment())
             self.result.append(VariableAssignmentStatement(ctx.start.line, ctx.start.column, n, t, f, e, s, ii, ie, fi))
         elif isinstance(ctx, SPLVParser.StatementContext) and ctx.functionDefinition() is not None:
@@ -301,25 +301,28 @@ class ExpressionCalculator(SPLVParserVisitor):
         self.depth = None
         self.starting_depth = None
         self.runner: Runner = runner
+        self.res = Expression()
     
     def calculate(self, exp):
         self.original_expression = exp.getText()
 
         counter = ExpressionCounter()
         self.starting_depth = counter.visit(exp)
-        res = Expression()
 
         while self.starting_depth >= 0:
             # print(f"depth: {self.starting_depth}")
             self.depth = self.starting_depth
-            res.stages.append(Expression.Stage(self.visit(exp)))
+            self.res.stages.append(Expression.Stage(self.visit(exp)))
             self.starting_depth = self.starting_depth - 1
         
         print("Stages:")
-        for stage in res.stages:
-            print(stage.content)
+        for stage in self.res.stages:
+            if isinstance(stage, Expression.Stage):
+                print(stage.content)
+            else:
+                print(stage)
         
-        return res
+        return self.res
 
     
     # Visit a parse tree produced by SPLVParser#parenthesesExpression.
@@ -520,7 +523,28 @@ class ExpressionCalculator(SPLVParserVisitor):
 
     # Visit a parse tree produced by SPLVParser#functionCallExpression.
     def visitFunctionCallExpression(self, ctx:SPLVParser.FunctionCallExpressionContext):
-        raise NotImplementedError()
+        start_depth = self.depth
+        self.depth = self.depth - 1
+
+        arg_exps = ctx.functionCall().passedParametersList().expression()
+        arg_contents = [self.visit(exp) for exp in arg_exps]
+
+        fun_name = ctx.functionCall().Identifier().getText()
+
+        if start_depth > 0:
+            return f"{fun_name}({','.join([a.__str__() for a in arg_contents])})"
+        else:
+            starting_len = len(self.runner.result)
+            self.runner.executeStatement(ctx)
+
+            contents = self.runner.result[starting_len:]
+            self.runner.result = self.runner.result[:starting_len]
+
+            self.res.stages.append(contents)
+
+            val = contents[-1].return_val
+
+            return val
 
 
     # Visit a parse tree produced by SPLVParser#notOperatorExpression.

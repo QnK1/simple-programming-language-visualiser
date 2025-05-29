@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from .errors import IndexOutOfBoundsException
 
 class Statement:
     def __init__(self, line_start: int, column_start: int):
@@ -90,8 +91,9 @@ class Error(Statement):
 
 class Expression:
     class Stage:
-        def __init__(self, c: str | FunctionCallStatement):
-            self.content: str | FunctionCallStatement = c
+        def __init__(self, c: str | Statement, is_function_call: bool = False):
+            self.content: str | list[Statement] = c
+            self.is_function_call = is_function_call
     
     def __init__(self):
         self.stages: list[Expression.Stage] = []
@@ -254,6 +256,9 @@ class ListValue:
     
     def __getitem__(self, i):
         if isinstance(i, slice):
+            if i.start.value < 0 or i.stop.value >= len(self.value):
+                raise IndexOutOfBoundsException()
+            
             return ListValue(self.value[i.start.value:i.stop.value])
         else:
             return ListValue(self.value[i.value])
