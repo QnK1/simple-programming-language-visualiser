@@ -86,7 +86,11 @@ class Runner(SPLVParserVisitor):
 
         for statement in function.content:
             self.executeStatement(statement)
+
         
+        # handling of void functions without return statements
+        if not isinstance(self.result[-1], ReturnStatement):
+            self.result.append(ReturnStatement(-1, -1, function.name, None, None))
 
         self.scopes.pop()
     

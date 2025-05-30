@@ -1,29 +1,6 @@
-fun int:fib(int n){
-    int a = 0;
-    
-    if(n == 0 or n == 1){
-        a = 1;
-    }els{
-        a = fib(n - 1) + fib(n - 2);
-    }
-
-    ret a;
+fun nul:fun1(){
+    int a = 5;
 }
 
-int a = fib(4);
 
-lst[int] list = [1, 2];
-
-list[0] = 5;
-
-int mm = 0;
-fun nul:test(){
-    flo c = 8.1;
-    mm = 3;
-
-    ret;
-}
-
-test();
-
-int testest = fib(mm);
+fun1();
