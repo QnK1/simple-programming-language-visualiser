@@ -80,11 +80,11 @@ def serializedATN():
         161,10,7,0,0,161,162,5,8,0,0,162,191,3,14,7,8,163,164,10,6,0,0,164,
         165,5,7,0,0,165,191,3,14,7,7,166,167,10,5,0,0,167,168,5,13,0,0,168,
         191,3,14,7,6,169,170,10,3,0,0,170,171,5,9,0,0,171,191,3,14,7,4,172,
-        173,10,2,0,0,173,174,5,10,0,0,174,191,3,14,7,3,175,176,10,11,0,0,
+        173,10,2,0,0,173,174,5,10,0,0,174,191,3,14,7,3,175,176,10,12,0,0,
         176,178,5,32,0,0,177,179,3,14,7,0,178,177,1,0,0,0,178,179,1,0,0,
         0,179,180,1,0,0,0,180,182,5,29,0,0,181,183,3,14,7,0,182,181,1,0,
         0,0,182,183,1,0,0,0,183,184,1,0,0,0,184,191,5,33,0,0,185,186,10,
-        10,0,0,186,187,5,32,0,0,187,188,3,14,7,0,188,189,5,33,0,0,189,191,
+        11,0,0,186,187,5,32,0,0,187,188,3,14,7,0,188,189,5,33,0,0,189,191,
         1,0,0,0,190,160,1,0,0,0,190,163,1,0,0,0,190,166,1,0,0,0,190,169,
         1,0,0,0,190,172,1,0,0,0,190,175,1,0,0,0,190,185,1,0,0,0,191,194,
         1,0,0,0,192,190,1,0,0,0,192,193,1,0,0,0,193,15,1,0,0,0,194,192,1,
@@ -1508,9 +1508,9 @@ class SPLVParser ( Parser ):
                         localctx = SPLVParser.ListSlicingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 175
-                        if not self.precpred(self._ctx, 11):
+                        if not self.precpred(self._ctx, 12):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 12)")
                         self.state = 176
                         self.match(SPLVParser.BracketLeft)
                         self.state = 178
@@ -1539,9 +1539,9 @@ class SPLVParser ( Parser ):
                         localctx = SPLVParser.ListIndexingExpressionContext(self, SPLVParser.ExpressionContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expression)
                         self.state = 185
-                        if not self.precpred(self._ctx, 10):
+                        if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
                         self.state = 186
                         self.match(SPLVParser.BracketLeft)
                         self.state = 187
@@ -3256,11 +3256,11 @@ class SPLVParser ( Parser ):
          
 
             if predIndex == 5:
-                return self.precpred(self._ctx, 11)
+                return self.precpred(self._ctx, 12)
          
 
             if predIndex == 6:
-                return self.precpred(self._ctx, 10)
+                return self.precpred(self._ctx, 11)
          
 
 

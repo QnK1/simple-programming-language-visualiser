@@ -261,10 +261,11 @@ class ListValue:
             
             return ListValue(self.value[i.start.value:i.stop.value])
         else:
-            return ListValue(self.value[i.value])
+            return self.value[i.value]
+                
     
     def __setitem__(self, key, val):
-        self.value[key.value] = val.value
+        self.value[key.value] = val
 
     def __contains__(self, item):
         return BoolValue(item in self.value)

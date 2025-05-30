@@ -269,10 +269,13 @@ class Runner(SPLVParserVisitor):
         return name, t, final_val, exp, self.getVariableScope(name), is_list_indexing, index_exp, final_index
 
 
-    def getVariableValue(self, name):
+    def getVariableValue(self, name, i = None):
         for scope in self.scopes[::-1]:
             if name in scope.variables:
-                return scope.variables[name].value
+                if i is None:
+                    return scope.variables[name].value
+                else:
+                    return scope.variables[name].value[i]
     
 
     def setVariableValue(self, name, value):
@@ -502,9 +505,12 @@ class ExpressionCalculator(SPLVParserVisitor):
 
         name = ctx.Identifier().getText()
 
+        print(f"ID: {ctx.getText()}")
+
         if start_depth > 0:
                 return f"{name}"
         else:
+            print(f"VAL: {self.runner.getVariableValue(name)}")
             return self.runner.getVariableValue(name)
 
 
@@ -577,6 +583,9 @@ class ExpressionCalculator(SPLVParserVisitor):
 
         list_exp = ctx.expression()[0]
         index_exp = ctx.expression()[1]
+
+        print(f"LIST EXP: {list_exp.getText()}")
+        print(f"INDEX_EXP: {index_exp.getText()}")
 
         list_content = self.visit(list_exp)
         index_content = self.visit(index_exp)
