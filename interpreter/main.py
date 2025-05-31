@@ -9,9 +9,10 @@ from .return_checker import ReturnChecker
 from .ParsingErrorListener import ParsingErrorListener
 from .errors import DeclarationException, CompilationError, ReturnException, TypeException
 from .runner import Runner
+from .run_utils import Statement
 
 
-def run(source: str) -> tuple[list[CompilationError], list]:
+def run(source: str) -> tuple[list[CompilationError], list[Statement]]:
     lexer = SPLVLexer(InputStream(source))
     stream = CommonTokenStream(lexer)
     parser = SPLVParser(stream)
@@ -53,7 +54,7 @@ def run(source: str) -> tuple[list[CompilationError], list]:
 
 
 if __name__ == "__main__":
-    with open(Path(__file__).resolve().parent / Path("quicksort.txt"), "r") as f:
+    with open(Path(__file__).resolve().parent.parent / Path("examples/fib.txt"), "r") as f:
         input_text = f.read()
 
     compilation_errors, program = run(input_text)

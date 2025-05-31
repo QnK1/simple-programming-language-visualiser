@@ -1,5 +1,0 @@
-int sum = 0;
-
-lop(int i in []){
-    sum = sum + i;
-}
