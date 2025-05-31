@@ -1,1 +1,18 @@
-int a = 5;
+lst[int] a = [1, 2, 3, 4];
+
+fun int:test(int n){
+    a[n] = a[n] + 1;
+    int c = 7;
+
+    if(n > 0){
+        c = test(n - 1);
+    }
+
+    ret 1;
+    
+}
+
+test(3);
+
+lst[int] b = a;
+

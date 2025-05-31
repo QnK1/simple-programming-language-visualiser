@@ -89,7 +89,7 @@ variableDefinition: GlobalTypeModifier? type Identifier AssignmentOperator expre
 variableAssignment: lValue AssignmentOperator expression;
 lValue
     : Identifier
-    | Identifier BracketLeft expression BracketRight
+    | lValue BracketLeft expression BracketRight
     ;
 ////
 

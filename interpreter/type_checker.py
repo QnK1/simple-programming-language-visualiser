@@ -145,7 +145,10 @@ class TypeChecker(SPLVParserVisitor):
 
     # Visit a parse tree produced by SPLVParser#lValue.
     def visitLValue(self, ctx:SPLVParser.LValueContext):
-        base_type = self._getType(ctx.Identifier().getText())
+        if ctx.Identifier() is not None:
+            base_type = self._getType(ctx.Identifier().getText())
+        else:
+            base_type = self.visit(ctx.lValue())
         exp = ctx.expression()
 
         if exp is None:

@@ -80,7 +80,11 @@ class DeclarationChecker(SPLVParserListener):
     
 
     def exitLValue(self, ctx:SPLVParser.LValueContext):
-        name = ctx.Identifier().getText()
+        name = ctx
+        while name.Identifier() is None:
+            name = name.lValue()
+        
+        name = name.Identifier().getText()
 
         self._checkIfDefined(name, ctx)
 

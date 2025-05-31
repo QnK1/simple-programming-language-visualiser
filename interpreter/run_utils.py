@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from .errors import IndexOutOfBoundsException
+import copy
 
 class Statement:
     def __init__(self, line_start: int, column_start: int):
@@ -14,74 +15,74 @@ class ScopeType(Enum):
 class VariableDefinitionStatement(Statement):
     def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val, rhs_exp: "Expression", scope: ScopeType):
         super().__init__(line_start, column_start)
-        self.name: str = name
-        self.type: str = type
-        self.final_val: str = final_val
-        self.rhs_exp: "Expression" = rhs_exp
-        self.scope = scope
+        self.name: str = copy.deepcopy(name)
+        self.type: str = copy.deepcopy(type)
+        self.final_val: str = copy.deepcopy(final_val)
+        self.rhs_exp: "Expression" = copy.deepcopy(rhs_exp)
+        self.scope = copy.deepcopy(scope)
 
 
 class VariableAssignmentStatement(Statement):
-    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val, rhs_exp: "Expression", scope: ScopeType, is_list_indexing: bool, index_exp: "Expression", final_index: str):
+    def __init__(self, line_start: int, column_start: int, name: str, type: str, final_val, rhs_exp: "Expression", scope: ScopeType, is_list_indexing: bool, index_exps: list["Expression"], final_indices: list):
         super().__init__(line_start, column_start)
-        self.name: str = name
-        self.type: str = type
-        self.final_val: str = final_val
-        self.rhs_exp: "Expression" = rhs_exp
-        self.scope = scope
-        self.is_list_indexing = is_list_indexing
-        self.index_exp = index_exp
-        self.final_index = final_index
+        self.name: str = copy.deepcopy(name)
+        self.type: str = copy.deepcopy(type)
+        self.final_val: str = copy.deepcopy(final_val)
+        self.rhs_exp: "Expression" = copy.deepcopy(rhs_exp)
+        self.scope = copy.deepcopy(scope)
+        self.is_list_indexing = copy.deepcopy(is_list_indexing)
+        self.index_exps = copy.deepcopy(index_exps)
+        self.final_indices = copy.deepcopy(final_indices)
 
 
 class FunctionDefinitionStatement(Statement):
     def __init__(self, line_start: int, column_start: int, args: list["Argument"], return_type: str, name: str):
         super().__init__(line_start, column_start)
-        self.args = args
-        self.return_type = return_type
-        self.name = name
+        self.args = copy.deepcopy(args)
+        self.return_type = copy.deepcopy(return_type)
+        self.name = copy.deepcopy(name)
 
 
 class ReturnStatement(Statement):
     def __init__(self, line_start: int, column_start: int, function_name: str, return_exp: "Expression", return_val):
         super().__init__(line_start, column_start)
-        self.function_name = function_name
-        self.return_val = return_val
+        self.function_name = copy.deepcopy(function_name)
+        self.return_val = copy.deepcopy(return_val)
 
 
 class FunctionCallStatement(Statement):
     def __init__(self, line_start: int, column_start: int, function_name: str, arg_expressions: list["Expression"], arg_values: list):
         super().__init__(line_start, column_start)
-        self.function_name = function_name
-        self.arg_expressions = arg_expressions
-        self.arg_values = arg_values
+        self.function_name = copy.deepcopy(function_name)
+        self.arg_expressions = copy.deepcopy(arg_expressions)
+        self.arg_values = copy.deepcopy(arg_values)
 
 
 class IfStatement(Statement):
     def __init__(self, line_start: int, column_start: int, condition_exp: "Expression", final_cond_val, has_else: bool):
         super().__init__(line_start, column_start)
-        self.condition_exp = condition_exp
-        self.final_cond_val = final_cond_val
-        self.has_else = has_else
+        self.condition_exp = copy.deepcopy(condition_exp)
+        self.final_cond_val = copy.deepcopy(final_cond_val)
+        self.has_else = copy.deepcopy(has_else)
 
 
 # represents one time a while statement is reached and evaluated
 class WhileStatement(Statement):
     def __init__(self, line_start: int, column_start: int, condition_exp: "Expression", final_cond_val):
         super().__init__(line_start, column_start)
-        self.condition_exp = condition_exp
-        self.final_cond_val = final_cond_val
+        self.condition_exp = copy.deepcopy(condition_exp)
+        self.final_cond_val = copy.deepcopy(final_cond_val)
 
 
 class LoopStatement(Statement):
     def __init__(self, line_start: int, column_start: int, iterator_name: str, iterator_type: str, current_iterator_val: str, iterated_exp: "Expression", iterated_exp_final_val, current_iterator_index: int):
         super().__init__(line_start, column_start)
-        self.iterator_name = iterator_name
-        self.iterator_type = iterator_type
-        self.current_iterator_val = current_iterator_val
-        self.iterated_exp = iterated_exp
-        self.iterated_exp_final_val = iterated_exp_final_val
-        self.current_iterator_index = current_iterator_index
+        self.iterator_name = copy.deepcopy(iterator_name)
+        self.iterator_type = copy.deepcopy(iterator_type)
+        self.current_iterator_val = copy.deepcopy(current_iterator_val)
+        self.iterated_exp = copy.deepcopy(iterated_exp)
+        self.iterated_exp_final_val = copy.deepcopy(iterated_exp_final_val)
+        self.current_iterator_index = copy.deepcopy(current_iterator_index)
 
 
 class Error(Statement):
@@ -261,7 +262,10 @@ class ListValue:
             
             return ListValue(self.value[i.start.value:i.stop.value])
         else:
-            return self.value[i.value]
+            if isinstance(i, int):
+                return self.value[i]
+            elif isinstance(i, IntValue):
+                return self.value[i.value]
                 
     
     def __setitem__(self, key, val):
