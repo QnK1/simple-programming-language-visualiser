@@ -54,7 +54,7 @@ def run(source: str) -> tuple[list[CompilationError], list[Statement]]:
 
 
 if __name__ == "__main__":
-    with open(Path(__file__).resolve().parent.parent / Path("examples/fib.txt"), "r") as f:
+    with open(Path(__file__).resolve().parent.parent / Path("examples/quicksort.txt"), "r") as f:
         input_text = f.read()
 
     compilation_errors, program = run(input_text)
