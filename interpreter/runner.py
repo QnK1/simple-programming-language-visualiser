@@ -598,7 +598,7 @@ class ExpressionCalculator(SPLVParserVisitor):
             contents = self.runner.result[starting_len:]
             self.runner.result = self.runner.result[:starting_len]
 
-            self.res.stages.append(contents)
+            self.res.stages.append(Expression.Stage(contents, True))
 
             val = contents[-1].return_val
 
