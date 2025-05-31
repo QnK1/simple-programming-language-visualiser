@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from .errors import IndexOutOfBoundsException
+from .errors import IndexOutOfBoundsException, ZeroDivisionException
 import copy
 
 class Statement:
@@ -86,8 +86,9 @@ class LoopStatement(Statement):
 
 
 class Error(Statement):
-    def __init__(self, line_start: int, column_start: int):
+    def __init__(self, line_start: int, column_start: int, message: str):
         super().__init__(line_start, column_start)
+        self.message = message
 
 
 class Expression:

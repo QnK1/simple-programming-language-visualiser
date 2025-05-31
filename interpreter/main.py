@@ -39,7 +39,7 @@ def run(source: str) -> tuple[list[CompilationError], list]:
     compile_time_errors.extend(declaration_errors)
 
     program = None
-    if tree is not None:
+    if tree is not None and len(compile_time_errors) == 0:
         try:
             return_checker.visit(tree)
             type_checker.visit(tree)
@@ -53,7 +53,7 @@ def run(source: str) -> tuple[list[CompilationError], list]:
 
 
 if __name__ == "__main__":
-    with open(Path(__file__).resolve().parent / Path("quicksort.txt"), "r") as f:
+    with open(Path(__file__).resolve().parent / Path("test3.txt"), "r") as f:
         input_text = f.read()
 
     compilation_errors, program = run(input_text)

@@ -3,6 +3,7 @@ from antlr4 import *
 from .base.SPLVParser import SPLVParser
 from .base.SPLVParserVisitor import SPLVParserVisitor
 from .run_utils import *
+from .errors import ZeroDivisionException, IndexOutOfBoundsException
 
 
 class Runner(SPLVParserVisitor):
@@ -12,8 +13,10 @@ class Runner(SPLVParserVisitor):
         self.functions: dict[str, Function] = {}
 
     def visitProgram(self, ctx:SPLVParser.ProgramContext):
-        self.visitChildren(ctx)
-
+        try:
+            self.visitChildren(ctx)
+        except (IndexOutOfBoundsException, ZeroDivisionException) as e:
+            self.result.append(Error(e.line, e.column, e.msg))
         return self.result
     
 
@@ -284,8 +287,10 @@ class Runner(SPLVParserVisitor):
                 index_exps.append(calculator.calculate(e))
                 final_indices.append(index_exps[-1].stages[-1].content)
 
-
-            self.setListElement(name, final_val, final_indices)
+            try:
+                self.setListElement(name, final_val, final_indices)
+            except IndexError:
+                raise IndexOutOfBoundsException("Index out of bounds", ctx.start.line, ctx.start.column)
         
         return name, t, final_val, exp, self.getVariableScope(name), is_list_indexing, index_exps, final_indices
 
@@ -489,7 +494,11 @@ class ExpressionCalculator(SPLVParserVisitor):
             if start_depth > 0:
                 return f"{left_content}/{right_content}"
             else:
-                return left_content / right_content
+                try:
+                    ret = left_content / right_content
+                except ZeroDivisionError:
+                    raise ZeroDivisionException("Index out of bounds excepiton", ctx.start.line, ctx.start.column)
+                return ret
         elif operator == "%":
             if start_depth > 0:
                 return f"{left_content}%{right_content}"
@@ -539,7 +548,11 @@ class ExpressionCalculator(SPLVParserVisitor):
         if start_depth > 0:
                 return f"{name}"
         else:
-            return self.runner.getVariableValue(name)
+            try:
+                ret = self.runner.getVariableValue(name)
+            except IndexError:
+                raise IndexOutOfBoundsException("Index out of bounds", ctx.start.line, ctx.start.column)
+            return ret
 
 
     # Visit a parse tree produced by SPLVParser#listSlicingExpression.
@@ -559,7 +572,11 @@ class ExpressionCalculator(SPLVParserVisitor):
                 list_content = ctx.expression()[0].Identifier().getText()
             return f"{list_content}[{self.visit(left_exp)}:{self.visit(right_exp)}]"
         else:
-            return list_content[self.visit(left_exp):self.visit(right_exp)]
+            try:
+                ret = list_content[self.visit(left_exp):self.visit(right_exp)]
+            except IndexError:
+                raise IndexOutOfBoundsException("Index out of bounds", ctx.start.line, ctx.start.column)
+            return ret
 
 
     # Visit a parse tree produced by SPLVParser#functionCallExpression.
@@ -622,7 +639,11 @@ class ExpressionCalculator(SPLVParserVisitor):
                 list_content = ctx.expression()[0].Identifier().getText()
             return f"{list_content}[{index_content}]"
         else:
-            return list_content[index_content]
+            try:
+                ret = list_content[index_content]
+            except IndexError:
+                raise IndexOutOfBoundsException("Index out of bounds", ctx.start.line, ctx.start.column)
+            return ret
 
 
     # Visit a parse tree produced by SPLVParser#literalExpression.

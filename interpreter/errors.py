@@ -28,9 +28,19 @@ class TypeException(Exception):
         self.line = line
         self.column = column
 
+###
 # runtime
+###
+
 class IndexOutOfBoundsException(Exception):
     def __init__(self, message, line, column):            
+        self.msg = message
+        self.line = line
+        self.column = column
+
+
+class ZeroDivisionException(Exception):
+    def __init__(self, message, line, column):
         self.msg = message
         self.line = line
         self.column = column
