@@ -50,7 +50,6 @@ class Runner(SPLVParserVisitor):
             self.result.append(IfStatement(ctx.start.line, ctx.start.column, c, f, h))
 
             for s in statements_to_execute:
-                print(f"IN MAIN: {s.getText()}, {type(s)}")
                 self.executeStatement(s)
         elif isinstance(ctx, SPLVParser.StatementInFunctionContext) and ctx.controlStatementInsideFunction() is not None and ctx.controlStatementInsideFunction().whileStatementInsideFunction() is not None:
             self.visit(ctx.controlStatementInsideFunction().whileStatementInsideFunction())
@@ -86,7 +85,6 @@ class Runner(SPLVParserVisitor):
 
             self.scopes[-1].variables[param.name] = Variable(param.type, final_val)
 
-        print(f"FUNCTION: {function.name}, {arg_values}")
         
         self.result.append(FunctionCallStatement(ctx.start.line, ctx.start.column, function.name, arg_exps, arg_values))
 
@@ -148,7 +146,6 @@ class Runner(SPLVParserVisitor):
             elif isinstance(ctx, SPLVParser.IfStatementInsideFunctionContext):
                 statements = ctx.functionControlBlock()[1].statementInFunction()
 
-        print(f"STATEMENTS IN IF: {[s.getText() for s in statements]}")
 
         return exp, final_val, has_else, statements
 
@@ -598,7 +595,8 @@ class ExpressionCalculator(SPLVParserVisitor):
             contents = self.runner.result[starting_len:]
             self.runner.result = self.runner.result[:starting_len]
 
-            self.res.stages.append(Expression.Stage(contents, True))
+            if start_depth == 0:
+                self.res.stages.append(Expression.Stage(contents, True))
 
             val = contents[-1].return_val
 
