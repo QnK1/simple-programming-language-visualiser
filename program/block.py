@@ -19,6 +19,8 @@ class Block():
         return self.name
     def getValue(self):
         return self.value
+    def getType(self):
+        return self.type
     def getColor(self):
         return self.color
     def getPosition(self):
