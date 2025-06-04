@@ -350,8 +350,16 @@ class StringValue:
             return StringValue(self.value + other.value)
         elif isinstance(other, ListValue):
             return other + self
+        elif isinstance(other, str):
+            return StringValue(self.value + other)
         
         raise NotImplementedError()
+    
+    def __getitem__(self, i):
+        if isinstance(i, int):
+            return self.value[i]
+        elif isinstance(i, IntValue):
+            return self.value[i.value]
 
 
 @dataclass
