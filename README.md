@@ -15,6 +15,11 @@ The goal is to create an interpreter for a custom programming language, transpil
 - ANTLR4 - used as a parser generator
 - PyGame - graphics engine, used for displaying code animations
 
+### How to run
+1. Install Python 3.13.3
+2. Install the required packages: ```pip install -r requirements.txt```
+3. Run: ```python -m program.run```
+
 ### Code example - Quicksort implemented in the language
 ```
 lst[int] tab = [6, 5, 4, 3, 2, 1];
@@ -253,8 +258,3 @@ loopStatementIterator: type Identifier InOperator expression;
 ////
 
 ```
-
-## How to run
-1. Install Python 3.13.3
-2. Install the required packages: ```pip install -r requirements.txt```
-3. Run: ```python -m program.run```
