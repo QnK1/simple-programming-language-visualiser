@@ -253,3 +253,8 @@ loopStatementIterator: type Identifier InOperator expression;
 ////
 
 ```
+
+## How to run
+1. Install Python 3.13.3
+2. Install the required packages: ```pip install -r requirements.txt```
+3. Run: ```python -m program.run```
