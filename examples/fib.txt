@@ -6,4 +6,4 @@ fun int:fib(int n){
     }
 }
 
-int a = fib(6);
+int a = fib(2);

@@ -345,6 +345,7 @@ class ExpressionCalculator(SPLVParserVisitor):
         self.starting_depth = None
         self.runner: Runner = runner
         self.res = Expression()
+        self.func_results = {}
     
     def calculate(self, exp):
         self.original_expression = exp.getText()
@@ -589,16 +590,21 @@ class ExpressionCalculator(SPLVParserVisitor):
         if start_depth > 0:
             return f"{fun_name}({','.join([a.__str__() for a in arg_contents])})"
         else:
-            starting_len = len(self.runner.result)
-            self.runner.executeStatement(ctx)
+            if (ctx.start.line, ctx.start.column) not in self.func_results.keys():
+                starting_len = len(self.runner.result)
+                self.runner.executeStatement(ctx)
 
-            contents = self.runner.result[starting_len:]
-            self.runner.result = self.runner.result[:starting_len]
+                contents = self.runner.result[starting_len:]
+                self.runner.result = self.runner.result[:starting_len]
 
-            if start_depth == 0:
+                
                 self.res.stages.append(Expression.Stage(contents, True))
 
-            val = contents[-1].return_val
+                val = contents[-1].return_val
+
+                self.func_results[(ctx.start.line, ctx.start.column)] = val
+            else:
+                val = self.func_results[(ctx.start.line, ctx.start.column)]
 
             return val
 
