@@ -6,6 +6,9 @@ class CompilationError:
     column: int
     msg: str
 
+    def __str__(self):
+        return f"(line {self.line}, column {self.column}) {self.msg}"
+
 
 # compile time
 class DeclarationException(Exception):
