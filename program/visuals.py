@@ -15,6 +15,11 @@ class Visuals():
     def __init__(self, simulation):
         self.simulation = simulation
         self.actions = set()                                    # Set[Action] -> Action[block, lifeTime, endFunction]
+        self.action_tick_time = config.action_tick_time
+
+    def actionTicks(self):
+        return max(int(self.action_tick_time/self.simulation.buttonDisplay.buttons['Speed'].getSliderValue()), 5)
+
 
     def ifFunc_q(self, var1, logic, var2, result = None):
         blocks = self.simulation.globals.blocks | self.simulation.boards[-1].blocks
@@ -22,7 +27,7 @@ class Visuals():
         color = (0, 255, 0) if result == True else (255, 0, 0)
         blocks[var1].highlight(color)
         blocks[var2].highlight(color)
-        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var1].unhighlight(), lambda: blocks[var2].unhighlight()]))
+        self.actions.add(Action(self.actionTicks(), [lambda: blocks[var1].unhighlight(), lambda: blocks[var2].unhighlight()]))
 
     def setVariable_q(self, var_name: str, value: float, type: str, if_global: bool = False):        # DODAĆ KOD JEŚLI JUZ ZMIENNA ISTNIEJE
         board = self.simulation.globals if if_global == True else self.simulation.boards[-1]
@@ -32,28 +37,28 @@ class Visuals():
         else:
             board.setBlock(var_name, value, type)
         board.blocks[var_name].highlight(config.change_color)
-        self.actions.add(Action(config.action_tick_time, [lambda: board.blocks[var_name].unhighlight()]))
+        self.actions.add(Action(self.actionTicks(), [lambda: board.blocks[var_name].unhighlight()]))
     
     def add_q(self, var_name: str, value):
         blocks = self.simulation.globals.blocks | self.simulation.boards[-1].blocks
         add = value if type(value) != str else blocks[value].getValue()
         blocks[var_name].value += add
         blocks[var_name].highlight(config.add_color)
-        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
+        self.actions.add(Action(self.actionTicks(), [lambda: blocks[var_name].unhighlight()]))
 
     def multiply_q(self, var_name: str, value):
         blocks = self.simulation.globals.blocks | self.simulation.boards[-1].blocks
         mul = value if type(value) != str else blocks[value].getValue()
         blocks[var_name].value *= mul
         blocks[var_name].highlight(config.mul_color)
-        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
+        self.actions.add(Action(self.actionTicks(), [lambda: blocks[var_name].unhighlight()]))
 
     def divide_q(self, var_name: str, value):
         blocks = self.simulation.globals.blocks | self.simulation.boards[-1].blocks
         div = value if type(value) != str else blocks[value].getValue()
         blocks[var_name].value /= div
         blocks[var_name].highlight(config.div_color)
-        self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
+        self.actions.add(Action(self.actionTicks(), [lambda: blocks[var_name].unhighlight()]))
 
     def openFunction_q(self, name, x, y):
         self.simulation.boards.append(Board(self.simulation, name, 0))
@@ -76,7 +81,7 @@ class Visuals():
             current = current[idx]
         current[index_exps[-1]] = value
         blocks[name].highlight(config.change_color)
-        self.actions.add(Action(config.action_tick_time, [lambda: blocks[name].unhighlight()]))
+        self.actions.add(Action(self.actionTicks(), [lambda: blocks[name].unhighlight()]))
 
     def ifFunc(self, var1, logic, var2, result = None):
         self.simulation.queue.append(lambda: self.ifFunc_q(var1, logic, var2, result))

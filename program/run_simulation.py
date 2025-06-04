@@ -118,9 +118,6 @@ class Simulation:
             elif isinstance(stage.content, list):
                 for statement in stage.content:
                     self.handleStatement(statement)
-            # else:
-            #     self.visuals.setCurrentCode(prefix + str(stage.content), x=self.tempx, y=self.tempy)
-            #     print("TO NIE POWINNO SIE STAĆ? - EXPRESSION, func call -> ", stage.is_function_call)
 
     def handleStatement(self, statement):
         self.tempx, self.tempy = statement.column_start, statement.line_start
@@ -151,13 +148,10 @@ class Simulation:
         elif isinstance(statement, ReturnStatement):
             cur_x, cur_y = self.tempx, self.tempy
             self.handleExpression(statement.return_exp, prefix='return -> ', x=cur_x, y=cur_y)
-            self.visuals.setCurrentCode('return2 -> ' + str(statement.return_val), x=cur_x, y=cur_y)
+            self.visuals.setCurrentCode('return -> ' + str(statement.return_val), x=cur_x, y=cur_y)
             self.visuals.closeFunction()
         
         elif isinstance(statement, FunctionCallStatement):
-            # for index, pair in enumerate(zip(statement.arg_expressions, statement.arg_values), start=1):
-            #     self.handleExpression(pair[0], prefix=f"arg{index} -> ")
-                # self.visuals.setCurrentCode(statement.function_name + f" arg{index} -> " + str(pair[1]), x=self.tempx, y=self.tempy)
             self.visuals.openFunction(statement.function_name+"(" + ", ".join(str(v) for v in statement.arg_values) + ")", self.function_args[statement.function_name].x, self.function_args[statement.function_name].y)
             for index, arg in enumerate(self.function_args[statement.function_name].args):
                 self.visuals.setVariable(arg.name, statement.arg_values[index], arg.type, False)

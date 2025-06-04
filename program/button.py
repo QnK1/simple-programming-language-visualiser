@@ -14,7 +14,7 @@ class Button():
         self.change_color_delay = -1
         self.blink = blink
         self.type = type
-        self.last_mouse_click_x = width/2
+        self.last_mouse_click_x = width/10
 
     def getX(self):
         return self.x
@@ -34,7 +34,7 @@ class Button():
     def getSliderValue(self):
         value = max(min(.9, self.last_mouse_click_x/(max(self.width,1))), .1) * 10
         value = value**2
-        return value/10
+        return value
 
     def executeFunctions(self):
         for func in self.functions:
