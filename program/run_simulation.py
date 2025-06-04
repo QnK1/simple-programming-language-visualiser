@@ -174,8 +174,6 @@ class Simulation:
 
         elif isinstance(statement, LoopStatement):
             cur_x, cur_y = self.tempx, self.tempy
-            self.handleExpression(statement.iterated_exp)
-            self.visuals.setCurrentCode(str(statement.iterated_exp_final_val))
             self.visuals.setCurrentCode(str(statement.iterator_name)+' = '+str(statement.iterated_exp_final_val[statement.current_iterator_index]), x=cur_x, y=cur_y)
 
         elif isinstance(statement, Error):
