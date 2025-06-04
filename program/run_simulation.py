@@ -12,6 +12,7 @@ from .myTextEditor import MyTextEditor
 from interface.get_pygments_tokens import SyntaxHighlighter
 from interpreter.main import run
 from interpreter.run_utils import *
+from .errorDisplay import ErrorDisplay
 
 class Simulation:
 
@@ -25,7 +26,7 @@ class Simulation:
         self.tps_delta = 0.0
         self.tps = config.ticks_per_second
         self.boards = []
-        self.boards.append(Board(self, 'Main variables', 0))
+        self.boards.append(Board(self, '', 0))
         self.globals = Board(self, 'Global variables', config.globals_height)
         self.visuals = Visuals(self)
         self.queue = deque()
@@ -40,6 +41,8 @@ class Simulation:
         self.tempx = -50
         self.tempy = -50
         self.paused = False
+        self.function_args = {}
+        self.errorDisplay = ErrorDisplay(self)
 
         while True:
             # Ticking
@@ -53,8 +56,13 @@ class Simulation:
                 self.checkKeys()
 
                 if self.queueWaitTicks <= 0 and len(self.queue):
-                    self.queue.popleft()()
-                    self.queueWaitTicks = config.action_tick_time + config.action_delay
+                    to_execute = self.queue.popleft()
+                    if isinstance(to_execute, list):
+                        for el in to_execute:
+                            el()
+                    else:
+                        to_execute()
+                    self.queueWaitTicks = (config.action_delay + config.action_tick_time) /self.buttonDisplay.buttons['Speed'].getSliderValue()
                 self.tick()
                 self.queueWaitTicks -= 1
                 self.tps_delta -= 1/ self.tps
@@ -65,17 +73,17 @@ class Simulation:
     def tick(self):
         self.buttonDisplay.tick()
         self.visuals.tick()
-        
-
     def draw(self):
-        # self.screen.fill((0,0,0))                                 # background color
-        self.screen.fill((0, 0, 0), rect=(0, 0, 1000, 1080))        # dont fill text editor, blinking line number bug
+        self.screen.fill((0,0,0))                                 # background color
+        # self.screen.fill((0, 0, 0), rect=(0, 0, 1000, 1080))        # dont fill text editor, blinking line number bug
         self.boards[-1].draw(self.mouse_x, self.mouse_y)
         self.globals.draw(self.mouse_x, self.mouse_y)
         self.buttonDisplay.draw()
         self.showCode.draw()
         self.textEditor.draw()
+        self.errorDisplay.draw()
         pygame.display.flip()                              # update screen
+
     def checkKeys(self):
         for event in self.pygame_events:
             if event.type == pygame.QUIT:
@@ -93,10 +101,20 @@ class Simulation:
             self.buttonDisplay.buttons['Pause'].button_color = config.button_paused_color
         self.paused = not self.paused
 
-    def handleExpression(self, expression, prefix = ""):
+    class FunctionParams:
+        def __init__(self, args, x, y):
+            self.args = args
+            self.x = x
+            self.y = y
+
+    def handleExpression(self, expression, prefix = "", x=None, y=None):
+        if x is None or y is None:
+            x, y = self.tempx, self.tempy
+        if expression == None:
+            return 
         for stage in expression.stages:
             if isinstance(stage.content, str):
-                self.visuals.setCurrentCode(prefix + stage.content, x=self.tempx, y=self.tempy)
+                self.visuals.setCurrentCode(prefix + stage.content, x=x, y=y)
             elif isinstance(stage.content, list):
                 for statement in stage.content:
                     self.handleStatement(statement)
@@ -105,58 +123,78 @@ class Simulation:
             #     print("TO NIE POWINNO SIE STAĆ? - EXPRESSION, func call -> ", stage.is_function_call)
 
     def handleStatement(self, statement):
-
-        if isinstance(statement, FunctionDefinitionStatement):
-            return
-        
         self.tempx, self.tempy = statement.column_start, statement.line_start
 
-        if isinstance(statement, VariableDefinitionStatement):
+        if isinstance(statement, FunctionDefinitionStatement):
+            self.function_args[statement.name] = self.FunctionParams(statement.args, self.tempx, self.tempy)
+        
+        elif isinstance(statement, VariableDefinitionStatement):
+            cur_x, cur_y = self.tempx, self.tempy
             self.handleExpression(statement.rhs_exp, statement.name + " = ")
-            self.visuals.setCurrentCode(statement.name + " = " + str(statement.final_val), x=self.tempx, y=self.tempy)
+            self.visuals.setCurrentCode(statement.name + " = " + str(statement.final_val), x=cur_x, y=cur_y)
             self.visuals.setVariable(statement.name, statement.final_val, statement.type, statement.scope == ScopeType.GLOBAL)
 
         elif isinstance(statement, VariableAssignmentStatement):
+            cur_x, cur_y = self.tempx, self.tempy
             self.handleExpression(statement.rhs_exp, statement.name + " = ")
             if statement.is_list_indexing:
                 for expr in statement.index_exps:
                     self.handleExpression(expr)
                 at = "".join(f"[{i}]" for i in statement.final_indices)
-                self.visuals.setCurrentCode(statement.name + at + " = " + str(statement.final_val), x=self.tempx, y=self.tempy)
+                self.visuals.setCurrentCode(statement.name + at + " = " + str(statement.final_val), x=cur_x, y=cur_y)
                 self.visuals.assignValue(statement.name, statement.final_val, statement.final_indices, statement.scope == ScopeType.GLOBAL)
             else:
-                self.visuals.setCurrentCode(statement.name + " = " + str(statement.final_val), x=self.tempx, y=self.tempy)
+                self.visuals.setCurrentCode(statement.name + " = " + str(statement.final_val), x=cur_x, y=cur_y)
                 self.visuals.setVariable(statement.name, statement.final_val, statement.type, statement.scope == ScopeType.GLOBAL)
                 
 
         elif isinstance(statement, ReturnStatement):
-            self.handleExpression(statement.return_exp, prefix='return -> ')
-            self.visuals.setCurrentCode('return -> ' + str(statement.return_val), x=self.tempx, y=self.tempy)
+            cur_x, cur_y = self.tempx, self.tempy
+            self.handleExpression(statement.return_exp, prefix='return -> ', x=cur_x, y=cur_y)
+            self.visuals.setCurrentCode('return2 -> ' + str(statement.return_val), x=cur_x, y=cur_y)
             self.visuals.closeFunction()
         
         elif isinstance(statement, FunctionCallStatement):
-            for index, pair in enumerate(zip(statement.arg_expressions, statement.arg_values), start=1):
-                self.handleExpression(pair[0], prefix=f"arg{index} -> ")
-                self.visuals.setCurrentCode(statement.function_name + f" arg{index} -> " + str(pair[1]), x=self.tempx, y=self.tempy)
-            self.visuals.openFunction(statement.function_name)
+            # for index, pair in enumerate(zip(statement.arg_expressions, statement.arg_values), start=1):
+            #     self.handleExpression(pair[0], prefix=f"arg{index} -> ")
+                # self.visuals.setCurrentCode(statement.function_name + f" arg{index} -> " + str(pair[1]), x=self.tempx, y=self.tempy)
+            self.visuals.openFunction(statement.function_name+"(" + ", ".join(str(v) for v in statement.arg_values) + ")", self.function_args[statement.function_name].x, self.function_args[statement.function_name].y)
+            for index, arg in enumerate(self.function_args[statement.function_name].args):
+                self.visuals.setVariable(arg.name, statement.arg_values[index], arg.type, False)
         
         elif isinstance(statement, IfStatement):
+            cur_x, cur_y = self.tempx, self.tempy
             self.handleExpression(statement.condition_exp)
+            self.visuals.setCurrentCode(str(statement.final_cond_val), x=cur_x, y=cur_y)
         
         elif isinstance(statement, WhileStatement):
+            cur_x, cur_y = self.tempx, self.tempy
             self.handleExpression(statement.condition_exp)
+            self.visuals.setCurrentCode(str(statement.final_cond_val), x=cur_x, y=cur_y)
 
         elif isinstance(statement, LoopStatement):
+            cur_x, cur_y = self.tempx, self.tempy
             self.handleExpression(statement.iterated_exp)
+            self.visuals.setCurrentCode(str(statement.iterated_exp_final_val))
+            self.visuals.setCurrentCode(str(statement.iterator_name)+' = '+str(statement.iterated_exp_final_val[statement.current_iterator_index]), x=cur_x, y=cur_y)
 
-            
+        elif isinstance(statement, Error):
+            queue_list = []
+            queue_list.append(lambda: self.errorDisplay.displayErrors([statement.message+' (line='+str(statement.line_start)+', column='+str(statement.column_start)+')']))
+            queue_list.append(lambda: self.visuals.setCurrentCode_q('', x=self.tempx, y=self.tempy))
+            self.queue.append(queue_list)
+
+  
     def calcelExecution(self):
+        self.textEditor.resetArrow()
+        self.textEditor.allowWrite = True
         self.queue.clear()
         self.visuals.actions.clear()
         self.showCode.text = ''
         self.boards = self.boards[0:1]
         self.boards[0].blocks.clear()
         self.globals.blocks.clear()
+        self.errorDisplay.clearErrors()
 
     def executeCode(self):
         print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
@@ -165,15 +203,19 @@ class Simulation:
         #     print(type(el), el)
         value = run(self.textEditor.getText())
         print('############################################')
+        print('Errors:')
+        print(value[0])
+        print('Statements:')
         print(value[1])
         self.calcelExecution()
+        
         if value[1] == None:
-            print('ERRORS!!!!')
-            print(value[0])
+            self.errorDisplay.displayErrors(value[0])
         else:
+            self.textEditor.allowWrite = False
             for el in value[1]:
                 self.handleStatement(el)
-            self.visuals.setCurrentCode('')
+            self.queue.append([lambda: self.textEditor.allowWriting(), lambda: self.textEditor.resetArrow()])
 
 
 

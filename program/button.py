@@ -31,8 +31,15 @@ class Button():
     def getText(self):
         return self.text
     
-    def getZipValue(self):
-        return self.last_mouse_click_x/(self.width-30)
+    def getSliderValue(self):
+        value = max(min(.9, self.last_mouse_click_x/(max(self.width,1))), .1) + .5
+
+        if value > 1.3:
+            value = value + (value-1) * 10
+
+        elif value > 1:
+            value = value + (value-1) * 3
+        return value
 
     def executeFunctions(self):
         for func in self.functions:

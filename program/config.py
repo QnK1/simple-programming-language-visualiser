@@ -63,3 +63,10 @@ button_text_offset_y = 10
 button_paused_color = (160, 50, 50)
 button_pressed_color = (100, 0, 100)
 button_pressed_color_ticks = 4
+
+# Errors config
+error_title_color = (250, 50, 50)
+error_color=(250, 50, 50)
+error_font_size = 40
+error_line_height = 50
+error_width_limit = editor_offset_x - board_offset*2

@@ -55,14 +55,15 @@ class Visuals():
         blocks[var_name].highlight(config.div_color)
         self.actions.add(Action(config.action_tick_time, [lambda: blocks[var_name].unhighlight()]))
 
-    def openFunction_q(self, name):
+    def openFunction_q(self, name, x, y):
         self.simulation.boards.append(Board(self.simulation, name, 0))
+        self.simulation.textEditor.arrowAt(x, y)
 
     def closeFunction_q(self):
         if len(self.simulation.boards) > 1:
             self.simulation.boards.pop()
 
-    def setCurrentCode_q(self, text, begin, end, x, y):
+    def setCurrentCode_q(self, text, begin=0, end=0, x=-50, y=-50):
         self.simulation.showCode.text = text
         self.simulation.showCode.begin = begin
         self.simulation.showCode.end = end
@@ -92,8 +93,8 @@ class Visuals():
     def divide(self, var_name: str, value):
         self.simulation.queue.append(lambda: self.divide_q(var_name, value))
 
-    def openFunction(self, name):
-        self.simulation.queue.append(lambda: self.openFunction_q(name))
+    def openFunction(self, name, x, y):
+        self.simulation.queue.append(lambda: self.openFunction_q(name, x, y))
 
     def closeFunction(self):
         self.simulation.queue.append(lambda: self.closeFunction_q())
