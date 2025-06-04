@@ -331,7 +331,7 @@ class Runner(SPLVParserVisitor):
     def getVariableScope(self, name):
         for i, scope in enumerate(self.scopes[::-1]):
             if name in scope.variables:
-                if i != 0 or i == 0 and len(self.scopes) == 1:
+                if i == len(self.scopes) - 1:
                     return ScopeType.GLOBAL
                 else:
                     return ScopeType.FUNCTION
