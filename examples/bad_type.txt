@@ -1,0 +1,9 @@
+int a = 5;
+
+lst[str] b = ["hello", "world", "!"];
+
+//int a = 17;
+
+//lst[int] c = 0;
+
+
