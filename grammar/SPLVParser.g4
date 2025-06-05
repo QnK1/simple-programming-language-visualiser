@@ -64,9 +64,9 @@ type
 
 // expressions
 expression
-    : Identifier #identifierExpression
-    | expression BracketLeft left_exp=expression? Colon right_exp=expression? BracketRight #listSlicingExpression
+    : expression BracketLeft left_exp=expression? Colon right_exp=expression? BracketRight #listSlicingExpression
     | expression BracketLeft expression BracketRight #listIndexingExpression
+    | Identifier #identifierExpression
     | literal #literalExpression
     | functionCall #functionCallExpression
     | expression MultiplicativeOperator expression #multiplicativeOperatorExpression
@@ -89,7 +89,7 @@ variableDefinition: GlobalTypeModifier? type Identifier AssignmentOperator expre
 variableAssignment: lValue AssignmentOperator expression;
 lValue
     : Identifier
-    | Identifier BracketLeft expression BracketRight
+    | lValue BracketLeft expression BracketRight
     ;
 ////
 

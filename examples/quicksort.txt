@@ -1,0 +1,35 @@
+lst[int] tab = [6, 5, 4, 3, 2, 1];
+
+fun int:partition(int p, int r){
+    int x = tab[r];
+    int i = p - 1;
+    int temp = 0;
+
+    lop(int j in [p..r]){
+        if(tab[j] <= x){
+            i = i + 1;
+            temp = tab[i];
+            tab[i] = tab[j];
+            tab[j] = temp;
+        }
+    }
+
+    temp = tab[i + 1];
+    tab[i + 1] = tab[r];
+    tab[r] = temp;
+
+    ret i + 1;
+}
+
+fun nul:quicksort(int p, int r){
+    int q = 0;
+    if(p < r){
+        q = partition(p, r);
+        quicksort(p, q - 1);
+        quicksort(q + 1, r);
+    }
+}
+
+quicksort(0, 5);
+
+lst[int] res = tab;

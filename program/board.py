@@ -3,7 +3,7 @@ from . import config
 from .block import Block
 
 class Board():
-    def __init__(self, simulation, name: str, top_spacing: int):
+    def __init__(self, simulation, name: str, top_spacing: int, title_color = config.title_color):
         self.simulation = simulation
         self.name = name
         self.top_spacing = top_spacing
@@ -13,7 +13,7 @@ class Board():
         self.board_offset = config.board_offset
         self.block_text_color = config.block_text_color
         self.font_size = config.font_size
-        self.title_color = config.title_color
+        self.title_color = title_color
         self.title_font_size = config.title_font_size
         self.title_height = config.title_height
         self.char_limit = config.block_char_limit
@@ -21,7 +21,6 @@ class Board():
         self.hover_text_color = config.hover_text_color
         self.hover_font_size = config.hover_font_size
         self.hover_height = config.hover_height
-        self.hover_border_size = config.hover_border_size
 
         self.blocks = {}                                 # Dict[variable_name : Block]
     def setBlock(self, name: str, value: any, type: str):

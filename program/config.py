@@ -20,7 +20,7 @@ block_spacing = 20
 blocks_width = 8
 
 # Hover on block config
-hover_color = (50,50,50)
+hover_color = (120,120,200)
 hover_text_color = (0,0,0)
 hover_font_size = 40
 hover_height = block_size * 1.5
@@ -55,12 +55,19 @@ editor_font_size = 30
 
 # Button config
 button_font_size = 40
-button_offset_y = 950
-button_offset_x = 1000
 button_width = 200
 button_height = 80
-button_spacing = 20
 button_color = (150,0,150)
 button_text_color = (0, 0, 0)
 button_text_offset_x = 10
 button_text_offset_y = 10
+button_paused_color = (160, 50, 50)
+button_pressed_color = (100, 0, 100)
+button_pressed_color_ticks = 4
+
+# Errors config
+error_title_color = (250, 50, 50)
+error_color=(250, 50, 50)
+error_font_size = 40
+error_line_height = 50
+error_width_limit = editor_offset_x - board_offset*2
