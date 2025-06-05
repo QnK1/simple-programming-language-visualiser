@@ -18,7 +18,7 @@ The goal is to create an interpreter for a custom programming language, transpil
 ### How to run
 1. Install Python 3.13.3
 2. Install the required packages: ```pip install -r requirements.txt```
-3. Run: ```python -m program.run```
+3. Run: ```python -m program.run_simulation```
 
 ### Code example - Quicksort implemented in the language
 ```
