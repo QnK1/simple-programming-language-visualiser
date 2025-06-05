@@ -18,7 +18,7 @@ The goal is to create an interpreter for a custom programming language, transpil
 ### How to run
 1. Install Python 3.13.3
 2. Install the required packages: ```pip install -r requirements.txt```
-3. Run: ```python -m program.run```
+3. Run: ```python -m program.run_simulation```
 
 ### Code example - Quicksort implemented in the language
 ```
@@ -258,3 +258,19 @@ loopStatementIterator: type Identifier InOperator expression;
 ////
 
 ```
+
+### Error handling
+
+Apart from the parsing functionality present in ANTLR4, our language provides custom compile-time error handling, which includes:
+- checking if identifiers have been defined, as well as checking if they haven't been defined multiple times
+- checking if functions return values in all control paths
+- robust static type checking
+
+The interpreter also includes runtime error handling, for example for out-of-bounds list indices or arithmetic errors.
+
+
+## GUI
+The GUI is an integral part of the project. It lets users inspect variable values in real time, track expression calculations and see which lines of code are currently being executed, with the integrated text editor providing custom syntax highlighting. Using the interface, code execution can be paused at any time and its speed can be controlled.
+
+![image1](/images/1.png)
+![image2](/images/2.png)
