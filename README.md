@@ -272,5 +272,8 @@ The interpreter also includes runtime error handling, for example for out-of-bou
 ## GUI
 The GUI is an integral part of the project. It lets users inspect variable values in real time, track expression calculations and see which lines of code are currently being executed, with the integrated text editor providing custom syntax highlighting. Using the interface, code execution can be paused at any time and its speed can be controlled.
 
+### GUI elements
 ![image1](/images/1.png)
+
+### Error example
 ![image2](/images/2.png)
