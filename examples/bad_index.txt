@@ -1,0 +1,7 @@
+lst[int] a = [7,6,5,4,3];
+
+int b = 0;
+
+lop(int i in [0..10]){
+    b = a[i];
+}
